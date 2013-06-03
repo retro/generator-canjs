@@ -3,7 +3,7 @@ var util   = require('util');
 var path   = require('path');
 var yeoman = require('yeoman-generator');
 
-var extractGeneratorName = function (_, appname) {
+var extractAppName = function (_, appname) {
   var slugged = _.slugify(appname),
     match = slugged.match(/^generator-(.+)/);
 
@@ -13,7 +13,6 @@ var extractGeneratorName = function (_, appname) {
 
   return slugged;
 };
-
 
 var CanjsGenerator = module.exports = function CanjsGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
@@ -29,7 +28,7 @@ util.inherits(CanjsGenerator, yeoman.generators.Base);
 
 CanjsGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
-  var generatorName = extractGeneratorName(this._, this.appname);
+  var generatorName = extractAppName(this._, this.appname);
 
   // welcome message
   var welcome =
@@ -37,17 +36,17 @@ CanjsGenerator.prototype.askFor = function askFor() {
   '\n    ######### ###########   ####  #######  ######'.yellow.bold +
   '\n  ########### ############# ############### ####'.yellow.bold +
   '\n ############ ############# ###############'.yellow.bold +
-  '\n ######              ###### #####    ###### ####  ########'.yellow.bold +
-  '\n #####                ##### #####     ##### #### ##########'.yellow.bold +
-  '\n #####          ########### #####     ##### #### ##########'.yellow.bold +
-  '\n #####       ############## #####     ##### #### #####'.yellow.bold +
-  '\n #####       #####    ##### #####     ##### ####  ######'.yellow.bold +
-  '\n ######     ######    ##### #####     ##### ####    ######'.yellow.bold +
-  '\n ########## ######### ##### #####     ##### ####      #####'.yellow.bold +
-  '\n  ########## ######## ##### #####     ##### #### ##########'.yellow.bold +
-  '\n    #######    #####   #### #####     ####  #### #########'.yellow.bold +
-  '\n                                          ######  #######'.yellow.bold +
-  '\n                                           ####'.yellow.bold;
+  '\n ######              ###### #####    ###### ####  #######'.yellow.bold +
+  '\n #####                ##### #####     ##### #### #########'.yellow.bold +
+  '\n #####          ########### #####     ##### #### ####'.yellow.bold +
+  '\n #####       ############## #####     ##### #### ####'.yellow.bold +
+  '\n #####       #####    ##### #####     ##### ####  #####'.yellow.bold +
+  '\n ######     ######    ##### #####     ##### ####    #####'.yellow.bold +
+  '\n ########## ######### ##### #####     ##### ####      ####'.yellow.bold +
+  '\n  ########## ######## ##### #####     ##### ####      ####'.yellow.bold +
+  '\n    #######    #####   #### #####     ####  #### ########'.yellow.bold +
+  '\n                                          ######  ###### '.yellow.bold +
+  '\n                                          #####'.yellow.bold;
 
   console.log(welcome);
 
@@ -75,7 +74,7 @@ CanjsGenerator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
-CanjsGenerator.prototype._requirejs = function(){
+CanjsGenerator.prototype._requirejs = function _requirejs(){
   return this.useRequire ? '"requirejs" : "~2.1.6",' : "";
 }
 
