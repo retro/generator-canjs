@@ -1,8 +1,9 @@
 requirejs.config({
   paths: {
-    can: 'components/canjs/amd'
+    can: 'components/canjs/amd/can',
+    jquery : 'components/jquery/jquery'
   }
 });
-requirejs(['can/can.js', 'can/control'], function(can){
+requirejs(['can/util/string', 'can/control'], function(can){
 /*APPCODE*/
 });

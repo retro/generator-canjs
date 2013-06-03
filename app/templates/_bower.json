@@ -2,7 +2,8 @@
   "name": "<%= _.slugify(appName) %>",
   "version": "0.0.0",
   "dependencies": {
-    <%= _depManagerBower() %>
-    "canjs" : "~1.1.6"
+    <%= _requirejs() %>
+    "canjs" : "~1.1.6",
+    "jquery" : "~1.10.1"
   }
 }

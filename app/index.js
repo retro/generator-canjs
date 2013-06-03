@@ -56,87 +56,39 @@ CanjsGenerator.prototype.askFor = function askFor() {
     message: 'What is the name of your application?',
     default: generatorName
   },{
-    name: 'depManagement',
-    message: 'What are you using for dependency management: (s)teal, (r)equire.js or (n)one? s/r/n',
-    default: 'n'
+    name: 'useRequire',
+    message: 'Would you like to include RequireJS (for AMD support)?',
+    default: 'Y/n',
   }];
 
-  var depManagers = {
-    s       : 'steal',
-    r       : 'requirejs',
-    n       : 'none'
-  }
-
-  var depPrompts = {
-    steal : [{
-      name : 'stealPath',
-      message : 'FOO BAR BAZ'
-    }],
-    requirejs : []
-  }
-
-  var depCbs = {
-    steal : function(props){
-    },
-    requirejs : function(props){
-
-    }
-  }
-
   this.prompt(prompts, function (err, props) {
-    var forDepPrompts;
 
     if (err) {
       return this.emit('error', err);
     }
 
     this.appName    = props.appName;
-    this.depManager = depManagers[this._.trim(props.depManagement)];
+    this.useRequire = (/y/i).test(props.useRequire);
 
-    forDepPrompts = depPrompts[this.depManagement];
-
-    if(forDepPrompts){
-      this.prompt(forDepPrompts, function(err, props){
-        var depCb = depCbs[this.depManagement].bind(this);
-        if(err) {
-          return this.emit('error', err);
-        }
-        depCb(props);
-        cb();
-      }.bind(this))
-    } else {
-      cb();
-    }
+    cb();
 
   }.bind(this));
 };
 
-CanjsGenerator.prototype._scriptTag = function(){
-  var app = this._.underscored(this.appName);
-  if(this.depManager === 'steal'){
-    return "<script type='text/javascript' src='../steal/steal.js?" + app + "'></script>";
-  } else if(this.depManager === 'requirejs'){
-    return "<script type='text/javascript' src='components/requirejs/require.js' data-main='" + app + "'></script>";
-  } else {
-    return "<script type='text/javascript' src='" + app + ".js'></script>";
-  }
-}
-
-CanjsGenerator.prototype._depManagerBower = function(){
-  if(this.depManager === 'requirejs'){
-    return '"requirejs" : "~2.1.6",';
-  }
-  return '';
+CanjsGenerator.prototype._requirejs = function(){
+  return this.useRequire ? '"requirejs" : "~2.1.6",' : "";
 }
 
 CanjsGenerator.prototype.app = function app() {
+  var depManager  = this.useRequire ? 'requirejs' : 'none';
   var appTemplate = this.read('_app.js');
-  var appWrapper  = this.read('_' + this.depManager + '_wrap.js');
+  var appWrapper  = this.read('_' + depManager + '_wrap.js');
   var app         = this._.underscored(this.appName);
+
   this.copy('_package.json', 'package.json');
   this.template('_bower.json', 'bower.json');
-  this.template('depmanager', '.depmanager');
-  this.template('app.html', app + '.html');
+  this.template(depManager + '.html', app + '.html');
+
   this.write(app + '.js', appWrapper.replace('/*APPCODE*/', appTemplate));
 };
 
