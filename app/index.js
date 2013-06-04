@@ -38,10 +38,10 @@ CanjsGenerator.prototype.askFor = function askFor() {
   '\n ############ ############# ###############'.yellow.bold +
   '\n ######              ###### #####    ###### ####  #######'.yellow.bold +
   '\n #####                ##### #####     ##### #### #########'.yellow.bold +
-  '\n #####          ########### #####     ##### #### ####'.yellow.bold +
+  '\n #####         ############ #####     ##### #### ####'.yellow.bold +
   '\n #####       ############## #####     ##### #### ####'.yellow.bold +
-  '\n #####       #####    ##### #####     ##### ####  #####'.yellow.bold +
-  '\n ######     ######    ##### #####     ##### ####    #####'.yellow.bold +
+  '\n #####      #####    ###### #####     ##### ####  #####'.yellow.bold +
+  '\n ######     #####     ##### #####     ##### ####    #####'.yellow.bold +
   '\n ########## ######### ##### #####     ##### ####      ####'.yellow.bold +
   '\n  ########## ######## ##### #####     ##### ####      ####'.yellow.bold +
   '\n    #######    #####   #### #####     ####  #### ########'.yellow.bold +
@@ -75,7 +75,11 @@ CanjsGenerator.prototype.askFor = function askFor() {
 };
 
 CanjsGenerator.prototype._requirejs = function _requirejs(){
-  return this.useRequire ? '"requirejs" : "~2.1.6",' : "";
+  var require = [
+    '"require-can-renderers" : "git://github.com/retro/require-can-renderers.git",',
+    '"requirejs" : "~2.1.6",'
+  ];
+  return this.useRequire ? require.join("\n") : "";
 }
 
 CanjsGenerator.prototype.app = function app() {
@@ -94,5 +98,4 @@ CanjsGenerator.prototype.app = function app() {
 CanjsGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
   this.copy('jshintrc', '.jshintrc');
-
 };

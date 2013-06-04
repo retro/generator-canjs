@@ -4,19 +4,19 @@ var yeoman = require('yeoman-generator');
 var path   = require('path');
 var base   = require('../base.js')
 
-var ModelGenerator = module.exports = function ModelGenerator(args, options, config) {
+var ControlGenerator = module.exports = function ControlGenerator(args, options, config) {
   base.apply(this, arguments);
 };
 
-util.inherits(ModelGenerator, base);
+util.inherits(ControlGenerator, base);
 
-ModelGenerator.prototype.askForName = base.namePrompt('Please enter the path to the model eg.: models/user:');
+ControlGenerator.prototype.askForName = base.namePrompt('Please enter the path to the control eg.: controls/users:');
 
-ModelGenerator.prototype.files = function files() {
+ControlGenerator.prototype.files = function files() {
   if(this.name){
     this._mkdirp(this.name);
     this.template((this._isUsingRequireJS() ? 'requirejs' : 'none') + '.js', this._fullName());
   } else {
     console.log('You must provide path to the model!');
   }
-}
+};
