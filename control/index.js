@@ -26,6 +26,10 @@ ControlGenerator.prototype._fullPath = function _fullPath(){
   return path.join(nameWithoutExtension, nameWithoutExtension.split('/').pop());
 }
 
+ControlGenerator.prototype._baseName = function _fullPath(){
+  return this._nameWithoutExtension().split('/').pop();
+}
+
 ControlGenerator.prototype._ejsHello = function _ejsHello(){
   return '<%= engine %>';
 }

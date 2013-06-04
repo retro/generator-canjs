@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title><%= _.classify(_componentName()) %> demo page!</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type='text/javascript' src='<%= _toRoot() %>components/jquery/jquery.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>components/canjs/can.jquery.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>components/canjs/can.view.mustache.js'></script>
+    <script type='text/javascript' src='<%= _baseName() %>.js'></script>
+    <script type='text/javascript'>
+       new <%= _.classify(_componentName()) %>Control('#content');
+    </script>
+  </body>
+</html>
