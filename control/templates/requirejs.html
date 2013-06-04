@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title><%= _controlName() %> demo page!</title>
+    <title><%= _.classify(_componentName()) %> demo page!</title>
   </head>
   <body>
     <div id="content"></div>
-    <script type='text/javascript' src='components/requirejs/require.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>components/requirejs/require.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>requirejsconfig.js'></script>
     <script type='text/javascript'>
-      requirejs([<%= _controlRequirePath() %>], function(<%= _controlName() %>){
-        new <%= _controlName() %>('#content');
+      requirejs.config({
+          baseUrl : '<%= _toRoot() %>'
+      })
+      requirejs(['<%= _fullPath() %>'], function(<%= _.classify(_componentName()) %>){
+        new <%= _.classify(_componentName()) %>('#content');
       })
     </script>
   </body>

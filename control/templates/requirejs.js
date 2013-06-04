@@ -1,4 +1,4 @@
-define(['can/util/string', 'can/control' , 'mustache!init', 'ejs!init'], function(can, Control, initMustache, initEjs){
+define(['can/util/string', 'mustache!./init', 'ejs!./init', 'can/control'], function(can, initMustache, initEjs){
 
   return can.Control({
     defaults : {
@@ -6,8 +6,12 @@ define(['can/util/string', 'can/control' , 'mustache!init', 'ejs!init'], functio
     }
   },{
     init : function(){
-      this.element.append(initMustache());
-      this.element.append(initEjs());
+      this.element.append(initMustache({
+        engine : 'Mustache'
+      }));
+      this.element.append(initEjs({
+        engine : 'EJS'
+      }));
     }
   });
 

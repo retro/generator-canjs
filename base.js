@@ -15,9 +15,9 @@ Generator.prototype._isUsingRequireJS = function _isUsingRequireJS(){
   return !!bower.dependencies.requirejs;
 }
 
-Generator.prototype._componentName = function modelName(){
-  var name = this.name.replace(/\.js$/, '');
-  return this._.singularize(name.split('/').pop());
+Generator.prototype._componentName = function modelName(singularize){
+  var name = this.name.replace(/\.js$/, '').split('/').pop();
+  return singularize ? this._.singularize(name) : name;
 }
 
 Generator.prototype._fullName = function _fullName(){
