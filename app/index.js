@@ -89,11 +89,13 @@ CanjsGenerator.prototype.app = function app() {
   var app         = this._.underscored(this.appName);
 
   this.copy('_package.json', 'package.json');
-  this.copy('requirejsconfig.js', 'requirejsconfig.js');
   this.template('_bower.json', 'bower.json');
   this.template(depManager + '.html', app + '.html');
-
   this.write(app + '.js', appWrapper.replace('/*APPCODE*/', appTemplate));
+  
+  if(this.useRequire){
+    this.copy('requirejsconfig.js', 'requirejsconfig.js');
+  }
 };
 
 CanjsGenerator.prototype.projectfiles = function projectfiles() {

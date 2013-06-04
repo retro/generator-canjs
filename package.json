@@ -1,9 +1,11 @@
 {
   "name": "generator-canjs",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "CanJS generator for Yeoman",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "canjs", 
+    "canjs-generator"
   ],
   "homepage": "https://github.com/retro/generator-canjs",
   "bugs": "https://github.com/retro/generator-canjs/issues",
