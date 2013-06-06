@@ -14,7 +14,7 @@ var getRenderer = function(ext, cwd){
 		"			path   = path.replace(/\\.|\\//g, '_').replace(/^_+|_+$/g, '');\n"+
 		"			fs     = require.nodeRequire('fs'),\n"+
 		"			views  = JSON.parse(fs.readFileSync('" + cwd + "/.build/views.json')),\n"+
-		"			output = 'define([\\'can/view/" + ext + "\\'], function(can){ ' + views[path] + ' });'\n"+
+		"			output = 'define([\\'can/view/" + ext + "\\', \\'can/observe\\'], function(can){ return ' + views[path] + ' });'\n"+
 		"			buildMap[name] = output;\n"+
 		"			load(output);\n"+
 		"		} else {\n"+
