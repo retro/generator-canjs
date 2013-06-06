@@ -1,6 +1,6 @@
 {
   "name": "generator-canjs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "CanJS generator for Yeoman",
   "keywords": [
     "yeoman-generator",
