@@ -5,25 +5,34 @@ var esprima   = require('esprima'),
 
 var getRenderer = function(ext, cwd){
 	return "define(function() {\n"+
-	"	var Rndrr = {},\n"+
-	"		buildMap = {};\n"+
-	"	Rndrr.load = function(name, parentRequire, load, config) {\n"+
-	"		var path   = parentRequire.toUrl(name + '." + ext + "').replace(/\\.|\\//g, '_').replace(/^_+|_+$/g, '');\n"+
-	"			fs     = require.nodeRequire('fs'),\n"+
-	"			views  = JSON.parse(fs.readFileSync('" + cwd + "/.build/views.json')),\n"+
-	"			output = views[path];\n"+
-	"\n"+
-	"		buildMap[name] = output;\n"+
-	"		load(output);\n"+
-	"	};\n"+
-	"	Rndrr.write = function (pluginName, name, write) {\n"+
-	"		if (buildMap.hasOwnProperty(name)) {\n"+
-	"			var text = buildMap[name];\n"+
-	"			write.asModule(pluginName + '!' + name, text);\n"+
-	"		}\n"+
-	"	};\n"+
-	"	return Rndrr;\n"+
-	"});\n";
+		"	var Rndrr = {},\n"+
+		"		buildMap = {};\n"+
+		"	Rndrr.load = function(name, parentRequire, load, config) {\n"+
+		"		var path = parentRequire.toUrl(name + '." + ext + "'),\n"+
+		"			fs, views, output;\n"+
+		"		if(config.isBuild){\n"+
+		"			path   = path.replace(/\\.|\\//g, '_').replace(/^_+|_+$/g, '');\n"+
+		"			fs     = require.nodeRequire('fs'),\n"+
+		"			views  = JSON.parse(fs.readFileSync('" + cwd + "/.build/views.json')),\n"+
+		"			output = 'define([\\'can/view/" + ext + "\\'], function(can){ ' + views[path] + ' });'\n"+
+		"			buildMap[name] = output;\n"+
+		"			load(output);\n"+
+		"		} else {\n"+
+		"			parentRequire(['can/view/" + ext + "', 'can/observe'], function(can) {\n"+
+		"				load(function(data){\n"+
+		"					return can.view(path, data)\n"+
+		"				});\n"+
+		"			});\n"+
+		"		}\n"+
+		"	};\n"+
+		"	Rndrr.write = function (pluginName, name, write) {\n"+
+		"		if (buildMap.hasOwnProperty(name)) {\n"+
+		"			var text = buildMap[name];\n"+
+		"			write.asModule(pluginName + '!' + name, text);\n"+
+		"		}\n"+
+		"	};\n"+
+		"	return Rndrr;\n"+
+		"});";
 }
 
 /**
