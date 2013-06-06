@@ -95,6 +95,7 @@ CanjsGenerator.prototype.app = function app() {
   
   if(this.useRequire){
     this.copy('requirejsconfig.js', 'requirejsconfig.js');
+    this.template('Gruntfile.js');
   }
 };
 

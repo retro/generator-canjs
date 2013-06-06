@@ -55,5 +55,18 @@ This generator installs https://github.com/retro/require-can-renderers which all
       initView()
     })
 
+## Build
+
+This generator comes with the Gruntfile.js which provides the `build` task. It will compile JavaScript
+and view files to the `production.js` file.
+
+It is a default task so it can be called as:
+
+    $ grunt
+
+Or as:
+
+    $ grunt build
+
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
