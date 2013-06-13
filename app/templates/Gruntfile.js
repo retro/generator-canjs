@@ -19,8 +19,8 @@ var getRenderer = function(ext, cwd){
 		"			load(output);\n"+
 		"		} else {\n"+
 		"			parentRequire(['can/view/" + ext + "', 'can/observe'], function(can) {\n"+
-		"				load(function(data){\n"+
-		"					return can.view(path, data)\n"+
+		"				load(function(data, helpers){\n"+
+		"					return can.view(path, data, helpers)\n"+
 		"				});\n"+
 		"			});\n"+
 		"		}\n"+
