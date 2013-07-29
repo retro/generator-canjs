@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/retro/generator-canjs.png)](http://waffle.io/retro/generator-canjs)  
 # generator-canjs
 
 CanJS generator for Yeoman.
