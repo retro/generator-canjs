@@ -71,8 +71,8 @@ module.exports = function(grunt) {
 			compile : {
 				options : {
 					paths: {
-						can      : 'components/canjs/amd/can',
-						jquery   : 'components/jquery/jquery',
+						can      : 'bower_components/canjs/amd/can',
+						jquery   : 'bower_components/jquery/jquery',
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
