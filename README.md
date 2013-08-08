@@ -4,9 +4,8 @@
 CanJS generator for Yeoman.
 
 ## Getting started
-- Make sure you have [yo](https://github.com/yeoman/yo) installed:
-    `npm install -g yo`
 - Install the generator: `npm install -g generator-canjs`
+- Go to the directory where your project will be developed: `mkdir my_project && cd my_project`
 - Run: `yo canjs`
 
 ## Usage
