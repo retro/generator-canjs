@@ -44,6 +44,6 @@ ControlGenerator.prototype.files = function files() {
     this.copy('init.mustache', path.join(this.name, 'init.mustache'));
     this.template('init.ejs', path.join(this.name, 'init.ejs'));
   } else {
-    console.log('You must provide path to the model!');
+    console.log('You must provide path to the control!');
   }
 };
