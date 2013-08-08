@@ -20,8 +20,11 @@ Generator.prototype._componentName = function modelName(singularize){
   return singularize ? this._.singularize(name) : name;
 }
 
-Generator.prototype._fullName = function _fullName(){
+Generator.prototype._fullName = function _fullName(pluralized){
   var name = this._.trim(this.name);
+
+  name = pluralized ? this._.pluralize(name) : name;
+
   if(!this._.endsWith(name, '.js')){
     name += '.js';
   }
@@ -58,10 +61,11 @@ Generator.namePrompt = function namePrompt(message){
       name = this._.trim(props.name);
 
       if(name !== ''){
-        this.name = name
+        this.name = name;
+        cb();
+      } else {
+        console.error('You must provide the path!'.red.bold);
       }
-
-      cb();
 
     }.bind(this)
 

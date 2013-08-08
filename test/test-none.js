@@ -46,11 +46,18 @@ describe('CanJS generator without RequireJS', function () {
 
   describe('CanJS Model', function(){
     it('creates canjs model', function(done){
-      var model = helpers.createGenerator('canjs:model', ['../../model'], ['models/user']);
+      var model = helpers.createGenerator('canjs:model', ['../../model']);
+
+      helpers.mockPrompt(model, {
+        name : 'models/user',
+        generateFixture : 'y'
+      })
+      
       this.app.run({}, function(){
         model.run([], function(){
           helpers.assertFiles([
-            ['models/user.js', /var UserModel/]
+            ['models/user.js', /var UserModel/],
+            ['fixtures/users.js', /var UserStore/]
           ]);
         })
         done();

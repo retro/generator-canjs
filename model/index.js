@@ -20,3 +20,34 @@ ModelGenerator.prototype.files = function files() {
     console.log('You must provide path to the model!');
   }
 }
+
+ModelGenerator.prototype.askForFixture = function askForFixture() {
+  var cb          = this.async(),
+      modelName   = this.name.split('/').pop();
+  
+  var prompts = [{
+    name: 'generateFixture',
+    message: 'Would you like to generate fixtures for the ' + modelName + ' model?',
+    default: 'Y/n'
+  }];
+
+  this.prompt(prompts, function (err, props) {
+
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    this.generateFixture = (/y/i).test(props.generateFixture);
+
+    cb();
+
+  }.bind(this));
+}
+
+ModelGenerator.prototype.fixtures = function fixtures(){
+  var fixturePath = ['fixtures', this._fullName(true).split('/').pop()].join('/');
+  if(this.generateFixture){
+    this._mkdirp(fixturePath);
+    this.template((this._isUsingRequireJS() ? 'requirejs_fixture' : 'none_fixture') + '.js', fixturePath);
+  }
+}
