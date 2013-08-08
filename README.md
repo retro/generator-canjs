@@ -26,6 +26,9 @@ affect the `canjs:model` and the `canjs:control` generators.
 This will create the model file. If you call this generator as `yo canjs:model models/user`
 it will create `user.js` file in the `models` folder.
 
+Model generator will offer to create fixtures for the generated model. For the `User` model fixtures
+will be generated in the `fixtures/users.js` file.
+
 ### Control generator
 
     $ yo canjs:control path/to/control/folder
