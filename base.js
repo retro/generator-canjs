@@ -2,9 +2,10 @@ var path      = require('path');
 var yeoman    = require('yeoman-generator');
 var util      = require('util');
 var inflector = require('underscore.inflections');
+var chalk     = require('chalk');
 
 var Generator = module.exports = function Generator(){
-  yeoman.generators.NamedBase.apply(this, arguments);
+  yeoman.generators.Base.apply(this, arguments);
   this._.mixin(inflector);
 }
 
@@ -52,19 +53,16 @@ Generator.namePrompt = function namePrompt(message){
       message: message
     }];
 
-    var promptsCb = function (err, props) {
+    var promptsCb = function (props) {
       var name;
-      if (err) {
-        return this.emit('error', err);
-      }
-
+      
       name = this._.trim(props.name);
 
       if(name !== ''){
         this.name = name;
         cb();
       } else {
-        console.error('You must provide the path!'.red.bold);
+        console.error(chalk.red.bold('You must provide the path!'));
       }
 
     }.bind(this)

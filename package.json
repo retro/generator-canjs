@@ -1,6 +1,6 @@
 {
   "name": "generator-canjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CanJS generator for Yeoman",
   "keywords": [
     "yeoman-generator",
@@ -23,14 +23,15 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.10.2",
-    "underscore.inflections": "~0.1.5"
+    "yeoman-generator": "~0.13.4",
+    "underscore.inflections": "~0.1.5",
+    "chalk" : "~0.2.0"
   },
   "devDependencies": {
     "mocha": "~1.9.0"
   },
   "peerDependencies": {
-    "yo": ">=1.0.0-rc.1.4"
+    "yo": ">=1.0.4"
   },
   "engines": {
     "node": ">=0.8.0",

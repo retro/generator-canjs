@@ -2,6 +2,7 @@
 var util   = require('util');
 var path   = require('path');
 var yeoman = require('yeoman-generator');
+var chalk  = require('chalk');
 
 var extractAppName = function (_, appname) {
   var slugged = _.slugify(appname),
@@ -32,23 +33,23 @@ CanjsGenerator.prototype.askFor = function askFor() {
 
   // welcome message
   var welcome =
-  '\n                                            ####'.yellow.bold +
-  '\n    ######### ###########   ####  #######  ######'.yellow.bold +
-  '\n  ########### ############# ############### ####'.yellow.bold +
-  '\n ############ ############# ###############'.yellow.bold +
-  '\n ######              ###### #####    ###### ####  #######'.yellow.bold +
-  '\n #####                ##### #####     ##### #### #########'.yellow.bold +
-  '\n #####         ############ #####     ##### #### ####'.yellow.bold +
-  '\n #####       ############## #####     ##### #### ####'.yellow.bold +
-  '\n #####      #####    ###### #####     ##### ####  #####'.yellow.bold +
-  '\n ######     #####     ##### #####     ##### ####    #####'.yellow.bold +
-  '\n ########## ######### ##### #####     ##### ####      ####'.yellow.bold +
-  '\n  ########## ######## ##### #####     ##### ####      ####'.yellow.bold +
-  '\n    #######    #####   #### #####     ####  #### ########'.yellow.bold +
-  '\n                                          ######  ###### '.yellow.bold +
-  '\n                                          #####'.yellow.bold;
+  '\n                                            ####' +
+  '\n    ######### ###########   ####  #######  ######' +
+  '\n  ########### ############# ############### ####' +
+  '\n ############ ############# ###############' +
+  '\n ######              ###### #####    ###### ####  #######' +
+  '\n #####                ##### #####     ##### #### #########' +
+  '\n #####         ############ #####     ##### #### ####' +
+  '\n #####       ############## #####     ##### #### ####' +
+  '\n #####      #####    ###### #####     ##### ####  #####' +
+  '\n ######     #####     ##### #####     ##### ####    #####' +
+  '\n ########## ######### ##### #####     ##### ####      ####' +
+  '\n  ########## ######## ##### #####     ##### ####      ####' +
+  '\n    #######    #####   #### #####     ####  #### ########' +
+  '\n                                          ######  ###### ' +
+  '\n                                          #####';
 
-  console.log(welcome);
+  console.log(chalk.yellow.bold(welcome));
 
   var prompts = [{
     name: 'appName',
@@ -60,11 +61,7 @@ CanjsGenerator.prototype.askFor = function askFor() {
     default: 'Y/n',
   }];
 
-  this.prompt(prompts, function (err, props) {
-
-    if (err) {
-      return this.emit('error', err);
-    }
+  this.prompt(prompts, function (props) {
 
     this.appName    = props.appName;
     this.useRequire = (/y/i).test(props.useRequire);

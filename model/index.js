@@ -31,11 +31,7 @@ ModelGenerator.prototype.askForFixture = function askForFixture() {
     default: 'Y/n'
   }];
 
-  this.prompt(prompts, function (err, props) {
-
-    if (err) {
-      return this.emit('error', err);
-    }
+  this.prompt(prompts, function (props) {
 
     this.generateFixture = (/y/i).test(props.generateFixture);
 
