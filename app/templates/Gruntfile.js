@@ -126,6 +126,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
+	grunt.registerTask('server','connect');
 	
 
 };
