@@ -80,7 +80,16 @@ module.exports = function(grunt) {
 					out : 'production.js'
 				}
 			}
-		}
+		},
+		connect:{
+			server:{
+				options:{
+					keepalive: true,  
+					port:8000,
+					base:'.'
+				}
+			}
+		},
 	});
 
 	grunt.registerTask('extractViews', function(){
