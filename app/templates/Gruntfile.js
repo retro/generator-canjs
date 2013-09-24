@@ -71,8 +71,8 @@ module.exports = function(grunt) {
 			compile : {
 				options : {
 					paths: {
-						can      : 'bower_components/canjs/amd/can',
-						jquery   : 'bower_components/jquery/jquery',
+						can      : 'app/bower_components/canjs/amd/can',
+						jquery   : 'app/bower_components/jquery/jquery',
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 		views.forEach(function(view){
 			var filename = view.expression.arguments[0].value;
 			generatedViews[filename] = escodegen.generate(view);
-			
+
 		})
 		fs.writeFileSync('.build/views.json', JSON.stringify(generatedViews));
 	})
@@ -117,6 +117,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
-	
+
 
 };

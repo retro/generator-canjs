@@ -11,7 +11,7 @@ describe('CanJS generator with RequireJS', function () {
       if (err) {
         return done(err);
       }
-      
+
       this.app = helpers.createGenerator('canjs:app', [
         '../../app'
       ]);
@@ -36,7 +36,8 @@ describe('CanJS generator with RequireJS', function () {
       ['foo.html', /require\.js/],
       ['foo.js', /requirejs/],
       'package.json',
-      'requirejsconfig.js'
+      'requirejsconfig.js',
+      'app/bower_components/canjs/.bower.json'
     ];
 
     this.app.run({}, function () {
