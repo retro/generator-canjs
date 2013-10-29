@@ -11,7 +11,7 @@ describe('CanJS generator without RequireJS', function () {
       if (err) {
         return done(err);
       }
-      
+
       this.app = helpers.createGenerator('canjs:app', [
         '../../app'
       ]);
@@ -35,7 +35,8 @@ describe('CanJS generator without RequireJS', function () {
       'bower.json',
       ['foo.html', /can\.jquery\.js/],
       'foo.js',
-      'package.json'
+      'package.json',
+      'app/bower_components/canjs/.bower.json'
     ];
 
     this.app.run({}, function () {
@@ -52,7 +53,7 @@ describe('CanJS generator without RequireJS', function () {
         name : 'models/user',
         generateFixture : 'y'
       })
-      
+
       this.app.run({}, function(){
         model.run([], function(){
           helpers.assertFiles([
