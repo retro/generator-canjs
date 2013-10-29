@@ -36,8 +36,7 @@ describe('CanJS generator with RequireJS', function () {
       ['foo.html', /require\.js/],
       ['foo.js', /requirejs/],
       'package.json',
-      'requirejsconfig.js',
-      'app/bower_components/canjs/.bower.json'
+      'requirejsconfig.js'
     ];
 
     this.app.run({}, function () {
@@ -76,6 +75,21 @@ describe('CanJS generator with RequireJS', function () {
             ['controls/users/users.js', /return can\.Control/],
             'controls/users/init.ejs',
             'controls/users/init.mustache',
+            ['controls/users/users.html', /requirejs/],
+          ]);
+        })
+        done();
+      })
+    })
+  })
+
+  describe('CanJS Component', function(){
+    it('creates canjs control', function(done){
+      var control = helpers.createGenerator('canjs:component', ['../../component'], ['component/users']);
+      this.app.run({}, function(){
+        control.run([], function(){
+          helpers.assertFiles([
+            ['controls/users/users.js', /return can\.Component/],
             ['controls/users/users.html', /requirejs/],
           ]);
         })

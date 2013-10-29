@@ -35,8 +35,7 @@ describe('CanJS generator without RequireJS', function () {
       'bower.json',
       ['foo.html', /can\.jquery\.js/],
       'foo.js',
-      'package.json',
-      'app/bower_components/canjs/.bower.json'
+      'package.json'
     ];
 
     this.app.run({}, function () {
@@ -76,6 +75,21 @@ describe('CanJS generator without RequireJS', function () {
             'controls/users/init.ejs',
             'controls/users/init.mustache',
             ['controls/users/users.html', /can\.jquery\.js/],
+          ]);
+        })
+        done();
+      })
+    })
+  })
+
+  describe('CanJS Component', function(){
+    it('creates canjs control', function(done){
+      var control = helpers.createGenerator('canjs:component', ['../../component'], ['components/users']);
+      this.app.run({}, function(){
+        control.run([], function(){
+          helpers.assertFiles([
+            ['controls/users/users.js', /can\.Component/],
+            ['controls/users/users.html', /\$\('#content'\)/],
           ]);
         })
         done();
