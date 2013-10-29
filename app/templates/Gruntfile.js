@@ -76,8 +76,17 @@ module.exports = function(grunt) {
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
-					name : '<%= appName %>',
+					name : 'generated',
 					out : 'production.js'
+				}
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 9001,
+					base: '.',
+					keepalive : true
 				}
 			}
 		}
@@ -117,6 +126,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
-	
+	grunt.loadNpmTasks('grunt-contrib-connect');
+
 
 };
