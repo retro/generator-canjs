@@ -71,25 +71,25 @@ module.exports = function(grunt) {
 			compile : {
 				options : {
 					paths: {
-						can      : 'bower_components/canjs/amd/can',
-						jquery   : 'bower_components/jquery/jquery',
+						can      : 'app/bower_components/canjs/amd/can',
+						jquery   : 'app/bower_components/jquery/jquery',
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
-					name : '<%= appName %>',
+					name : 'generated',
 					out : 'production.js'
 				}
 			}
 		},
-		connect:{
-			server:{
-				options:{
-					keepalive: true,  
-					port:8000,
-					base:'.'
+		connect: {
+			server: {
+				options: {
+					port: 9001,
+					base: '.',
+					keepalive : true
 				}
 			}
-		},
+		}
 	});
 
 	grunt.registerTask('extractViews', function(){
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
 		views.forEach(function(view){
 			var filename = view.expression.arguments[0].value;
 			generatedViews[filename] = escodegen.generate(view);
-			
+
 		})
 		fs.writeFileSync('.build/views.json', JSON.stringify(generatedViews));
 	})
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
-	grunt.registerTask('server','connect');
-	
+	grunt.loadNpmTasks('grunt-contrib-connect');
+
 
 };

@@ -21,6 +21,10 @@ Generator.prototype._componentName = function modelName(singularize){
   return singularize ? this._.singularize(name) : name;
 }
 
+Generator.prototype._dasherizedComponentName = function(){
+  return this._componentName().replace(/_/g, '-');
+}
+
 Generator.prototype._fullName = function _fullName(pluralized){
   var name = this._.trim(this.name);
 

@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title><%= _.classify(_componentName()) %> demo page!</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type='text/javascript' src='<%= _toRoot() %>bower_components/jquery/jquery.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>bower_components/canjs/can.jquery.js'></script>
+    <script type='text/javascript' src='<%= _toRoot() %>bower_components/canjs/can.view.mustache.js'></script>
+    <script type='text/javascript' src='<%= _baseName() %>.js'></script>
+    <script type='text/javascript'>
+      $('#content').html(
+        can.view.mustache('<<%= _dasherizedComponentName() %> hello="world"></<%= _dasherizedComponentName() %>>')
+      );
+    </script>
+  </body>
+</html>

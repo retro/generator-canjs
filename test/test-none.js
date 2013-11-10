@@ -11,7 +11,7 @@ describe('CanJS generator without RequireJS', function () {
       if (err) {
         return done(err);
       }
-      
+
       this.app = helpers.createGenerator('canjs:app', [
         '../../app'
       ]);
@@ -52,7 +52,7 @@ describe('CanJS generator without RequireJS', function () {
         name : 'models/user',
         generateFixture : 'y'
       })
-      
+
       this.app.run({}, function(){
         model.run([], function(){
           helpers.assertFiles([
@@ -75,6 +75,21 @@ describe('CanJS generator without RequireJS', function () {
             'controls/users/init.ejs',
             'controls/users/init.mustache',
             ['controls/users/users.html', /can\.jquery\.js/],
+          ]);
+        })
+        done();
+      })
+    })
+  })
+
+  describe('CanJS Component', function(){
+    it('creates canjs control', function(done){
+      var control = helpers.createGenerator('canjs:component', ['../../component'], ['components/users']);
+      this.app.run({}, function(){
+        control.run([], function(){
+          helpers.assertFiles([
+            ['controls/users/users.js', /can\.Component/],
+            ['controls/users/users.html', /\$\('#content'\)/],
           ]);
         })
         done();
