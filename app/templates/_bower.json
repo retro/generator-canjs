@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     <%= _requirejs() %>
-    "canjs" : "~2.0.0",
+    "canjs" : "~2.0.4",
     "jquery" : "~1.9.1"
   }
 }
