@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
-					name : 'generated',
+					name : '<%= _.underscored(appName) %>',
 					out : 'production.js'
 				}
 			}
