@@ -71,12 +71,12 @@ module.exports = function(grunt) {
 			compile : {
 				options : {
 					paths: {
-						can      : 'app/bower_components/canjs/amd/can',
-						jquery   : 'app/bower_components/jquery/jquery',
+						can      : 'bower_components/canjs/amd/can',
+						jquery   : 'bower_components/jquery/jquery',
 						mustache : '.build/mustache',
 						ejs      : '.build/ejs'
 					},
-					name : 'generated',
+					name : '<%= _.underscored(appName) %>',
 					out : 'production.js'
 				}
 			}
