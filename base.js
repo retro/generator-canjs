@@ -48,13 +48,15 @@ Generator.prototype._mkdirp = function _mkdirp(name){
 
 Generator.namePrompt = function namePrompt(message){
   return function askFor() {
+
     var cb = this.async();
 
     var name = this._.trim(this.name || "");
 
     var prompts = [{
       name: 'name',
-      message: message
+      message: message,
+      default: arguments[0] || ""
     }];
 
     var promptsCb = function (props) {

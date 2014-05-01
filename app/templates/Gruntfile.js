@@ -50,21 +50,24 @@ var getRenderer = function(ext, cwd){
  * 3. Use esprima and escodegen to parse .build/views.js and convert it to a JSON file
  * 4. Provide custom renderers for mustache and EJS that will get compiled view from the JSON file
  * 5. Call require compile task to create production.js file
- * 6. Remoce .build folder to cleanup
+ * 6. Remove .build folder to cleanup
  */
 
 module.exports = function(grunt) {
 
 	grunt.initConfig({
+		cancompile : cancompile : {
+			dist: {
+				src: ['**/*.mustache', '**/*.ejs', '!node_modules/**'],
+				out: '.build/views.js'
+			}
+		},
 		exec : {
 			mkbuilddir : {
 				cmd : 'mkdir .build'
 			},
 			rmbuilddir   : {
 				cmd : 'rm -rf .build'
-			},
-			compileviews : {
-				cmd: 'node_modules/can-compile/bin/can-compile -o .build/views.js'
 			}
 		},
 		requirejs : {
@@ -115,7 +118,7 @@ module.exports = function(grunt) {
 		grunt.task.run(
 			'exec:rmbuilddir',
 			'exec:mkbuilddir',
-			'exec:compileviews',
+			'cancompile:dist',
 			'extractViews',
 			'createRenderers',
 			'requirejs:compile',
@@ -123,10 +126,10 @@ module.exports = function(grunt) {
 		);
 	});
 
+	grunt.loadNpmTasks('can-compile');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
 	grunt.loadNpmTasks('grunt-contrib-connect');
-
 
 };

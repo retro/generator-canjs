@@ -10,9 +10,10 @@
     <script type='text/javascript' src='<%= _toRoot() %>bower_components/canjs/can.view.mustache.js'></script>
     <script type='text/javascript' src='<%= _baseName() %>.js'></script>
     <script type='text/javascript'>
-      $('#content').html(
-        can.view.mustache('<<%= _dasherizedComponentName() %> hello="world"></<%= _dasherizedComponentName() %>>')
-      );
+      var template = can.mustache('<<%= _dasherizedComponentName() %> hello="hello"></<%= _dasherizedComponentName() %>>');
+      $('#content').html(template({
+        hello: "world!"
+      }));
     </script>
   </body>
 </html>

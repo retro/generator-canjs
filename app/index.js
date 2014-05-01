@@ -74,7 +74,7 @@ CanjsGenerator.prototype.askFor = function askFor() {
 CanjsGenerator.prototype._requirejs = function _requirejs(){
   var require = [
     '"require-can-renderers" : "git://github.com/retro/require-can-renderers.git",',
-    '"requirejs" : "~2.1.6",'
+    '"requirejs" : "~2.1.11",'
   ];
   return this.useRequire ? require.join("\n") : "";
 }

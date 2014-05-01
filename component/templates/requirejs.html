@@ -12,10 +12,10 @@
           baseUrl : '<%= _toRoot() %>'
       })
       requirejs(['<%= _fullPath() %>'], function(<%= _.classify(_componentName()) %>){
-
-        $('#content').html(
-          can.view.mustache('<<%= _dasherizedComponentName() %> hello="world"></<%= _dasherizedComponentName() %>>')
-        );
+        var template = can.view.mustache('<<%= _dasherizedComponentName() %> hello="hello"></<%= _dasherizedComponentName() %>>');
+        $('#content').html(template({
+          hello: "world!"
+        }));
         
       })
     </script>
