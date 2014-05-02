@@ -104,7 +104,17 @@ module.exports = function(grunt) {
  					"style/style.css": "style/style.less"
  				}
  			}
- 		}
+ 		},
+ 		watch: {
+			scripts: {
+				files: '**/*.less',
+				tasks: ['less:development'],
+				options: {
+					debounceDelay: 250,
+					interrupt: true,
+				}
+			}
+		}
 	});
 
 	grunt.registerTask('extractViews', function(){
@@ -141,7 +151,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('can-compile');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-exec');
-	grunt.registerTask('default', 'build');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+
+	grunt.registerTask('default', 'build');
 };
