@@ -4,6 +4,6 @@
   "dependencies": {
     <%= _requirejs() %>
     "canjs" : "~2.0.4",
-    "jquery" : "~1.9.1"
+    "jquery" : "~1.11.0"
   }
 }

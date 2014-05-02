@@ -56,7 +56,7 @@ var getRenderer = function(ext, cwd){
 module.exports = function(grunt) {
 
 	grunt.initConfig({
-		cancompile : cancompile : {
+		cancompile : {
 			dist: {
 				src: ['**/*.mustache', '**/*.ejs', '!node_modules/**'],
 				out: '.build/views.js'
@@ -92,7 +92,19 @@ module.exports = function(grunt) {
 					keepalive : true
 				}
 			}
-		}
+		},
+ 		less: {
+ 			development: {
+ 				options: {
+ 					paths: ["style"],
+ 					relativeUrls: true,
+ 					rootPath: "style/"
+ 				},
+ 				files: {
+ 					"style/style.css": "style/style.less"
+ 				}
+ 			}
+ 		}
 	});
 
 	grunt.registerTask('extractViews', function(){
@@ -131,5 +143,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.registerTask('default', 'build');
 	grunt.loadNpmTasks('grunt-contrib-connect');
-
+	grunt.loadNpmTasks('grunt-contrib-less');
 };
