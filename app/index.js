@@ -85,6 +85,9 @@ CanjsGenerator.prototype.app = function app() {
   var appWrapper  = this.read('_' + depManager + '_wrap.js');
   var app         = this._.underscored(this.appName);
 
+  this.mkdir('style');
+  this.copy('_style.less', 'style/style.less');
+  this.copy('_style.css', 'style/style.css');
   this.copy('_package.json', 'package.json');
   this.template('_bower.json', 'bower.json');
   this.template(depManager + '.html', app + '.html');

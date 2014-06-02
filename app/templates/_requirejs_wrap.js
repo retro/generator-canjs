@@ -1,3 +1,3 @@
-requirejs(['can/util/string', 'can/control'], function(can){
+requirejs(['can/util/library', 'can/control'], function(can){
 /*APPCODE*/
 });

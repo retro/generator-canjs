@@ -34,9 +34,17 @@ ComponentGenerator.prototype.files = function files() {
   var template = this._isUsingRequireJS() ? 'requirejs' : 'none',
       fullPath = this._fullPath();
   if(this.name){
+
     this._mkdirp(this.name + '/');
     this.template(template + '.js', fullPath + '.js');
     this.template(template + '.html', fullPath + '.html');
+    this.template('style.less', fullPath + '.less');
+
+    if(this._isUsingRequireJS()){
+      this.template('template.mustache', fullPath + '.mustache');
+    }
+    
+    this.template('style.less', fullPath + '.less');
   } else {
     console.log('You must provide path to the component!');
   }
