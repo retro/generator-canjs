@@ -1,6 +1,6 @@
 define(['can/util/string', 'mustache!./init', 'ejs!./init', 'can/control'], function(can, initMustache, initEjs){
 
-  return can.Control({
+  return can.Control.extend({
     defaults : {
 
     }

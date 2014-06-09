@@ -1,6 +1,6 @@
 define(['can/util/string', 'can/model'], function(can){
 
-  return can.Model({
+  return can.Model.extend({
 
     findAll : 'GET /<%= _.pluralize(_componentName(true)) %>',
     findOne : 'GET /<%= _.pluralize(_componentName(true)) %>/{id}',

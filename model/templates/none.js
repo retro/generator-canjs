@@ -1,4 +1,4 @@
-var <%= _.classify(_componentName(true)) %>Model = can.Model({
+var <%= _.classify(_componentName(true)) %>Model = can.Model.extend({
 
   findAll : 'GET /<%= _.pluralize(_componentName(true)) %>',
   findOne : 'GET /<%= _.pluralize(_componentName(true)) %>/{id}',
