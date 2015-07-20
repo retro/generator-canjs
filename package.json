@@ -1,0 +1,16 @@
+{
+  "name": "generator-donejs",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "lodash": "^3.10.0",
+    "q": "^1.4.1",
+    "yeoman-generator": "^0.20.2"
+  }
+}
