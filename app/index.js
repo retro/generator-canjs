@@ -14,6 +14,16 @@ module.exports = generators.Base.extend({
       homepage: this.pkg.homepage,
       repository: this.pkg.repository
     };
+
+    this.templateFiles = [
+      'app.js',
+      'index.stache',
+      'styles.less',
+      'test.html',
+      'test.js',
+      'models/fixtures.js',
+      'models/test.js'
+    ]
   },
 
   prompting: function () {
@@ -89,7 +99,7 @@ module.exports = generators.Base.extend({
         url: this.props.authorUrl
       },
       scripts: {
-        test: 'testee ' + this.props.short + '/test.html --browsers firefox',
+        test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'can-serve --port 8080'
       },
       main: this.props.folder + '/index.stache!done-autorender',
@@ -124,16 +134,12 @@ module.exports = generators.Base.extend({
       'testee'
     ], {'saveDev': true});
 
-    this.fs.copyTpl(
-      self.templatePath('index.stache'),
-      self.destinationPath(self.props.folder + '/index.stache'),
-      self.props
-    );
-
-    this.fs.copyTpl(
-      self.templatePath('app.js'),
-      self.destinationPath(self.props.folder + '/app.js'),
-      self.props
-    );
+    this.templateFiles.forEach(function(name) {
+      self.fs.copyTpl(
+        self.templatePath(name),
+        self.destinationPath(path.join(self.props.folder, name)),
+        self.props
+      );
+    });
   }
 });

@@ -1,6 +1,7 @@
 import Component from 'can/component/component';
 import Map from 'can/map/';
 import 'can/map/define/';
+import './<%= name %>.less!';
 import template from './<%= name %>.stache!';
 
 export const ViewModel = Map.extend({

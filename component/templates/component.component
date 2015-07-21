@@ -1,0 +1,20 @@
+<can-component tag="<%= tag %>">
+  <style>
+    p { font-weight: bold; }
+  </style>
+  <template>
+    <p>{{message}}</p>
+  </template>
+  <view-model>
+    import Map from 'can/map/';
+    import 'can/map/define/';
+
+    export default Map.extend({
+      define: {
+        message: {
+          value: 'This is the <%= tag %> component'
+        }
+      }
+    });
+  </view-model>
+</can-component>
