@@ -1,9 +1,23 @@
 {
   "name": "generator-donejs",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A generator for your DoneJS application",
+  "main": "app/index",
+  "homepage": "http://donejs.com/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:donejs/generator-donejs.git",
+    "github": "https://github.com/donejs/generator-donejs"
+  },
+  "author": {
+    "name": "Bitovi",
+    "email": "contact@bitovi.com",
+    "web": "http://bitovi.com/"
+  },
   "files": [
-    "app"
+    "app",
+    "component",
+    "supermodel"
   ],
   "keywords": [
     "yeoman-generator"
