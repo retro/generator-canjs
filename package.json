@@ -2,8 +2,14 @@
   "name": "generator-donejs",
   "version": "0.0.1",
   "description": "A generator for your DoneJS application",
-  "main": "app/index",
   "homepage": "http://donejs.com/",
+  "license": "MIT",
+	"scripts": {
+      "publish": "git push origin --tags",
+      "release:patch": "npm version patch && npm publish",
+      "release:minor": "npm version minor && npm publish",
+      "release:major": "npm version major && npm publish"
+	},
   "repository": {
     "type": "git",
     "url": "git@github.com:donejs/generator-donejs.git",

@@ -123,7 +123,9 @@ module.exports = generators.Base.extend({
       'can-ssr',
       'done-autorender',
       'done-css',
-      'done-component'
+      'done-component',
+      'yeoman-environment',
+      'generator-donejs'
     ], {'save': true});
 
     this.npmInstall([
