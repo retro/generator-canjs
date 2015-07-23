@@ -4,6 +4,7 @@
   "description": "A generator for your DoneJS application",
   "homepage": "http://donejs.com/",
   "license": "MIT",
+  "main": "lib",
   "scripts": {
     "publish": "git push origin --tags",
     "release:patch": "npm version patch && npm publish",
@@ -21,6 +22,7 @@
     "web": "http://bitovi.com/"
   },
   "files": [
+    "lib",
     "app",
     "component",
     "supermodel"
