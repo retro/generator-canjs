@@ -102,7 +102,7 @@ module.exports = generators.Base.extend({
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'can-serve --port 8080'
       },
-      main: this.props.folder + '/index.stache!done-autorender',
+      main: _.kebabCase(this.props.name) + '/index.stache!done-autorender',
       files: [this.props.folder],
       keywords: this.props.keywords,
       system: {
