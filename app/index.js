@@ -118,7 +118,7 @@ module.exports = generators.Base.extend({
     this.npmInstall([
       'can@^2.3.0-pre.0',
       'can-connect',
-      'steal',
+      'steal@^0.11.0-pre.0',
       'jquery',
       'can-ssr',
       'done-autorender',
@@ -132,7 +132,7 @@ module.exports = generators.Base.extend({
       'documentjs@^0.3.0-pre.4',
       'funcunit',
       'steal-qunit',
-      'steal-tools',
+      'steal-tools@^0.11.0-pre.7',
       'testee'
     ], {'saveDev': true});
 
