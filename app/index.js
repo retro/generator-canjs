@@ -109,7 +109,7 @@ module.exports = generators.Base.extend({
         directories: {
           lib: 'src'
         },
-        npmIgnore: ['documentjs', 'testee']
+        npmIgnore: ['documentjs', 'testee', 'donejs-deploy']
       }
     };
 
@@ -133,7 +133,8 @@ module.exports = generators.Base.extend({
       'funcunit',
       'steal-qunit',
       'steal-tools@^0.11.0-pre.7',
-      'testee'
+      'testee',
+      'donejs-deploy'
     ], {'saveDev': true});
 
     this.templateFiles.forEach(function(name) {
