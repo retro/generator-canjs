@@ -11,9 +11,15 @@ module.exports = generators.Base.extend({
     // This makes `appname` a required argument.
     this.argument('name', {
       type: String,
-      required: true,
-      desc: 'The module name for your component (e.g. pmo/home)'
+      required: false,
+      desc: 'The module name for your component (e.g. restaurant/list)'
     });
+
+		this.argument('tag', {
+			type: String,
+			required: false,
+			desc: 'The name of the tag (e.g. restaurant-list)'
+		});
 
     this.modletFiles = [
       'modlet/component.html',
@@ -26,15 +32,42 @@ module.exports = generators.Base.extend({
     ];
   },
 
+	prompting: function () {
+		var done = this.async();
+		this.prompt({
+			name: 'name',
+			message: 'What is the module name of your component (e.g. pmo/home or pmo/home.component)?',
+			required: true,
+			when: !this.name
+		}, function (first) {
+			var name = this.name = this.name || first.name;
+			var parts = this.parts = _.compact(this.name.split('/'));
+			var short = this.short = this.config.get('short');
+
+			var tag = (parts[0] === short ? parts :
+				[short].concat(parts)).join('-');
+			var prompts = [{
+				name: 'tag',
+				message: 'The tag name of the component',
+				default: tag
+			}];
+
+			this.prompt(prompts, function (props) {
+				_.extend(this, props);
+
+				done();
+			}.bind(this));
+		}.bind(this));
+	},
+
   writing: function () {
     var isDoneComponent = this.name.indexOf('.component') !== -1;
     this.name = this.name.replace('.component', '');
 
     var self = this;
-    var parts = _.compact(this.name.split('/'));
+    var parts = this.parts;
     var name = parts[parts.length - 1];
-    // The application short name (e.g. pmo)
-    var short = this.config.get('short');
+    var short = this.short;
     // The folder (usually src/)
     var folder = this.config.get('folder');
     var fullPath = [folder].concat(parts);
@@ -52,7 +85,7 @@ module.exports = generators.Base.extend({
       // The full component path
       path: path.join.apply(path, fullPath),
       // The full tag name (prepending the short name if it isn't there yet)
-      tag: (parts[0] === short ? parts : [short].concat(parts)).join('-'),
+      tag: this.tag,
       // The short name of the component (e.g. list for restaurant/list)
       name: name,
       // The full module name (e.g. pmo/restaurant/list)

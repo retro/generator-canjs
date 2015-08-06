@@ -12,7 +12,7 @@ module.exports = generators.Base.extend({
     // This makes `appname` a required argument.
     this.argument('name', {
       type: String,
-      required: true,
+      required: false,
       desc: 'The name for you model (e.g. order)'
     });
 
@@ -25,21 +25,31 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
     var done = this.async();
-    var prompts = [{
-      name: 'url',
-      message: 'What is the URL endpoint?',
-      default: '/' + this.name
-    }, {
-      name: 'idProp',
-      message: 'What is the property name of the id?',
-      default: 'id'
-    }];
 
-    this.prompt(prompts, function (props) {
-      this.props = _.extend(this.props, props);
+		this.prompt({
+			name: 'name',
+			type: String,
+			required: true,
+			message: 'The name for you model (e.g. order)',
+			when: !this.name
+		}, function (first) {
+			var name = this.name = this.name || first.name;
+			var prompts = [{
+				name: 'url',
+				message: 'What is the URL endpoint?',
+				default: '/' + name
+			}, {
+				name: 'idProp',
+				message: 'What is the property name of the id?',
+				default: 'id'
+			}];
 
-      done();
-    }.bind(this));
+			this.prompt(prompts, function (props) {
+				this.props = _.extend(this.props, props);
+
+				done();
+			}.bind(this));
+		}.bind(this));
   },
 
   writing: function () {
