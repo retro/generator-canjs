@@ -104,7 +104,7 @@ module.exports = generators.Base.extend({
         'live-reload': "steal-tools live-reload",
         develop: "npm start & npm run live-reload"
       },
-      main: this.props.folder + '/index.stache!done-autorender',
+      main: 'index.stache!done-autorender',
       files: [this.props.folder],
       keywords: this.props.keywords,
       system: {
@@ -112,7 +112,13 @@ module.exports = generators.Base.extend({
           lib: this.props.folder
         },
         configDependencies: [ 'live-reload' ],
-        npmIgnore: ['documentjs', 'testee']
+        npmIgnore: [
+          'documentjs',
+          'testee',
+          'donejs-deploy',
+          'yeoman-generator',
+          'generator-donejs'
+        ]
       }
     };
 
@@ -121,7 +127,7 @@ module.exports = generators.Base.extend({
     this.npmInstall([
       'can@^2.3.0-pre.0',
       'can-connect',
-      'steal',
+      'steal@^0.11.0-pre.0',
       'jquery',
       'can-ssr',
       'done-autorender',
@@ -135,8 +141,9 @@ module.exports = generators.Base.extend({
       'documentjs@^0.3.0-pre.4',
       'funcunit',
       'steal-qunit',
-      'steal-tools',
-      'testee'
+      'steal-tools@^0.11.0-pre.7',
+      'testee',
+      'donejs-deploy'
     ], {'saveDev': true});
 
     this.templateFiles.forEach(function(name) {

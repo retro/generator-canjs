@@ -46,7 +46,7 @@ module.exports = generators.Base.extend({
 
     var options = {
       // ../ levels to go up to the root
-      root: '../'.repeat(fullPath.length),
+      root: _.repeat('../', fullPath.length),
       // Application short name (e.g. pmo)
       short: short,
       // The full component path
