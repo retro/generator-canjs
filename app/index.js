@@ -109,7 +109,13 @@ module.exports = generators.Base.extend({
         directories: {
           lib: 'src'
         },
-        npmIgnore: ['documentjs', 'testee', 'donejs-deploy']
+        npmIgnore: [
+          'documentjs',
+          'testee',
+          'donejs-deploy',
+          'yeoman-generator',
+          'generator-donejs'
+        ]
       }
     };
 
