@@ -4,7 +4,7 @@
     {{asset "css"}}
   </head>
   <body>
-    <can-import from="./styles.less!" />
+    <can-import from="<%= folder %>/styles.less!" />
     <can-import from="<%= folder %>/app" [.]="{value}" />
 
     <h1>{{message}}</h1>
