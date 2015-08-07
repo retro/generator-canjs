@@ -86,9 +86,12 @@ module.exports = generators.Base.extend({
   },
 
   writing: function () {
+		var pkgName = _.kebabCase(this.props.name);
+		var pkgMain = pkgName + '/index.stache!done-autorender';
+
     var self = this;
     var pkgJsonFields = {
-      name: _.kebabCase(this.props.name),
+      name: pkgName,
       version: '0.0.0',
       description: this.props.description,
       homepage: this.props.homepage,
@@ -104,10 +107,11 @@ module.exports = generators.Base.extend({
         'live-reload': "steal-tools live-reload",
         develop: "npm start & npm run live-reload"
       },
-      main: 'index.stache!done-autorender',
+      main: pkgMain,
       files: [this.props.folder],
       keywords: this.props.keywords,
       system: {
+				main: pkgMain,
         directories: {
           lib: this.props.folder
         },
