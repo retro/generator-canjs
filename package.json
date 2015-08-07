@@ -34,5 +34,8 @@
     "lodash": "^3.10.0",
     "q": "^1.4.1",
     "yeoman-generator": "^0.20.2"
+  },
+  "system": {
+    "npmDependencies": []
   }
 }
