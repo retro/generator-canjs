@@ -41,6 +41,10 @@ module.exports = generators.Base.extend({
 			when: !this.name
 		}, function (first) {
 			var name = this.name = this.name || first.name;
+
+			this.isDoneComponent = this.name.indexOf('.component') !== -1;
+			this.name = this.name.replace('.component', '');
+
 			var parts = this.parts = _.compact(this.name.split('/'));
 			var short = this.short = this.config.get('short');
 
@@ -61,8 +65,7 @@ module.exports = generators.Base.extend({
 	},
 
   writing: function () {
-    var isDoneComponent = this.name.indexOf('.component') !== -1;
-    this.name = this.name.replace('.component', '');
+    var isDoneComponent = this.isDoneComponent;
 
     var self = this;
     var parts = this.parts;
@@ -70,6 +73,7 @@ module.exports = generators.Base.extend({
     var short = this.short;
     // The folder (usually src/)
     var folder = this.config.get('folder');
+    var appName = appName
     var fullPath = [folder].concat(parts);
 
     // .component files don't go in their own folder
@@ -109,7 +113,7 @@ module.exports = generators.Base.extend({
       });
 
       var mainTests = this.destinationPath(path.join(folder, 'test.js'));
-      utils.addImport(mainTests, options.path + '/' + options.name + '_test');
+      utils.addImport(mainTests, appName + '/' + name + '/' + name + '_test');
     }
   }
 });

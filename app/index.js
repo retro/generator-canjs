@@ -1,6 +1,11 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
+var makeVersionList = function(list) {
+  return Object.keys(list).map(function(key) {
+    return key + '@' + list[key];
+  });
+};
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -23,7 +28,7 @@ module.exports = generators.Base.extend({
       'test.js',
       'models/fixtures.js',
       'models/test.js'
-    ]
+    ];
   },
 
   prompting: function () {
@@ -80,6 +85,7 @@ module.exports = generators.Base.extend({
 
       this.config.set('short', this.props.short);
       this.config.set('folder', this.props.folder);
+      this.config.set('name', this.props.name);
 
       done();
     }.bind(this));
@@ -128,27 +134,38 @@ module.exports = generators.Base.extend({
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg));
 
-    this.npmInstall([
-      'can@^2.3.0-pre.0',
-      'can-connect',
-      'steal@^0.11.0-pre.0',
-      'jquery',
-      'can-ssr',
-      'done-autorender',
-      'done-css',
-      'done-component',
-      'yeoman-environment',
-      'generator-donejs'
-    ], {'save': true});
+    if(this.options.packages) {
+      this.log('Installing packages for DoneJS v' + this.options.version);
+      var deps = this.options.packages.dependencies;
+      var devDeps = this.options.packages.devDependencies;
 
-    this.npmInstall([
-      'documentjs@^0.3.0-pre.4',
-      'funcunit',
-      'steal-qunit',
-      'steal-tools@^0.11.0-pre.7',
-      'testee',
-      'donejs-deploy'
-    ], {'saveDev': true});
+      this.npmInstall(makeVersionList(deps), { save: true });
+      this.npmInstall(makeVersionList(devDeps), { saveDev: true });
+
+    } else {
+      this.log('No DoneJS packages with specific versions provided! Installing latest version of every package. WARNING: Projects with latest versions might not be tested together yet.');
+      this.npmInstall([
+        'can',
+        'can-connect',
+        'steal',
+        'jquery',
+        'can-ssr',
+        'done-autorender',
+        'done-css',
+        'done-component',
+        'yeoman-environment',
+        'generator-donejs'
+      ], { save: true });
+
+      this.npmInstall([
+        'documentjs',
+        'funcunit',
+        'steal-qunit',
+        'steal-tools',
+        'testee',
+        'donejs-deploy'
+      ], { saveDev: true});
+    }
 
     this.templateFiles.forEach(function(name) {
       self.fs.copyTpl(

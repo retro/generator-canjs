@@ -55,6 +55,7 @@ module.exports = generators.Base.extend({
   writing: function () {
     var self = this;
     var folder = this.config.get('folder');
+    var appName = this.config.get('name');
     var options = {
       className: this.name.charAt(0).toUpperCase() + this.name.slice(1),
       name: this.name,
@@ -72,9 +73,9 @@ module.exports = generators.Base.extend({
     });
 
     var modelTest = this.destinationPath(path.join(folder, 'models', 'test.js'));
-    utils.addImport(modelTest, folder + '/models/' + options.name + '_test');
+    utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
 
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures.js'));
-    utils.addImport(fixturesFile, folder + '/models/fixtures/' + options.name);
+    utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
   }
 });

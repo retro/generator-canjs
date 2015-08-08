@@ -11,11 +11,13 @@
 
     {{asset "inline-cache"}}
 
-    {{#isProduction}}
-      <script src="/node_modules/steal/steal.production.js"
-        main="<%= name %>/index.stache!done-autorender"></script>
-    {{else}}
-      <script src="/node_modules/steal/steal.js"></script>
-    {{/isProduction}}
+    {{#switch @env.NODE_ENV}}
+      {{#case "production"}}
+        <script src="/node_modules/steal/steal.production.js"  main="place-my-order/index.stache!done-autorender"></script>
+      {{/case}}
+      {{#default}}
+        <script src="node_modules/steal/steal.js"></script>
+      {{/default}}
+    {{/switch}}
   </body>
 </html>
