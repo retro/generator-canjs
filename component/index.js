@@ -45,15 +45,12 @@ module.exports = generators.Base.extend({
 			this.isDoneComponent = this.name.indexOf('.component') !== -1;
 			this.name = name = name.replace('.component', '');
 
-			var parts = this.parts = _.compact(this.name.split('/'));
-			var short = this.short = this.config.get('short');
-
-			var tag = (parts[0] === short ? parts :
-				[short].concat(parts)).join('-');
+			var tag = _.kebabCase(name);
 			var prompts = [{
 				name: 'tag',
 				message: 'The tag name of the component',
-				default: tag
+				default: tag,
+        when: !this.tag
 			}];
 
 			this.prompt(prompts, function (props) {
@@ -68,9 +65,8 @@ module.exports = generators.Base.extend({
     var isDoneComponent = this.isDoneComponent;
 
     var self = this;
-    var parts = this.parts;
+    var parts = this.name.split('/');
     var name = parts[parts.length - 1];
-    var short = this.short;
     // The folder (usually src/)
     var folder = this.config.get('folder');
     var appName = this.config.get('name');
@@ -84,16 +80,15 @@ module.exports = generators.Base.extend({
     var options = {
       // ../ levels to go up to the root
       root: _.repeat('../', fullPath.length),
-      // Application short name (e.g. pmo)
-      short: short,
       // The full component path
       path: path.join.apply(path, fullPath),
       // The full tag name (prepending the short name if it isn't there yet)
       tag: this.tag,
       // The short name of the component (e.g. list for restaurant/list)
       name: name,
+      app: appName,
       // The full module name (e.g. pmo/restaurant/list)
-      module: [short].concat(parts).join('/')
+      module: parts.join('/')
     };
 
     if(isDoneComponent) {
@@ -113,7 +108,8 @@ module.exports = generators.Base.extend({
       });
 
       var mainTests = this.destinationPath(path.join(folder, 'test.js'));
-      utils.addImport(mainTests, appName + '/' + name + '/' + name + '_test');
+      utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/')
+        + '/' + name + '_test');
     }
   }
 });

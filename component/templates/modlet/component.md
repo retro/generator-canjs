@@ -1,4 +1,4 @@
-@parent <%= short %>
+@parent <%= app %>
 @module {can.Component} <%= module %> <<%= tag %>>
 @signature `<<%=tag %>>`
 

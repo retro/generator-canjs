@@ -39,10 +39,6 @@ module.exports = generators.Base.extend({
       when: !this.pkg.name,
       default: process.cwd().split(path.sep).pop()
     }, {
-      name: 'short',
-      message: 'What is your application short name?',
-      default: 'app'
-    }, {
       name: 'folder',
       message: 'Project main folder',
       default: 'src'
@@ -83,7 +79,6 @@ module.exports = generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.props = _.extend(this.props, props);
 
-      this.config.set('short', this.props.short);
       this.config.set('folder', this.props.folder);
       this.config.set('name', this.props.name);
 
