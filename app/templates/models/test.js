@@ -1,1 +1,1 @@
-import './fixtures';
+import './fixtures/';
