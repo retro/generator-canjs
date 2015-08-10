@@ -1,9 +1,9 @@
 import "can/route/";
 import AppMap from "can-ssr/app-map";
 
-const AppState = AppMap.extend({
+const AppViewModel = AppMap.extend({
   message: 'Hello World!',
   title: '<%= name %>'
 });
 
-export default AppState;
+export default AppViewModel;
