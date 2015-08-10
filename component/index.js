@@ -43,7 +43,7 @@ module.exports = generators.Base.extend({
 			var name = this.name = this.name || first.name;
 
 			this.isDoneComponent = this.name.indexOf('.component') !== -1;
-			this.name = this.name.replace('.component', '');
+			this.name = name = name.replace('.component', '');
 
 			var parts = this.parts = _.compact(this.name.split('/'));
 			var short = this.short = this.config.get('short');
@@ -73,7 +73,7 @@ module.exports = generators.Base.extend({
     var short = this.short;
     // The folder (usually src/)
     var folder = this.config.get('folder');
-    var appName = appName
+    var appName = this.config.get('name');
     var fullPath = [folder].concat(parts);
 
     // .component files don't go in their own folder
