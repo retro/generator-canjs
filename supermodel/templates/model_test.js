@@ -6,8 +6,8 @@ QUnit.module('models/<%= name %>');
 QUnit.test('getList', function(){
   stop();
   <%= className %>.getList().then(function(items) {
-    QUnit.equal(items.length, 5);
-    QUnit.equal(items.attr('0.name'), '<%= name %> number 0');
+    QUnit.equal(items.length, 2);
+    QUnit.equal(items.attr('0.description'), 'First item');
     start();
   });
 });

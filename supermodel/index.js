@@ -63,6 +63,10 @@ module.exports = generators.Base.extend({
       idProp: this.props.idProp
     };
 
+    if(this.name === 'test') {
+      throw new Error('Supermodel can not be named "test"');
+    }
+
     this.modelFiles.forEach(function(name) {
       var target = name.replace('model', options.name);
       self.fs.copyTpl(

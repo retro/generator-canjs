@@ -1,12 +1,12 @@
-import fixture from 'can/util/fixture/';
+import fixture from 'can-connect/fixture/';
 
-const store = fixture.store(5, function(i){
-  return {
-    <%= idProp %>: i,
-    name: "<%= name %> number "+i,
-    ownerId: fixture.rand(10)
-  };
-});
+const store = fixture.store([{
+  <%= idProp %>: 0,
+  description: 'First item'
+}, {
+  <%= idProp %>: 1,
+  description: 'Second item'
+}]);
 
 fixture({
   'GET <%= url %>': store.findAll,
@@ -15,3 +15,6 @@ fixture({
   'PUT <%= url %>/{<%= idProp %>}': store.update,
   'DELETE <%= url %>/{<%= idProp %>}': store.destroy
 });
+
+export default store;
+
