@@ -75,7 +75,7 @@ module.exports = generators.Base.extend({
     var modelTest = this.destinationPath(path.join(folder, 'models', 'test.js'));
     utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
 
-    var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures.js'));
+    var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
   }
 });

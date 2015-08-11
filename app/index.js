@@ -26,7 +26,7 @@ module.exports = generators.Base.extend({
       'styles.less',
       'test.html',
       'test.js',
-      'models/fixtures.js',
+      'models/fixtures/fixtures.js',
       'models/test.js'
     ];
   },
