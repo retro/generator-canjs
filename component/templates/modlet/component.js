@@ -1,4 +1,4 @@
-import Component from 'can/component/component';
+import Component from 'can/component/';
 import Map from 'can/map/';
 import 'can/map/define/';
 import './<%= name %>.less!';

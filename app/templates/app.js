@@ -1,5 +1,5 @@
-import "can/route/";
 import AppMap from "can-ssr/app-map";
+import route from "can/route/";
 import 'can/map/define/';
 
 const AppViewModel = AppMap.extend({
@@ -8,7 +8,8 @@ const AppViewModel = AppMap.extend({
       value: 'Hello World!'
     },
     title: {
-      value: '<%= name %>'
+      value: '<%= name %>',
+      serialize: false
     }
   }
 });
