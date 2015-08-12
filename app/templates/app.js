@@ -1,6 +1,6 @@
 import "can/route/";
 import AppMap from "can-ssr/app-map";
-import 'can/map/define';
+import 'can/map/define/';
 
 const AppViewModel = AppMap.extend({
   define: {
