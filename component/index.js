@@ -107,7 +107,7 @@ module.exports = generators.Base.extend({
         );
       });
 
-      var mainTests = this.destinationPath(path.join(folder, 'test.js'));
+      var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
       utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/')
         + '/' + name + '_test');
     }

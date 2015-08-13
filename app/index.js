@@ -20,12 +20,19 @@ module.exports = generators.Base.extend({
       repository: this.pkg.repository
     };
 
-    this.templateFiles = [
+    this.mainFiles = [
+      'test.html',
+      'readme.md',
+      'documentjs.json'
+    ];
+
+    this.srcFiles = [
       'app.js',
       'index.stache',
+      'index.md',
       'styles.less',
-      'test.html',
-      'test.js',
+      'test/test.js',
+      'test/smoke.js',
       'models/fixtures/fixtures.js',
       'models/test.js'
     ];
@@ -103,10 +110,11 @@ module.exports = generators.Base.extend({
         url: this.props.authorUrl
       },
       scripts: {
-        test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
+        test: 'testee test.html --browsers firefox --reporter Spec --root http://localhost:8080',
         start: 'can-serve --port 8080',
         'live-reload': "steal-tools live-reload",
-        develop: "npm start & npm run live-reload"
+        develop: "npm start & npm run live-reload",
+        document: "documentjs"
       },
       main: pkgMain,
       files: [this.props.folder],
@@ -121,7 +129,7 @@ module.exports = generators.Base.extend({
           'documentjs',
           'testee',
           'donejs-deploy',
-          'yeoman-generator',
+          'yeoman-environment',
           'generator-donejs'
         ]
       }
@@ -162,9 +170,17 @@ module.exports = generators.Base.extend({
       ], { saveDev: true});
     }
 
-    this.templateFiles.forEach(function(name) {
+    this.mainFiles.forEach(function(name) {
       self.fs.copyTpl(
         self.templatePath(name),
+        self.destinationPath(name),
+        self.props
+      );
+    });
+
+    this.srcFiles.forEach(function(name) {
+      self.fs.copyTpl(
+        self.templatePath(path.join('src', name)),
         self.destinationPath(path.join(self.props.folder, name)),
         self.props
       );
