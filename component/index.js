@@ -8,7 +8,6 @@ module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-    // This makes `appname` a required argument.
     this.argument('name', {
       type: String,
       required: false,

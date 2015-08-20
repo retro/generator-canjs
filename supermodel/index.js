@@ -9,7 +9,6 @@ module.exports = generators.Base.extend({
 
     this.props = {};
 
-    // This makes `appname` a required argument.
     this.argument('name', {
       type: String,
       required: false,
