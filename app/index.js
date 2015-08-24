@@ -23,13 +23,15 @@ module.exports = generators.Base.extend({
     this.mainFiles = [
       'test.html',
       'readme.md',
-      'documentjs.json'
+      'documentjs.json',
+      '.gitignore'
     ];
 
     this.srcFiles = [
       'app.js',
       'index.stache',
       'index.md',
+      'index.html',
       'styles.less',
       'test/test.js',
       'test/smoke.js',
