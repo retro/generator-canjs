@@ -21,7 +21,6 @@ module.exports = generators.Base.extend({
     };
 
     this.mainFiles = [
-      'test.html',
       'readme.md',
       'documentjs.json',
       '.gitignore'
@@ -33,8 +32,9 @@ module.exports = generators.Base.extend({
       'index.md',
       'index.html',
       'styles.less',
+      'test.html',
       'test/test.js',
-      'test/smoke.js',
+      'test/functional.js',
       'models/fixtures/fixtures.js',
       'models/test.js'
     ];
@@ -112,7 +112,7 @@ module.exports = generators.Base.extend({
         url: this.props.authorUrl
       },
       scripts: {
-        test: 'testee test.html --browsers firefox --reporter Spec --root http://localhost:8080',
+        test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'can-serve --port 8080',
         'live-reload': "steal-tools live-reload",
         develop: "npm start & npm run live-reload",

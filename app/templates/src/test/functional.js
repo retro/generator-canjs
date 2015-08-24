@@ -5,7 +5,7 @@ F.attach(QUnit);
 
 QUnit.module('<%= name %> functional smoke test', {
   beforeEach() {
-    F.open('/');
+    F.open('.');
   }
 });
 
