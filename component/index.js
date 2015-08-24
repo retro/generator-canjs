@@ -65,7 +65,7 @@ module.exports = generators.Base.extend({
 
     var self = this;
     var parts = this.name.split('/');
-    var name = parts[parts.length - 1];
+    var name = _.last(parts);
     // The folder (usually src/)
     var folder = this.config.get('folder');
     var appName = this.config.get('name');
@@ -87,7 +87,7 @@ module.exports = generators.Base.extend({
       name: name,
       app: appName,
       // The full module name (e.g. pmo/restaurant/list)
-      module: parts.join('/')
+      module: [appName].concat(parts).join('/')
     };
 
     if(isDoneComponent) {
