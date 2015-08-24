@@ -5,7 +5,8 @@ import 'can/map/define/';
 const AppViewModel = AppMap.extend({
   define: {
     message: {
-      value: 'Hello World!'
+      value: 'Hello World!',
+      serialize: false
     },
     title: {
       value: '<%= name %>',
