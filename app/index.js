@@ -80,7 +80,7 @@ module.exports = generators.Base.extend({
       store: true
     }, {
       name: 'keywords',
-      message: 'Key your keywords (comma to split)',
+      message: 'Application keywords',
       when: !this.pkg.keywords,
       filter: _.words
     }];

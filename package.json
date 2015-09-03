@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "lib",
   "scripts": {
+    "test": "mocha test/ --timeout 600000",
     "publish": "git push origin --tags && git push origin",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
@@ -37,5 +38,9 @@
   },
   "system": {
     "npmDependencies": []
+  },
+  "devDependencies": {
+    "mocha": "^2.3.0",
+    "donejs": "*"
   }
 }
