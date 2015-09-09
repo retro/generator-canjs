@@ -1,6 +1,7 @@
 <can-component tag="<%= tag %>">
-  <style>
-    <%= tag %> { display: block; }
+  <style type="less">
+    display: block;
+    
     p { font-weight: bold; }
   </style>
   <template>
