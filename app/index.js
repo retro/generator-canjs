@@ -114,9 +114,9 @@ module.exports = generators.Base.extend({
       scripts: {
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'can-serve --port 8080',
-        'live-reload': "steal-tools live-reload",
-        develop: "npm start & npm run live-reload",
-        document: "documentjs"
+        develop: "can-serve --develop --port 8080",
+        document: "documentjs",
+        build: "steal-tools"
       },
       main: pkgMain,
       files: [this.props.folder],
@@ -131,7 +131,6 @@ module.exports = generators.Base.extend({
           'documentjs',
           'testee',
           'donejs-deploy',
-          'yeoman-environment',
           'generator-donejs'
         ]
       }
@@ -158,7 +157,6 @@ module.exports = generators.Base.extend({
         'done-autorender',
         'done-css',
         'done-component',
-        'yeoman-environment',
         'generator-donejs'
       ], { save: true });
 

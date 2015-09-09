@@ -1,3 +1,4 @@
+var assert = require('assert');
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 var exec = require('child_process').exec;
