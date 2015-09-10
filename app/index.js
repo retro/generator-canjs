@@ -23,7 +23,7 @@ module.exports = generators.Base.extend({
     this.mainFiles = [
       'readme.md',
       'documentjs.json',
-      '.gitignore'
+      '_gitignore'
     ];
 
     this.srcFiles = [
@@ -171,9 +171,11 @@ module.exports = generators.Base.extend({
     }
 
     this.mainFiles.forEach(function(name) {
+      // Handle bug where npm has renamed .gitignore to .npmignore
+      // https://github.com/npm/npm/issues/3763
       self.fs.copyTpl(
         self.templatePath(name),
-        self.destinationPath(name),
+        self.destinationPath((name === "_gitignore") ? ".gitignore" : name),
         self.props
       );
     });
