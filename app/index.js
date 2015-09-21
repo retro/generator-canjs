@@ -23,7 +23,8 @@ module.exports = generators.Base.extend({
     this.mainFiles = [
       'readme.md',
       'documentjs.json',
-      '_gitignore'
+      '_gitignore',
+      'build.js'
     ];
 
     this.srcFiles = [
