@@ -1,7 +1,7 @@
 # generator-donejs
 
 [![Build Status](https://travis-ci.org/donejs/generator-donejs.svg?branch=master)](https://travis-ci.org/donejs/generator-donejs)
-[![npm version](https://badge.fury.io/js/generator-donejs)](http://badge.fury.io/js/generator-donejs)
+[![npm version](https://badge.fury.io/js/generator-donejs.svg)](http://badge.fury.io/js/generator-donejs)
 
 A Yeoman generator for your DoneJS application.
 
