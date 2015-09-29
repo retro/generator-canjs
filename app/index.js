@@ -117,7 +117,7 @@ module.exports = generators.Base.extend({
         start: 'can-serve --port 8080',
         develop: "can-serve --develop --port 8080",
         document: "documentjs",
-        build: "steal-tools"
+        build: "node build"
       },
       main: pkgMain,
       files: [this.props.folder],
