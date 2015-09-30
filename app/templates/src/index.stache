@@ -2,6 +2,7 @@
   <head>
     <title>{{title}}</title>
     {{asset "css"}}
+    {{asset "html5shiv"}}
   </head>
   <body>
     <can-import from="<%= name %>/styles.less!" />
