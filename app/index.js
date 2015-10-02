@@ -24,14 +24,16 @@ module.exports = generators.Base.extend({
       'readme.md',
       'documentjs.json',
       '_gitignore',
-      'build.js'
+      'build.js',
+      'production.html',
+      'development.html'
     ];
 
     this.srcFiles = [
+      'test.html',
       'app.js',
       'index.stache',
       'index.md',
-      'index.html',
       'styles.less',
       'test.html',
       'test/test.js',

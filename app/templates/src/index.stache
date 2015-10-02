@@ -6,13 +6,13 @@
   </head>
   <body>
     <can-import from="<%= name %>/styles.less!" />
-    <can-import from="<%= name %>/app" as="viewModel" />
+    <can-import from="<%= name %>/app" export-as="viewModel" />
 
     <h1>{{message}}</h1>
 
     {{asset "inline-cache"}}
 
-    {{#switch @env.NODE_ENV}}
+    {{#switch env.NODE_ENV}}
       {{#case "production"}}
         <script src="/node_modules/steal/steal.production.js"  main="<%= name %>/index.stache!done-autorender"></script>
       {{/case}}
