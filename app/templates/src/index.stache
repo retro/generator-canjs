@@ -14,10 +14,10 @@
 
     {{#switch env.NODE_ENV}}
       {{#case "production"}}
-        <script src="{{baseUrl 'node_modules/steal/steal.production.js'}}"  main="<%= name %>/index.stache!done-autorender"></script>
+        <script src="{{joinBase 'node_modules/steal/steal.production.js'}}"  main="<%= name %>/index.stache!done-autorender"></script>
       {{/case}}
       {{#default}}
-        <script src="{{baseUrl 'node_modules/steal/steal.js'}}"></script>
+        <script src="/node_modules/steal/steal.js"></script>
       {{/default}}
     {{/switch}}
   </body>
