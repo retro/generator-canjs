@@ -134,7 +134,8 @@ module.exports = generators.Base.extend({
           'documentjs',
           'testee',
           'donejs-deploy',
-          'generator-donejs'
+          'generator-donejs',
+          'donejs-cli'
         ]
       }
     };
