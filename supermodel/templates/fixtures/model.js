@@ -1,4 +1,4 @@
-import fixture from 'can-connect/fixture/';
+import fixture from 'can-fixture';
 
 const store = fixture.store([{
   <%= idProp %>: 0,
@@ -17,4 +17,3 @@ fixture({
 });
 
 export default store;
-

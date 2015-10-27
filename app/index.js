@@ -170,7 +170,8 @@ module.exports = generators.Base.extend({
         'steal-qunit',
         'steal-tools',
         'testee',
-        'donejs-deploy'
+        'donejs-deploy',
+        'can-fixture'
       ], { saveDev: true});
     }
 
