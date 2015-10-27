@@ -1,2 +1,1 @@
-import fixture from 'can-connect/fixture/';
-
+import fixture from 'can-fixture';
