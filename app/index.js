@@ -160,8 +160,7 @@ module.exports = generators.Base.extend({
         'can-ssr',
         'done-autorender',
         'done-css',
-        'done-component',
-        'generator-donejs'
+        'done-component'
       ], { save: true });
 
       this.npmInstall([
@@ -171,7 +170,8 @@ module.exports = generators.Base.extend({
         'steal-tools',
         'testee',
         'donejs-deploy',
-        'can-fixture'
+        'can-fixture',
+        'generator-donejs'
       ], { saveDev: true});
     }
 
