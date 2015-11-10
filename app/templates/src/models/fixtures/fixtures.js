@@ -1,1 +1,1 @@
-import fixture from 'can-fixture';
+// Main file that loads all model fixtures
