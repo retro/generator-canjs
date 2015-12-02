@@ -6,6 +6,7 @@ var makeVersionList = function(list) {
     return key + '@' + list[key];
   });
 };
+var npmVersion = require('../lib/utils').npmVersion;
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -45,56 +46,68 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
     var done = this.async();
-    var prompts = [{
-      name: 'name',
-      message: 'Project name',
-      when: !this.pkg.name,
-      default: process.cwd().split(path.sep).pop()
-    }, {
-      name: 'folder',
-      message: 'Project main folder',
-      default: 'src'
-    }, {
-      name: 'description',
-      message: 'Description',
-      when: !this.pkg.description
-    }, {
-      name: 'homepage',
-      message: 'Project homepage url',
-      when: !this.pkg.homepage
-    }, {
-      name: 'githubAccount',
-      message: 'GitHub username or organization',
-      when: !this.pkg.repository
-    }, {
-      name: 'authorName',
-      message: 'Author\'s Name',
-      when: !this.pkg.author,
-      store: true
-    }, {
-      name: 'authorEmail',
-      message: 'Author\'s Email',
-      when: !this.pkg.author,
-      store: true
-    }, {
-      name: 'authorUrl',
-      message: 'Author\'s Homepage',
-      when: !this.pkg.author,
-      store: true
-    }, {
-      name: 'keywords',
-      message: 'Application keywords',
-      when: !this.pkg.keywords,
-      filter: _.words
-    }];
 
-    this.prompt(prompts, function (props) {
-      this.props = _.extend(this.props, props);
+    npmVersion(function(err, version){
+      if(err) {
+        done(err);
+        return;
+      }
 
-      this.config.set('folder', this.props.folder);
-      this.config.set('name', this.props.name);
+      var prompts = [{
+        name: 'name',
+        message: 'Project name',
+        when: !this.pkg.name,
+        default: process.cwd().split(path.sep).pop()
+      }, {
+        name: 'folder',
+        message: 'Project main folder',
+        default: 'src'
+      }, {
+        name: 'description',
+        message: 'Description',
+        when: !this.pkg.description
+      }, {
+        name: 'homepage',
+        message: 'Project homepage url',
+        when: !this.pkg.homepage
+      }, {
+        name: 'githubAccount',
+        message: 'GitHub username or organization',
+        when: !this.pkg.repository
+      }, {
+        name: 'authorName',
+        message: 'Author\'s Name',
+        when: !this.pkg.author,
+        store: true
+      }, {
+        name: 'authorEmail',
+        message: 'Author\'s Email',
+        when: !this.pkg.author,
+        store: true
+      }, {
+        name: 'authorUrl',
+        message: 'Author\'s Homepage',
+        when: !this.pkg.author,
+        store: true
+      }, {
+        name: 'keywords',
+        message: 'Application keywords',
+        when: !this.pkg.keywords,
+        filter: _.words
+      }, {
+        name: 'npmVersion',
+        message: 'NPM version used',
+        default: version.major
+      }];
 
-      done();
+      this.prompt(prompts, function (props) {
+        this.props = _.extend(this.props, props);
+
+        this.config.set('folder', this.props.folder);
+        this.config.set('name', this.props.name);
+
+        done();
+      }.bind(this));
     }.bind(this));
   },
 
@@ -139,6 +152,10 @@ module.exports = generators.Base.extend({
         ]
       }
     };
+
+    if(this.props.npmVersion >= 3) {
+      pkgJsonFields.system.npmAlgorithm = 'flat';
+    }
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg));
 
