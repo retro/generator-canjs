@@ -144,12 +144,18 @@ module.exports = generators.Base.extend({
 
     if(this.options.packages) {
       this.log('Installing packages for DoneJS v' + this.options.version);
-      var deps = this.options.packages.dependencies;
-      var devDeps = this.options.packages.devDependencies;
+      var deps = makeVersionList(this.options.packages.dependencies);
+      var devDeps = makeVersionList(this.options.packages.devDependencies);
 
-      this.npmInstall(makeVersionList(deps), { save: true });
-      this.npmInstall(makeVersionList(devDeps), { saveDev: true });
-
+      if(this.options.skipInstall) {
+        this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
+          dependencies: deps,
+          devDependencies: devDeps
+        }));
+      } else {
+        this.npmInstall(deps, { save: true });
+        this.npmInstall(devDeps, { saveDev: true });
+      }
     } else {
       this.log('No DoneJS packages with specific versions provided! Installing latest version of every package. WARNING: Projects with latest versions might not be tested together yet.');
       this.npmInstall([
