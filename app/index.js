@@ -7,6 +7,9 @@ var makeVersionList = function(list) {
   });
 };
 var npmVersion = require('../lib/utils').npmVersion;
+var npmOptions = function(options){
+  return _.extend({ loglevel: 'error' }, options);
+};
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -170,8 +173,8 @@ module.exports = generators.Base.extend({
           devDependencies: devDeps
         }));
       } else {
-        this.npmInstall(makeVersionList(deps), { save: true });
-        this.npmInstall(makeVersionList(devDeps), { saveDev: true });
+        this.npmInstall(makeVersionList(deps), npmOptions({ save: true }));
+        this.npmInstall(makeVersionList(devDeps), npmOptions({ saveDev: true }));
       }
     } else {
       this.log('No DoneJS packages with specific versions provided! Installing latest version of every package. WARNING: Projects with latest versions might not be tested together yet.');
@@ -184,7 +187,7 @@ module.exports = generators.Base.extend({
         'done-autorender',
         'done-css',
         'done-component'
-      ], { save: true });
+      ], npmOptions({ save: true }));
 
       this.npmInstall([
         'documentjs',
@@ -195,7 +198,7 @@ module.exports = generators.Base.extend({
         'donejs-deploy',
         'can-fixture',
         'generator-donejs'
-      ], { saveDev: true});
+      ], npmOptions({ saveDev: true}));
     }
 
     this.mainFiles.forEach(function(name) {
