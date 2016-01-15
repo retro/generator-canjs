@@ -160,46 +160,19 @@ module.exports = generators.Base.extend({
       pkgJsonFields.system.npmAlgorithm = 'flat';
     }
 
-    this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg));
-
-    if(this.options.packages) {
-      this.log('Installing packages for DoneJS v' + this.options.version);
-      var deps = this.options.packages.dependencies;
-      var devDeps = this.options.packages.devDependencies;
-
-      if(this.options.skipInstall) {
-        this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
-          dependencies: deps,
-          devDependencies: devDeps
-        }));
-      } else {
-        this.npmInstall(makeVersionList(deps), npmOptions({ save: true }));
-        this.npmInstall(makeVersionList(devDeps), npmOptions({ saveDev: true }));
-      }
-    } else {
-      this.log('No DoneJS packages with specific versions provided! Installing latest version of every package. WARNING: Projects with latest versions might not be tested together yet.');
-      this.npmInstall([
-        'can',
-        'can-connect',
-        'steal',
-        'jquery',
-        'can-ssr',
-        'done-autorender',
-        'done-css',
-        'done-component'
-      ], npmOptions({ save: true }));
-
-      this.npmInstall([
-        'documentjs',
-        'funcunit',
-        'steal-qunit',
-        'steal-tools',
-        'testee',
-        'donejs-deploy',
-        'can-fixture',
-        'generator-donejs'
-      ], npmOptions({ saveDev: true}));
+    if(!this.options.packages) {
+      throw new Error('No DoneJS dependency package list provided!');
     }
+
+    this.log('Writing package.json v' + this.options.version);
+
+    var deps = this.options.packages.dependencies;
+    var devDeps = this.options.packages.devDependencies;
+
+    this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
+      dependencies: deps,
+      devDependencies: devDeps
+    }));
 
     this.mainFiles.forEach(function(name) {
       // Handle bug where npm has renamed .gitignore to .npmignore
@@ -218,5 +191,12 @@ module.exports = generators.Base.extend({
         self.props
       );
     });
+  },
+
+  end: function () {
+    if(!this.options.skipInstall) {
+      var done = this.async();
+      this.spawnCommand('npm', ['--loglevel', 'error', 'install']).on('close', done);
+    }
   }
 });
