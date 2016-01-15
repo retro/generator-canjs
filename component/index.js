@@ -61,54 +61,72 @@ module.exports = generators.Base.extend({
 	},
 
   writing: function () {
-    var isDoneComponent = this.isDoneComponent;
+		var isDoneComponent = this.isDoneComponent;
+		var self = this;
+		var package = {};
+		// The folder (usually src/)
+		var folder = this.config.get('folder');
+		var appName = this.config.get('name');
+		var parts = this.name.split('/');
+		var name = _.last(parts);
 
-    var self = this;
-    var parts = this.name.split('/');
-    var name = _.last(parts);
-    // The folder (usually src/)
-    var folder = this.config.get('folder');
-    var appName = this.config.get('name');
-    var fullPath = [folder].concat(parts);
+		if (this.config.get('configMain') != null) {
+			try {
+				fs.accessSync(this.config.get('configMain'), fs.R_OK);
+			} catch (e) {
+				self.log.error("Main config file not found");
+				process.exit(1);
+			}
+			package = JSON.parse(fs.readFileSync(this.config.get('configMain'), 'utf8'));
+			folder = folder ? folder : _.get(package, 'system.directories.lib', folder);
+			appName = appName ? appName : _.get(package, 'name', appName);
+		}
 
-    // .component files don't go in their own folder
-    if(isDoneComponent) {
-      fullPath.pop();
-    }
+		if (folder == null || appName == null) {
+			self.log.error("No 'folder' or 'appName' specified. Neither in your .yo-rc.json nor in your package.json file");
+			process.exit(1);
+		}
 
-    var options = {
-      // ../ levels to go up to the root
-      root: _.repeat('../', fullPath.length),
-      // The full component path
-      path: path.join.apply(path, fullPath),
-      // The full tag name (prepending the short name if it isn't there yet)
-      tag: this.tag,
-      // The short name of the component (e.g. list for restaurant/list)
-      name: name,
-      app: appName,
-      // The full module name (e.g. pmo/restaurant/list)
-      module: [appName].concat(parts).join('/')
-    };
+		var fullPath = [folder].concat(parts);
 
-    if(isDoneComponent) {
-      this.fs.copyTpl(
-        self.templatePath('component.component'),
-        self.destinationPath(path.join(options.path, options.name + '.component')),
-        options
-      );
-    } else {
-      this.modletFiles.forEach(function(name) {
-        var target = name.replace('component', options.name).replace('modlet/', '');
-        self.fs.copyTpl(
-          self.templatePath(name),
-          self.destinationPath(path.join(options.path, target)),
-          options
-        );
-      });
+		// .component files don't go in their own folder
+		if (isDoneComponent) {
+			fullPath.pop();
+		}
 
-      var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
-      utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/')
-        + '/' + name + '_test');
-    }
+		var options = {
+			// ../ levels to go up to the root
+			root: _.repeat('../', fullPath.length),
+			// The full component path
+			path: path.join.apply(path, fullPath),
+			// The full tag name (prepending the short name if it isn't there yet)
+			tag: this.tag,
+			// The short name of the component (e.g. list for restaurant/list)
+			name: name,
+			app: appName,
+			// The full module name (e.g. pmo/restaurant/list)
+			module: [appName].concat(parts).join('/')
+		};
+
+		if (isDoneComponent) {
+			this.fs.copyTpl(
+					self.templatePath('component.component'),
+					self.destinationPath(path.join(options.path, options.name + '.component')),
+					options
+			);
+		} else {
+			this.modletFiles.forEach(function (name) {
+				var target = name.replace('component', options.name).replace('modlet/', '');
+				self.fs.copyTpl(
+						self.templatePath(name),
+						self.destinationPath(path.join(options.path, target)),
+						options
+				);
+			});
+
+			var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
+			utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/')
+					+ '/' + name + '_test');
+		}
   }
 });
