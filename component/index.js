@@ -79,7 +79,7 @@ module.exports = generators.Base.extend({
 	  var appName = _.get(pkg, 'name');
 
 		if (folder == null || appName == null) {
-			self.log.error("The 'folder' or 'appName' is not specified in your package.json file.");
+			self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
 			process.exit(1);
 		}
 
