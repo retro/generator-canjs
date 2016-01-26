@@ -1,5 +1,4 @@
 var generators = require('yeoman-generator');
-var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
@@ -63,27 +62,24 @@ module.exports = generators.Base.extend({
   writing: function () {
 		var isDoneComponent = this.isDoneComponent;
 		var self = this;
-		var package = {};
-		// The folder (usually src/)
-		var folder = this.config.get('folder');
-		var appName = this.config.get('name');
+	  var pkgFile = this.destinationPath('package.json');
 		var parts = this.name.split('/');
 		var name = _.last(parts);
 
-		if (this.config.get('configMain') != null) {
-			try {
-				fs.accessSync(this.config.get('configMain'), fs.R_OK);
-			} catch (e) {
-				self.log.error("Main config file not found");
-				process.exit(1);
-			}
-			package = JSON.parse(fs.readFileSync(this.config.get('configMain'), 'utf8'));
-			folder = folder ? folder : _.get(package, 'system.directories.lib', folder);
-			appName = appName ? appName : _.get(package, 'name', appName);
-		}
+	  // try to read the packeage.json in the project root folder
+	  try {
+		  this.fs.accessSync(pkgFile, this.fs.R_OK);
+	  } catch (e) {
+		  self.log.error("No package.json file not found at "+pkgFile);
+		  process.exit(1);
+	  }
+
+	  var pkg = this.fs.readJSON(pkgFile, {});
+	  var folder = _.get(pkg, 'system.directories.lib');
+	  var appName = _.get(pkg, 'name');
 
 		if (folder == null || appName == null) {
-			self.log.error("No 'folder' or 'appName' specified. Neither in your .yo-rc.json nor in your package.json file");
+			self.log.error("The 'folder' or 'appName' is not specified in your package.json file.");
 			process.exit(1);
 		}
 
