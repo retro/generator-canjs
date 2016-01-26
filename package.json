@@ -1,6 +1,6 @@
 {
   "name": "generator-donejs",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "A generator for your DoneJS application",
   "homepage": "http://donejs.com/",
   "license": "MIT",
@@ -41,7 +41,8 @@
     "npmDependencies": []
   },
   "devDependencies": {
-    "mocha": "^2.3.0",
-    "donejs": "*"
+    "donejs": "*",
+    "donejs-cli": "^0.6.5",
+    "mocha": "^2.3.0"
   }
 }
