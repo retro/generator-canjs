@@ -105,6 +105,10 @@ module.exports = generators.Base.extend({
 
       this.prompt(prompts, function (props) {
         this.props = _.extend(this.props, props);
+
+        this.config.set('folder', this.props.folder);
+        this.config.set('name', this.props.name);
+
         done();
       }.bind(this));
     }.bind(this));
