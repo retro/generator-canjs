@@ -53,8 +53,21 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
-    var folder = this.config.get('folder');
-    var appName = this.config.get('name');
+    var pkgFile = this.destinationPath('package.json');
+    var pkg = this.fs.readJSON(pkgFile, false);
+
+    if(pkg === false) {
+      self.log.error("No package.json file not found at "+pkgFile);
+      process.exit(1);
+    }
+    var folder = _.get(pkg, 'system.directories.lib');
+    var appName = _.get(pkg, 'name');
+
+    if (folder == null || appName == null) {
+      self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
+      process.exit(1);
+    }
+
     var options = {
       className: this.name.charAt(0).toUpperCase() + this.name.slice(1),
       name: this.name,
