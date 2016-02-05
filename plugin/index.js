@@ -152,6 +152,7 @@ module.exports = generators.Base.extend({
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
       dependencies: {
+        steal: deps.steal,
         can: deps.can,
         jquery: deps.jquery
       },
