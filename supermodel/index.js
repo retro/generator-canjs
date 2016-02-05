@@ -69,7 +69,7 @@ module.exports = generators.Base.extend({
     }
 
     var options = {
-      className: this.name.charAt(0).toUpperCase() + this.name.slice(1),
+      className: _.upperFirst(_.camelCase(this.name)),
       name: this.name,
       url: this.props.url,
       idProp: this.props.idProp
