@@ -1,6 +1,6 @@
 {
   "name": "generator-donejs",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "A generator for your DoneJS application",
   "homepage": "http://donejs.com/",
   "license": "MIT",
@@ -26,7 +26,8 @@
     "lib",
     "app",
     "component",
-    "supermodel"
+    "supermodel",
+    "module"
   ],
   "keywords": [
     "yeoman-generator"
