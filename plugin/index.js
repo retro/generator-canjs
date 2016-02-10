@@ -26,8 +26,8 @@ module.exports = generators.Base.extend({
     ];
     
     this.srcFiles = [
-      'test.html',
-      'test.js',
+      'test/test.html',
+      'test/test.js',
       'plugin.js',
       'plugin.md'
     ];
@@ -114,7 +114,7 @@ module.exports = generators.Base.extend({
         preversion: "npm test && npm run build",
         version: "git commit -am \"Update dist for release\" && git checkout -b release && git add -f dist/",
         postversion: "git push --tags && git checkout master && git branch -D release && git push",
-        testee: "testee src/test.html --browsers firefox",
+        testee: "testee src/test/test.html --browsers firefox",
         test: "npm run jshint && npm run testee",
         jshint: "jshint src/. --config",
         "release:patch": "npm version patch && npm publish",

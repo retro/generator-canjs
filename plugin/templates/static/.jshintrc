@@ -29,7 +29,7 @@
 	"latedef": true,
 	"noarg": true,
 	"undef": true,
-	"unused": "vars",
+	"unused": true,
 	"trailing": true,
 	"maxdepth": 4,
 	"boss" : true,
