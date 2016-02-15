@@ -81,6 +81,11 @@ module.exports = generators.Base.extend({
 			self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
 			process.exit(1);
 		}
+    
+    // https://github.com/donejs/donejs/issues/525
+    if(!isRootComponent && parts[0] === appName) {
+      parts.shift();
+    }
 
 		var fullPath = isRootComponent ? [folder] : [folder].concat(parts);
 
