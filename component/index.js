@@ -74,13 +74,20 @@ module.exports = generators.Base.extend({
 		}
 		var folder = _.get(pkg, 'system.directories.lib');
 		var appName = _.get(pkg, 'name');
+    // If we generate a component with the same name as the application
+    var isRootComponent = name === appName;
 
 		if (folder == null || appName == null) {
 			self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
 			process.exit(1);
 		}
+    
+    // https://github.com/donejs/donejs/issues/525
+    if(!isRootComponent && parts[0] === appName) {
+      parts.shift();
+    }
 
-		var fullPath = [folder].concat(parts);
+		var fullPath = isRootComponent ? [folder] : [folder].concat(parts);
 
 		// .component files don't go in their own folder
 		if (isDoneComponent) {
@@ -98,9 +105,9 @@ module.exports = generators.Base.extend({
 			name: name,
 			app: appName,
 			// The full module name (e.g. pmo/restaurant/list)
-			module: [appName].concat(parts).join('/')
+			module: isRootComponent ? parts.join('/') : [appName].concat(parts).join('/')
 		};
-
+    
 		if (isDoneComponent) {
 			this.fs.copyTpl(
 					self.templatePath('component.component'),
