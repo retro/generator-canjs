@@ -72,7 +72,7 @@ module.exports = generators.Base.extend({
 			self.log.error("No package.json file not found at "+pkgFile);
 			process.exit(1);
 		}
-		var folder = _.get(pkg, 'system.directories.lib');
+		var folder = _.get(pkg, 'system.directories.lib') || "./";
 		var appName = _.get(pkg, 'name');
     // If we generate a component with the same name as the application
     var isRootComponent = name === appName;

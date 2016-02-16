@@ -45,6 +45,7 @@
   "devDependencies": {
     "donejs": "*",
     "donejs-cli": "^0.6.5",
+    "fs-extra": "^0.26.5",
     "mocha": "^2.3.0"
   }
 }
