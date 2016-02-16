@@ -123,7 +123,7 @@ module.exports = generators.Base.extend({
         build: "node build.js",
         document: "documentjs"
       },
-      main: this.props.folder + '/' + this.props.name,
+      main: this.props.name,
       files: [this.props.folder],
       keywords: this.props.keywords,
       system: {
