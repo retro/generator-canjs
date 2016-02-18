@@ -121,7 +121,8 @@ module.exports = generators.Base.extend({
         "release:minor": "npm version minor && npm publish",
         "release:major": "npm version major && npm publish",
         build: "node build.js",
-        document: "documentjs"
+        document: "documentjs",
+        develop: "can-serve --static --develop --port 8080"
       },
       main: this.props.name,
       files: [this.props.folder],
@@ -130,9 +131,14 @@ module.exports = generators.Base.extend({
         directories: {
           lib: this.props.folder
         },
+        configDependencies: [ 'live-reload' ],
         npmIgnore: [
           'documentjs',
-          'testee'
+          'testee',
+          'can-ssr',
+          'generator-donejs',
+          'donejs-cli',
+          'steal-tools'
         ]
       }
     };
@@ -146,22 +152,27 @@ module.exports = generators.Base.extend({
     }
 
     this.log('Writing package.json v' + this.options.version);
-
-    var deps = this.options.packages.dependencies;
-    var devDeps = this.options.packages.devDependencies;
+    
+    var getDependency = function(name) {
+      return self.options.packages.dependencies[name] || 
+        self.options.packages.devDependencies[name];
+    }
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
       dependencies: {
-        can: deps.can,
-        jquery: deps.jquery
+        'can': getDependency('can'),
+        'jquery': getDependency('jquery')
       },
       devDependencies: {
-        documentjs: devDeps.documentjs,
-        jshint: "^2.9.1",
-        steal: deps.steal,
-        'steal-qunit': devDeps['steal-qunit'],
-        'steal-tools': devDeps['steal-tools'],
-        testee: devDeps.testee
+        'documentjs': getDependency('documentjs'),
+        'jshint': '^2.9.1',
+        'steal': getDependency('steal'),
+        'steal-qunit': getDependency('steal-qunit'),
+        'steal-tools': getDependency('steal-tools'),
+        'testee': getDependency('testee'),
+        'can-ssr': getDependency('can-ssr'),
+        'generator-donejs': getDependency('generator-donejs'),
+        'donejs-cli': getDependency('donejs-cli'),
       }
     }));
 
