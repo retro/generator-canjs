@@ -28,6 +28,7 @@ module.exports = generators.Base.extend({
     this.srcFiles = [
       'test/test.html',
       'test/test.js',
+      'plugin_test.js',
       'plugin.js',
       'plugin.md'
     ];

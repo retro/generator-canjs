@@ -10,7 +10,7 @@ function pipe(child) {
   child.stderr.pipe(process.stderr);
 }
 
-describe('generator-donejs', function () {
+describe('generator-donejs:plugin', function () {
   it('donejs:plugin', function (done) {
     var tmpDir;
 
