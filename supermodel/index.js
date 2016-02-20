@@ -2,6 +2,7 @@ var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
+var upperFirst = require("lodash.upperfirst");
 
 module.exports = generators.Base.extend({
   constructor: function () {
@@ -69,7 +70,7 @@ module.exports = generators.Base.extend({
     }
 
     var options = {
-      className: _.upperFirst(_.camelCase(this.name)),
+      className: upperFirst(_.camelCase(this.name)),
       name: this.name,
       url: this.props.url,
       idProp: this.props.idProp
