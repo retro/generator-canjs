@@ -142,14 +142,7 @@ module.exports = generators.Base.extend({
         directories: {
           lib: this.props.folder
         },
-        configDependencies: [ 'live-reload' ],
-        npmIgnore: [
-          'documentjs',
-          'testee',
-          'donejs-deploy',
-          'generator-donejs',
-          'donejs-cli'
-        ]
+        configDependencies: [ 'live-reload' ]
       }
     };
 
