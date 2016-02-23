@@ -7,7 +7,7 @@
   <template>
     <p>{{message}}</p>
   </template>
-  <view-model>
+  <script type="view-model">
     import Map from 'can/map/';
     import 'can/map/define/';
 
@@ -18,5 +18,5 @@
         }
       }
     });
-  </view-model>
+  </script>
 </can-component>
