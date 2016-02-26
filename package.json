@@ -38,6 +38,7 @@
     "lodash.upperfirst": "^4.1.2",
     "q": "^1.4.1",
     "semver": "^5.1.0",
+    "validate-npm-package-name": "^2.2.2",
     "yeoman-generator": "^0.20.2"
   },
   "system": {

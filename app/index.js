@@ -1,3 +1,4 @@
+var validate = require("validate-npm-package-name");
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
@@ -105,14 +106,21 @@ module.exports = generators.Base.extend({
 
       this.prompt(prompts, function (props) {
         this.props = _.extend(this.props, props);
-
+        this.props.name = _.kebabCase(this.props.name);
+        
+        if(!validate(this.props.name)) {
+          throw new Error('Your project name ' + this.props.name + ' is not' +
+            'valid. Please try another name.')
+          return;
+        }
+        
         done();
       }.bind(this));
     }.bind(this));
   },
 
   writing: function () {
-		var pkgName = _.kebabCase(this.props.name);
+		var pkgName = this.props.name;
 		var pkgMain = pkgName + '/index.stache!done-autorender';
 
     var self = this;
