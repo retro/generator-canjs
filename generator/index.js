@@ -18,6 +18,15 @@ module.exports = generators.Base.extend({
       homepage: this.pkg.homepage,
       repository: this.pkg.repository
     };
+    
+    this.mainFiles = [
+      '_gitignore',
+      'license.md',
+      'readme.md',
+      'default/templates/file.js',
+      'default/index.js',
+      'test/index.js'
+    ];
   },
 
   prompting: function () {
@@ -70,7 +79,7 @@ module.exports = generators.Base.extend({
 
       this.prompt(prompts, function (props) {
         this.props = _.extend(this.props, props);
-        this.props.name = 'donejs' + _.kebabCase(this.props.name);
+        this.props.name = _.kebabCase(this.props.name);
         done();
       }.bind(this));
     }.bind(this));
@@ -78,7 +87,8 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
-    var pkgJsonFields = {
+    
+    this.fs.writeJSON('package.json', {
       name: this.props.name,
       version: '0.0.0',
       description: this.props.description,
@@ -89,22 +99,22 @@ module.exports = generators.Base.extend({
         email: this.props.authorEmail,
         url: this.props.authorUrl
       },
-      "scripts": {
-        preversion: "npm test",
-        test: "npm run jshint && mocha test/",
-        "release:patch": "npm version patch && npm publish",
-        "release:minor": "npm version minor && npm publish",
-        "release:major": "npm version major && npm publish"
+      license: "MIT",
+      main: "default/index",
+      scripts: {
+        test: "npm run jshint && npm run mocha",
+        jshint: "jshint test/. default/index.js --config",
+        mocha: "mocha test/ --timeout 120000",
+        publish: "git push origin --tags && git push origin",
+        'release:patch': "npm version patch && npm publish",
+        'release:minor': "npm version minor && npm publish",
+        'release:major': "npm version major && npm publish"
       },
-      main: 'generator/index',
-      files: [
-        'generator'
-      ],
       keywords: this.props.keywords
-    };
+    });
     
     this.npmInstall(['yeoman-generator'], { 'save': true });
-    this.npmInstall(['mocha'], { 'saveDev': true });
+    this.npmInstall(['mocha', 'jshint', 'yeoman-assert', 'yeoman-test'], { 'saveDev': true });
 
     this.fs.copy(this.templatePath('static'), this.destinationPath());
     this.fs.copy(this.templatePath('static/.*'), this.destinationPath());
@@ -115,14 +125,6 @@ module.exports = generators.Base.extend({
       self.fs.copyTpl(
         self.templatePath(name),
         self.destinationPath((name === "_gitignore") ? ".gitignore" : name),
-        self.props
-      );
-    });
-    
-    this.srcFiles.forEach(function(name) {
-      self.fs.copyTpl(
-        self.templatePath(name),
-        self.destinationPath(path.join(self.props.folder, name.replace('plugin', self.props.name))),
         self.props
       );
     });

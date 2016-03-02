@@ -7,14 +7,19 @@ module.exports = generator.Base.extend({
     this.prompt([{
       type    : 'input',
       name    : 'name',
-      message : 'Name of project for Cordova',
-      default : this.appname // Default to current folder name
+      message : 'What is the name of the file?'
     }], function (answers) {
+      this.props = answers;
       done();
     }.bind(this));
   },
-  
   writing: function () {
+    this.log('Copying file to ' + this.destinationPath(this.props.name + '.js'));
     
+    this.fs.copyTpl(
+			this.templatePath('file.js'),
+			this.destinationPath(this.props.name + '.js'),
+			this.props
+		);
   }
 });
