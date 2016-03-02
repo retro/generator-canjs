@@ -26,7 +26,7 @@ describe('generator-donejs:plugin', function () {
         name: 'my-plugin'
       })
       .on('end', function () {
-        child = exec('npm test', {
+        var child = exec('npm test', {
           cwd: tmpDir
         });
 
