@@ -125,10 +125,16 @@ module.exports = generators.Base.extend({
         document: "documentjs",
         develop: "can-serve --static --develop --port 8080"
       },
-      main: this.props.name,
-      files: [this.props.folder],
+      main: "dist/cjs/" + this.props.name,
+      browser: {
+       transform: [ "cssify" ]
+      },
+      browserify: {
+       transform: [ "cssify" ]
+      },
       keywords: this.props.keywords,
       system: {
+        main: this.props.name,
         directories: {
           lib: this.props.folder
         },
@@ -136,7 +142,6 @@ module.exports = generators.Base.extend({
         npmIgnore: [
           'documentjs',
           'testee',
-          'can-ssr',
           'generator-donejs',
           'donejs-cli',
           'steal-tools'
@@ -157,7 +162,7 @@ module.exports = generators.Base.extend({
     var getDependency = function(name) {
       return self.options.packages.dependencies[name] || 
         self.options.packages.devDependencies[name];
-    }
+    };
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
       dependencies: {
@@ -167,11 +172,11 @@ module.exports = generators.Base.extend({
       devDependencies: {
         'documentjs': getDependency('documentjs'),
         'jshint': '^2.9.1',
+        'cssify': '^0.6.0',
         'steal': getDependency('steal'),
         'steal-qunit': getDependency('steal-qunit'),
         'steal-tools': getDependency('steal-tools'),
         'testee': getDependency('testee'),
-        'can-ssr': getDependency('can-ssr'),
         'generator-donejs': getDependency('generator-donejs'),
         'donejs-cli': getDependency('donejs-cli'),
       }
