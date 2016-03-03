@@ -28,7 +28,8 @@
     "component",
     "supermodel",
     "module",
-    "plugin"
+    "plugin",
+    "generator"
   ],
   "keywords": [
     "yeoman-generator"
