@@ -1,6 +1,14 @@
 var generator = require('yeoman-generator');
 
 module.exports = generator.Base.extend({
+  initializing: function () {
+    this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    
+    this.files = [
+      'file.js'
+    ];
+  },
+
   prompting: function () {
     var done = this.async();
 

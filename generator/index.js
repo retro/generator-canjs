@@ -1,10 +1,6 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
-var npmVersion = require('../lib/utils').npmVersion;
-var npmOptions = function(options){
-  return _.extend({ loglevel: 'error' }, options);
-};
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -31,57 +27,50 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
     var done = this.async();
+    
+    var prompts = [{
+      name: 'name',
+      message: 'Project name',
+      when: !this.pkg.name,
+      default: process.cwd().split(path.sep).pop()
+    }, {
+      name: 'description',
+      message: 'Description',
+      when: !this.pkg.description
+    }, {
+      name: 'homepage',
+      message: 'Project homepage url',
+      when: !this.pkg.homepage
+    }, {
+      name: 'githubAccount',
+      message: 'GitHub username or organization',
+      when: !this.pkg.repository
+    }, {
+      name: 'authorName',
+      message: 'Author\'s Name',
+      when: !this.pkg.author,
+      store: true
+    }, {
+      name: 'authorEmail',
+      message: 'Author\'s Email',
+      when: !this.pkg.author,
+      store: true
+    }, {
+      name: 'authorUrl',
+      message: 'Author\'s Homepage',
+      when: !this.pkg.author,
+      store: true
+    }, {
+      name: 'keywords',
+      message: 'Application keywords',
+      when: !this.pkg.keywords,
+      filter: _.words
+    }];
 
-    npmVersion(function(err, version){
-      if(err) {
-        done(err);
-        return;
-      }
-
-      var prompts = [{
-        name: 'name',
-        message: 'Project name',
-        when: !this.pkg.name,
-        default: process.cwd().split(path.sep).pop()
-      }, {
-        name: 'description',
-        message: 'Description',
-        when: !this.pkg.description
-      }, {
-        name: 'homepage',
-        message: 'Project homepage url',
-        when: !this.pkg.homepage
-      }, {
-        name: 'githubAccount',
-        message: 'GitHub username or organization',
-        when: !this.pkg.repository
-      }, {
-        name: 'authorName',
-        message: 'Author\'s Name',
-        when: !this.pkg.author,
-        store: true
-      }, {
-        name: 'authorEmail',
-        message: 'Author\'s Email',
-        when: !this.pkg.author,
-        store: true
-      }, {
-        name: 'authorUrl',
-        message: 'Author\'s Homepage',
-        when: !this.pkg.author,
-        store: true
-      }, {
-        name: 'keywords',
-        message: 'Application keywords',
-        when: !this.pkg.keywords,
-        filter: _.words
-      }];
-
-      this.prompt(prompts, function (props) {
-        this.props = _.extend(this.props, props);
-        this.props.name = _.kebabCase(this.props.name);
-        done();
-      }.bind(this));
+    this.prompt(prompts, function (props) {
+      this.props = _.extend(this.props, props);
+      this.props.name = _.kebabCase(this.props.name);
+      done();
     }.bind(this));
   },
 
@@ -100,7 +89,7 @@ module.exports = generators.Base.extend({
         url: this.props.authorUrl
       },
       license: "MIT",
-      main: "default/index",
+      main: "lib/",
       scripts: {
         test: "npm run jshint && npm run mocha",
         jshint: "jshint test/. default/index.js --config",
@@ -113,7 +102,7 @@ module.exports = generators.Base.extend({
       keywords: this.props.keywords
     });
     
-    this.npmInstall(['yeoman-generator'], { 'save': true });
+    this.npmInstall(['yeoman-generator', 'lodash'], { 'save': true });
     this.npmInstall(['mocha', 'jshint', 'yeoman-assert', 'yeoman-test'], { 'saveDev': true });
 
     this.fs.copy(this.templatePath('static'), this.destinationPath());
