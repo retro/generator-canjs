@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-import plugin from '../<%= name %>';
+import plugin from './<%= name %>';
 
 QUnit.module('<%= name %>');
 

@@ -1,1 +1,1 @@
-import '../<%= name %>_test.js';
+import '../<%= name %>_test';
