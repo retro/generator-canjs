@@ -179,6 +179,7 @@ module.exports = generators.Base.extend({
         'testee': getDependency('testee'),
         'generator-donejs': getDependency('generator-donejs'),
         'donejs-cli': getDependency('donejs-cli'),
+        'can-ssr': getDependency('can-ssr')
       }
     }));
 
