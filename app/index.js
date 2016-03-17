@@ -150,7 +150,7 @@ module.exports = generators.Base.extend({
         directories: {
           lib: this.props.folder
         },
-        configDependencies: [ 'live-reload' ]
+        configDependencies: [ 'live-reload', 'node_modules/can-zone/register' ]
       }
     };
 
