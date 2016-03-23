@@ -72,7 +72,7 @@ module.exports = generators.Base.extend({
     var options = {
       className: upperFirst(_.camelCase(this.name)),
       name: this.name,
-      url: this.props.url,
+      url: this.props.url.trim(),
       idProp: this.props.idProp
     };
 
