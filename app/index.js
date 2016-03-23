@@ -107,13 +107,13 @@ module.exports = generators.Base.extend({
       this.prompt(prompts, function (props) {
         this.props = _.extend(this.props, props);
         this.props.name = _.kebabCase(this.props.name);
-        
+
         if(!validate(this.props.name)) {
           throw new Error('Your project name ' + this.props.name + ' is not' +
             'valid. Please try another name.')
           return;
         }
-        
+
         done();
       }.bind(this));
     }.bind(this));
@@ -137,8 +137,8 @@ module.exports = generators.Base.extend({
       },
       scripts: {
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
-        start: 'can-serve --port 8080',
-        develop: "can-serve --develop --port 8080",
+        start: 'done-serve --port 8080',
+        develop: "done-serve --develop --port 8080",
         document: "documentjs",
         build: "node build"
       },
@@ -150,7 +150,7 @@ module.exports = generators.Base.extend({
         directories: {
           lib: this.props.folder
         },
-        configDependencies: [ 'live-reload' ]
+        configDependencies: [ 'live-reload', 'node_modules/can-zone/register' ]
       }
     };
 
