@@ -25,7 +25,7 @@ describe('generator-donejs', function () {
       })
       .withPrompts({
         name: 'messages',
-        url: "/messages",
+        url: '  /messages',
         idProp: "id"
       })
       .on('end', function () {
