@@ -54,12 +54,14 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
+    var done = this.async();
     var pkgFile = this.destinationPath('package.json');
     var pkg = this.fs.readJSON(pkgFile, false);
 
     if(pkg === false) {
-      self.log.error("No package.json file not found at "+pkgFile);
-      process.exit(1);
+      var error = new Error('Expected to find a package.json file at ' + pkgFile +
+                            ' but did not');
+      return done(error);
     }
     var folder = _.get(pkg, 'system.directories.lib');
     var appName = _.get(pkg, 'name');
@@ -94,5 +96,6 @@ module.exports = generators.Base.extend({
 
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
+    done();
   }
 });

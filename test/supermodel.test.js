@@ -12,25 +12,50 @@ function pipe(child) {
 }
 
 describe('generator-donejs', function () {
-  it('donejs:supermodel', function (done) {
-    var tmpDir;
+  describe('donejs:supermodel', function() {
+    it('basics works', function (done) {
+      var tmpDir;
 
-    helpers.run(path.join(__dirname, '../supermodel'))
-      .inTmpDir(function (dir) {
-        tmpDir = dir;
-        fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
-      })
-      .withOptions({
-        skipInstall: true
-      })
-      .withPrompts({
-        name: 'messages',
-        url: '  /messages',
-        idProp: "id"
-      })
-      .on('end', function () {
-        assert( fs.existsSync( path.join( tmpDir, "src", "models", "messages.js" ) ), "bar.js exists" );
-        done();
-      });
+      helpers.run(path.join(__dirname, '../supermodel'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'messages',
+          url: '  /messages',
+          idProp: "id"
+        })
+        .on('end', function () {
+          assert( fs.existsSync( path.join( tmpDir, "src", "models", "messages.js" ) ), "bar.js exists" );
+          done();
+        });
+    });
+
+    it('Errors when a package is not found', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../supermodel'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join(__dirname, 'tests', 'empty'), dir);
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'messages',
+          url: '  /messages',
+          idProp: "id"
+        })
+        .on('error', function(err) {
+          var msg = err.message;
+          assert(/Expected to find/.test(msg), 'Correct error message');
+          done();
+        });
+    });
   });
 });
