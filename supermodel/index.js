@@ -3,6 +3,7 @@ var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
+var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
   constructor: function () {
@@ -55,14 +56,12 @@ module.exports = generators.Base.extend({
   writing: function () {
     var self = this;
     var done = this.async();
-    var pkgFile = this.destinationPath('package.json');
-    var pkg = this.fs.readJSON(pkgFile, false);
 
-    if(pkg === false) {
-      var error = new Error('Expected to find a package.json file at ' + pkgFile +
-                            ' but did not');
-      return done(error);
+    var pkg = utils.getPkgOrBail(this, done);
+    if(!pkg) {
+      return;
     }
+
     var folder = _.get(pkg, 'system.directories.lib') || './';
     var appName = _.get(pkg, 'name');
 

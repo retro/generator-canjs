@@ -2,9 +2,6 @@ var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
-var npmOptions = function(options){
-  return _.extend({ loglevel: 'error' }, options);
-};
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -24,7 +21,7 @@ module.exports = generators.Base.extend({
       'readme.md',
       '_gitignore'
     ];
-    
+
     this.srcFiles = [
       'test/test.html',
       'test/test.js',
@@ -158,9 +155,9 @@ module.exports = generators.Base.extend({
     }
 
     this.log('Writing package.json v' + this.options.version);
-    
+
     var getDependency = function(name) {
-      return self.options.packages.dependencies[name] || 
+      return self.options.packages.dependencies[name] ||
         self.options.packages.devDependencies[name];
     };
 
@@ -185,7 +182,7 @@ module.exports = generators.Base.extend({
 
     this.fs.copy(this.templatePath('static'), this.destinationPath());
     this.fs.copy(this.templatePath('static/.*'), this.destinationPath());
-    
+
     this.mainFiles.forEach(function(name) {
       // Handle bug where npm has renamed .gitignore to .npmignore
       // https://github.com/npm/npm/issues/3763
@@ -195,7 +192,7 @@ module.exports = generators.Base.extend({
         self.props
       );
     });
-    
+
     this.srcFiles.forEach(function(name) {
       self.fs.copyTpl(
         self.templatePath(name),
