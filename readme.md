@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/donejs/generator-donejs.svg?branch=master)](https://travis-ci.org/donejs/generator-donejs)
 [![npm version](https://badge.fury.io/js/generator-donejs.svg)](http://badge.fury.io/js/generator-donejs)
+[![Coverage Status](https://coveralls.io/repos/github/donejs/generator-donejs/badge.svg?branch=master)](https://coveralls.io/github/donejs/generator-donejs?branch=master)
 
 A Yeoman generator for your DoneJS application. Available generators are:
 
