@@ -63,13 +63,8 @@ module.exports = generators.Base.extend({
                             ' but did not');
       return done(error);
     }
-    var folder = _.get(pkg, 'system.directories.lib');
+    var folder = _.get(pkg, 'system.directories.lib') || './';
     var appName = _.get(pkg, 'name');
-
-    if (folder == null || appName == null) {
-      self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
-      process.exit(1);
-    }
 
     var options = {
       className: upperFirst(_.camelCase(this.name)),

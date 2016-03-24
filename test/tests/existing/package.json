@@ -1,0 +1,10 @@
+{
+	"name": "existing",
+	"main": "index.js",
+	"version": "1.0.0",
+  "system": {
+    "directories": {
+      "lib": "src"
+    }
+  }
+}
