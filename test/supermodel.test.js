@@ -5,6 +5,7 @@ var exec = require('child_process').exec;
 var donejsPackage = require('donejs-cli/package.json');
 var npmVersion = require('../lib/utils').npmVersion;
 var fs = require('fs-extra');
+var testHelpers = require('./helpers');
 
 function pipe(child) {
   child.stdout.pipe(process.stdout);
@@ -153,6 +154,39 @@ describe('generator-donejs', function () {
         assert(/fixtures\/foo/.test(fixFile), 'Existing fixtures remain');
         assert(/fixtures\/messages/.test(fixFile), 'New fixture added');
       });
+    });
+
+    describe('Running in a project with the existing module', function() {
+      before(function(done){
+        var test = this;
+
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            test.tmpDir = dir;
+            fs.copySync(path.join( __dirname, "tests", "existing2"), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'messages',
+            url: '/messages',
+            idProp: "id"
+          })
+          .on('end', function () {
+            done();
+          });
+      });
+
+      it('Doesn\'t update the test.js file twice', function() {
+        var tmpDir = this.tmpDir;
+        var testFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
+                                                 'test.js'), 'utf8');
+
+        var times = testHelpers.appearances("messages_test", testFile);
+        assert.equal(times, 1, 'Only appears once');
+      });
+
     });
   });
 });
