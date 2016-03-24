@@ -6,7 +6,9 @@
   "license": "MIT",
   "main": "lib",
   "scripts": {
+    "coverage": "istanbul cover _mocha -- test/ --timeout 600000",
     "test": "mocha test/ --timeout 600000",
+    "coverage:upload": "istanbul cover _mocha --report lcovonly -- test/ --timeout 600000 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "publish": "git push origin --tags && git push origin",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
@@ -46,9 +48,12 @@
     "npmDependencies": []
   },
   "devDependencies": {
+    "coveralls": "^2.11.8",
     "donejs": "*",
-    "donejs-cli": "^0.7.0-pre.7",
+    "donejs-cli": "^0.8.0",
     "fs-extra": "^0.26.5",
-    "mocha": "^2.3.0"
+    "istanbul": "^0.4.2",
+    "mocha": "^2.3.0",
+    "mocha-lcov-reporter": "^1.2.0"
   }
 }
