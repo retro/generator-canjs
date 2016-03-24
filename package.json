@@ -6,7 +6,9 @@
   "license": "MIT",
   "main": "lib",
   "scripts": {
-    "test": "mocha test/ --timeout 600000",
+    "coverage": "istanbul cover _mocha -- test/ --timeout 600000",
+    "test": "npm run coverage",
+    "test:only": "mocha test/ --timeout 600000",
     "publish": "git push origin --tags && git push origin",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
@@ -47,8 +49,9 @@
   },
   "devDependencies": {
     "donejs": "*",
-    "donejs-cli": "^0.7.0-pre.7",
+    "donejs-cli": "^0.8.0",
     "fs-extra": "^0.26.5",
+    "istanbul": "^0.4.2",
     "mocha": "^2.3.0"
   }
 }
