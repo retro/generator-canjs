@@ -2,9 +2,6 @@ var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
-var npmOptions = function(options){
-  return _.extend({ loglevel: 'error' }, options);
-};
 
 module.exports = generators.Base.extend({
   initializing: function () {

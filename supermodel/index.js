@@ -3,6 +3,7 @@ var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
+var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
   constructor: function () {
@@ -54,20 +55,15 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
-    var pkgFile = this.destinationPath('package.json');
-    var pkg = this.fs.readJSON(pkgFile, false);
+    var done = this.async();
 
-    if(pkg === false) {
-      self.log.error("No package.json file not found at "+pkgFile);
-      process.exit(1);
+    var pkg = utils.getPkgOrBail(this, done);
+    if(!pkg) {
+      return;
     }
-    var folder = _.get(pkg, 'system.directories.lib');
+
+    var folder = _.get(pkg, 'system.directories.lib') || './';
     var appName = _.get(pkg, 'name');
-
-    if (folder == null || appName == null) {
-      self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
-      process.exit(1);
-    }
 
     var options = {
       className: upperFirst(_.camelCase(this.name)),
@@ -94,5 +90,6 @@ module.exports = generators.Base.extend({
 
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
+    done();
   }
 });

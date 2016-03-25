@@ -11,32 +11,56 @@ function pipe(child) {
 }
 
 describe('generator-donejs', function () {
-  it('donejs:app', function (done) {
-    var tmpDir;
+  describe('donejs:app', function() {
+    it('works', function (done) {
+      var tmpDir;
 
-    helpers.run(path.join(__dirname, '../app'))
-      .inTmpDir(function (dir) {
-        tmpDir = dir;
-      })
-      .withOptions({
-        packages: donejsPackage.donejs,
-        skipInstall: false
-      })
-      .withPrompts({
-        name: 'place-my-tmp'
-      })
-      .on('end', function () {
-        child = exec('npm test', {
-          cwd: tmpDir
+      helpers.run(path.join(__dirname, '../app'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+        })
+        .withOptions({
+          packages: donejsPackage.donejs,
+          skipInstall: false
+        })
+        .withPrompts({
+          name: 'place-my-tmp'
+        })
+        .on('end', function () {
+          child = exec('npm test', {
+            cwd: tmpDir
+          });
+
+          pipe(child);
+
+          child.on('exit', function (status) {
+            assert.equal(status, 0, 'Got correct exist status');
+            done();
+          });
         });
+    });
 
-        pipe(child);
+    it('fails with an invalid package name', function (done) {
+      var tmpDir;
 
-        child.on('exit', function (status) {
-          assert.equal(status, 0, 'Got correct exist status');
+      helpers.run(path.join(__dirname, '../app'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+        })
+        .withOptions({
+          packages: donejsPackage.donejs,
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'http'
+        })
+        .on('error', function(err){
+          var msg = err.message;
+          assert(/is not valid/.test(msg), 'Error because of invalid name');
           done();
         });
-      });
+    });
+
   });
 
   describe('NPM 3 support', function(){

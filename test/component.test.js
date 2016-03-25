@@ -12,26 +12,94 @@ function pipe(child) {
 }
 
 describe('generator-donejs', function () {
-  it('donejs:component', function (done) {
-    var tmpDir;
+  describe('donejs:component', function() {
 
-    helpers.run(path.join(__dirname, '../component'))
-      .inTmpDir(function (dir) {
-        tmpDir = dir;
-        fs.copySync(path.join( __dirname, "tests", "no_directories" ), dir)
-      })
-      .withOptions({
-        skipInstall: true
-      })
-      .withPrompts({
-        name: 'foo/bar',
-        tag: 'foo-bar'
-      })
-      .on('end', function () {
-        assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar.js" ) ), "bar.js exists" );
-        assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar_test.js" ) ), "bar_test.js exists" );
-        assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar.html" ) ), "bar.html exists" );
-        done();
-      });
+    it('works with a .component type', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'basics'), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'home.component'
+        })
+        .on('end', function () {
+          assert(fs.existsSync(path.join(tmpDir, 'src', 'home.component')),
+                 'home.component exists');
+          done();
+        });
+    });
+
+    it('can provide a name that includes the package name', function(done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'basics'), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'basics/foo/bar',
+          tag: 'foo-bar'
+        })
+        .on('end', function () {
+          assert(fs.existsSync(path.join(tmpDir, 'src', 'foo', 'bar', 'bar.js')),
+                 'created at the right place');
+          done();
+        });
+    });
+
+    it('works with no directories.lib', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", "no_directories" ), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'foo/bar',
+          tag: 'foo-bar'
+        })
+        .on('end', function () {
+          assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar.js" ) ), "bar.js exists" );
+          assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar_test.js" ) ), "bar_test.js exists" );
+          assert( fs.existsSync( path.join( tmpDir, "foo", "bar", "bar.html" ) ), "bar.html exists" );
+          done();
+        });
+    });
+
+    it('Errors when a package is not found', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join(__dirname, 'tests', 'empty'), dir);
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'foo/bar',
+          tag: 'foo-bar'
+        })
+        .on('error', function(err) {
+          var msg = err.message;
+          assert(/Expected to find/.test(msg), 'Correct error message');
+          done();
+        });
+    });
   });
 });

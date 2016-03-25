@@ -2,15 +2,7 @@ var validate = require("validate-npm-package-name");
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
-var makeVersionList = function(list) {
-  return Object.keys(list).map(function(key) {
-    return key + '@' + list[key];
-  });
-};
 var npmVersion = require('../lib/utils').npmVersion;
-var npmOptions = function(options){
-  return _.extend({ loglevel: 'error' }, options);
-};
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -108,9 +100,14 @@ module.exports = generators.Base.extend({
         this.props = _.extend(this.props, props);
         this.props.name = _.kebabCase(this.props.name);
 
-        if(!validate(this.props.name)) {
-          throw new Error('Your project name ' + this.props.name + ' is not' +
-            'valid. Please try another name.')
+        var validationResults = validate(this.props.name);
+        var isValid = validationResults.validForNewPackages;
+
+        if(!isValid) {
+          var warnings = validationResults.warnings;
+          var error = new Error('Your project name ' + this.props.name + ' is not ' +
+            'valid. Please try another name. Reason: ' + warnings[0]);
+          done(error);
           return;
         }
 
