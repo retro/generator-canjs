@@ -1,10 +1,11 @@
 var generators = require('yeoman-generator');
-var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
+  templatePath: utils.templatePath(path.join('.donejs', 'templates', 'component')),
+
   constructor: function () {
     generators.Base.apply(this, arguments);
 
@@ -120,8 +121,8 @@ module.exports = generators.Base.extend({
 			});
 
 			var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
-			utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/')
-					+ '/' + name + '_test');
+			utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/') +
+        '/' + name + '_test');
 		}
     done();
   }

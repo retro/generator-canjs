@@ -5,6 +5,8 @@ var _ = require('lodash');
 var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
+  templatePath: utils.templatePath(path.join('.donejs', 'templates', 'module')),
+  
   constructor: function () {
     generators.Base.apply(this, arguments);
 
