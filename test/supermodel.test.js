@@ -36,6 +36,32 @@ describe('generator-donejs', function () {
         });
     });
 
+    it('allows to override template files', function (done) {
+      var source = path.join(__dirname, 'tests', 'override', 'override.js');
+      var tmpDir, target;
+
+      helpers.run(path.join(__dirname, '../supermodel'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          target = path.join(dir, '.donejs', 'templates', 'supermodel', 'model_test.js');
+          fs.copySync(path.join( __dirname, 'tests', 'basics' ), dir);
+          fs.copySync(source, target);
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'messages',
+          url: '  /messages',
+          idProp: "id"
+        })
+        .on('end', function () {
+          assert.fileContent(path.join(tmpDir, 'src', 'models', 'messages_test.js'),
+            /Overriden messages test file/);
+          done();
+        });
+    });
+
     it('Errors when a package is not found', function (done) {
       var tmpDir;
 

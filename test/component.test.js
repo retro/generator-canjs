@@ -101,5 +101,30 @@ describe('generator-donejs', function () {
           done();
         });
     });
+
+    it('allows to override template files', function (done) {
+      var source = path.join(__dirname, 'tests', 'override', 'override.js');
+      var tmpDir, target;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          target = path.join(dir, '.donejs', 'templates', 'component', 'modlet', 'component_test.js');
+          fs.copySync(path.join( __dirname, "tests", 'basics'), dir);
+          fs.copySync(source, target);
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'dummy',
+          tag: 'dummy-component'
+        })
+        .on('end', function () {
+          assert.fileContent(path.join(tmpDir, 'src', 'dummy', 'dummy_test.js'),
+            /Overriden dummy test file/);
+          done();
+        });
+    });
   });
 });

@@ -6,6 +6,8 @@ var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
+  templatePath: utils.templatePath(path.join('.donejs', 'templates', 'supermodel')),
+  
   constructor: function () {
     generators.Base.apply(this, arguments);
 
