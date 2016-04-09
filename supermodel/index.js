@@ -16,7 +16,7 @@ module.exports = generators.Base.extend({
     this.argument('name', {
       type: String,
       required: false,
-      desc: 'The name for you model (e.g. order)'
+      desc: 'The name for the model (e.g. order)'
     });
 
     this.modelFiles = [
