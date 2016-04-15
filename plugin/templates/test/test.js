@@ -1,1 +1,1 @@
-import '../<%= name %>_test';
+import '../<%= (folder && folder !== '.') ? folder + "/" : '' %><%= name %>_test';
