@@ -70,6 +70,7 @@ module.exports = generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.props = _.extend(this.props, props);
       this.props.name = _.kebabCase(this.props.name);
+      this.props.addName = this.props.name.replace('donejs-', '');
       done();
     }.bind(this));
   },
