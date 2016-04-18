@@ -19,12 +19,12 @@ module.exports = generators.Base.extend({
     this.mainFiles = [
       'documentjs.json',
       'readme.md',
-      '_gitignore'
+      '_gitignore',
+      'test/test.html',
+      'test/test.js',
     ];
 
     this.srcFiles = [
-      'test/test.html',
-      'test/test.js',
       'plugin_test.js',
       'plugin.js',
       'plugin.md'
@@ -97,6 +97,8 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
+    var jshintFolder = this.props.folder && this.props.folder !== '.' ?
+      ' ./' + this.props.folder + '/' : '';
     var pkgJsonFields = {
       name: this.props.name,
       version: '0.0.0',
@@ -112,9 +114,9 @@ module.exports = generators.Base.extend({
         preversion: "npm test && npm run build",
         version: "git commit -am \"Update dist for release\" && git checkout -b release && git add -f dist/",
         postversion: "git push --tags && git checkout master && git branch -D release && git push",
-        testee: "testee src/test/test.html --browsers firefox",
+        testee: "testee test/test.html --browsers firefox",
         test: "npm run jshint && npm run testee",
-        jshint: "jshint src/. --config",
+        jshint: "jshint ./*.js" + jshintFolder + " --config",
         "release:patch": "npm version patch && npm publish",
         "release:minor": "npm version minor && npm publish",
         "release:major": "npm version major && npm publish",
@@ -132,9 +134,6 @@ module.exports = generators.Base.extend({
       keywords: this.props.keywords,
       system: {
         main: this.props.name,
-        directories: {
-          lib: this.props.folder
-        },
         configDependencies: [ 'live-reload' ],
         npmIgnore: [
           'documentjs',
@@ -146,6 +145,10 @@ module.exports = generators.Base.extend({
       }
     };
 
+    if(this.props.folder && this.props.folder !== '.') {
+      pkgJsonFields.system.directories = { lib: this.props.folder };
+    }
+    
     if(this.props.npmVersion >= 3) {
       pkgJsonFields.system.npmAlgorithm = 'flat';
     }
