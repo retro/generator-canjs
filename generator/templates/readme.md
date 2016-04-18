@@ -7,7 +7,7 @@
 
 ## Using the generator
 
-To add this generator to you DoneJS application run
+To add this generator to your DoneJS application, run
 
 ```
 donejs add <%= addName %>
