@@ -1,6 +1,7 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
+
 var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
@@ -58,6 +59,7 @@ module.exports = generators.Base.extend({
   writing: function () {
     var self = this;
     var done = this.async();
+    _.mixin(require("lodash-inflection"));
 
     var pkg = utils.getPkgOrBail(this, done);
     if(!pkg) {
@@ -91,7 +93,7 @@ module.exports = generators.Base.extend({
     utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
 
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
-    utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
+    utils.addImport(fixturesFile, appName + '/models/fixtures/' + _.pluralize(options.name));
     done();
   }
 });
