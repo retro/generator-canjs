@@ -15,7 +15,7 @@ donejs add <%= addName %>
 
 ## Developing
 
-To make changes to this generator clone the repository and install the dependencies
+To make changes to this generator, clone the repository and install the dependencies
 
 ```
 git clone git@github.com:<%= githubAccount %>/<%= name %>.git
