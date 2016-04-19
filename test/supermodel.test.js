@@ -214,5 +214,70 @@ describe('generator-donejs', function () {
       });
 
     });
+
+    describe('Fixtures should be in plural names',function(){
+      it('makes regular plural names', function (done) {
+        var tmpDir;
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            tmpDir = dir;
+            fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'message',
+            url: '  /messages',
+            idProp: "id"
+          })
+          .on('end', function () {
+            assert( fs.existsSync( path.join(tmpDir, "src","models", "fixtures", "messages.js")), "messages.js exists" );
+            done();
+          });
+      });
+
+      it('makes irregular plural names', function (done) {
+        var tmpDir;
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            tmpDir = dir;
+            fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'person',
+            url: '  /people',
+            idProp: "id"
+          })
+          .on('end', function () {
+            assert( fs.existsSync(path.join(tmpDir, "src","models", "fixtures", "people.js")), "people.js exists" );
+            done();
+          });
+      });
+
+      it('makes uncountable plural names', function (done) {
+        var tmpDir;
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            tmpDir = dir;
+            fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'equipment',
+            url: '  /equipment',
+            idProp: "id"
+          })
+          .on('end', function () {
+            assert( fs.existsSync( path.join( tmpDir, "src", "models", "fixtures", "equipment.js" ) ), "equipment.js exists" );
+            done();
+          });
+      });
+    });
   });
 });

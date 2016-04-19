@@ -81,7 +81,12 @@ module.exports = generators.Base.extend({
     }
 
     this.modelFiles.forEach(function(name) {
-      var target = name.replace('model', options.name);
+      var target;
+      if (name == 'fixtures/model.js')  {
+        target = name.replace('model', _.pluralize(options.name));
+      } else {
+        target = name.replace('model', options.name);
+      }
       self.fs.copyTpl(
         self.templatePath(name),
         self.destinationPath(path.join(folder, 'models', target)),
@@ -91,7 +96,6 @@ module.exports = generators.Base.extend({
 
     var modelTest = this.destinationPath(path.join(folder, 'models', 'test.js'));
     utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
-
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + _.pluralize(options.name));
     done();
