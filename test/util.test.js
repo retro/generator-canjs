@@ -25,6 +25,18 @@ describe('generator:utils', function() {
 
         assert(/import foo from 'foo';/.test(testFile), 'correctly written');
       });
+
+      it('doesn\'t add extra newlines', function() {
+        var tmpDir = this.tmpDir;
+        var f = path.join(tmpDir, 'test.js');
+        fs.writeFileSync(f, 'import bar from \'bar\'\n', 'utf8');
+
+        utils.addImport(f, 'foo', 'foo');
+        utils.addImport(f, 'bar', 'bar');
+        var testFile = fs.readFileSync(f);
+
+        assert(!(/\n\n\n/.test(testFile)), 'should not have multiple newlines in a row');
+      });
     });
   });
 });
