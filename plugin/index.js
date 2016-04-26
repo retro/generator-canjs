@@ -104,7 +104,10 @@ module.exports = generators.Base.extend({
       version: '0.0.0',
       description: this.props.description,
       homepage: this.props.homepage,
-      repository: this.props.repository,
+      repository: {
+        type: 'git',
+        url: 'git://github.com/' +  this.props.githubAccount + '/' + this.props.name + '.git'
+      },
       author: {
         name: this.props.authorName,
         email: this.props.authorEmail,
