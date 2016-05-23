@@ -27,4 +27,18 @@ describe('generator:utils', function() {
       });
     });
   });
+
+  describe('toNpmInstallStrings', function() {
+    it('works', function(){
+      var deps = {
+        foo: "^1.0.0",
+        bar: "~2.0.0"
+      };
+      var strings = utils.toNpmInstallStrings(deps);
+
+      assert.equal(strings.length, 2, "There are two deps");
+      assert.equal(strings[0], "foo@^1.0.0");
+      assert.equal(strings[1], "bar@~2.0.0");
+    });
+  });
 });
