@@ -1,6 +1,8 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
+var packages = require('./packages');
+var utils = require('../lib/utils');
 
 module.exports = generators.Base.extend({
   initializing: function () {
@@ -14,7 +16,7 @@ module.exports = generators.Base.extend({
       homepage: this.pkg.homepage,
       repository: this.pkg.repository
     };
-    
+
     this.mainFiles = [
       '_gitignore',
       'license.md',
@@ -27,7 +29,7 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
     var done = this.async();
-    
+
     var prompts = [{
       name: 'name',
       message: 'Project name',
@@ -77,7 +79,7 @@ module.exports = generators.Base.extend({
 
   writing: function () {
     var self = this;
-    
+
     this.fs.writeJSON('package.json', {
       name: this.props.name,
       version: '0.0.0',
@@ -102,13 +104,16 @@ module.exports = generators.Base.extend({
       },
       keywords: this.props.keywords
     });
-    
-    this.npmInstall(['yeoman-generator', 'lodash'], { 'save': true });
-    this.npmInstall(['mocha', 'jshint', 'yeoman-assert', 'yeoman-test'], { 'saveDev': true });
+
+    var deps = utils.toNpmInstallStrings(packages.dependencies);
+    var devDeps = utils.toNpmInstallStrings(packages.devDependencies);
+
+    this.npmInstall(deps, { 'save': true });
+    this.npmInstall(devDeps, { 'saveDev': true });
 
     this.fs.copy(this.templatePath('static'), this.destinationPath());
     this.fs.copy(this.templatePath('static/.*'), this.destinationPath());
-    
+
     this.mainFiles.forEach(function(name) {
       // Handle bug where npm has renamed .gitignore to .npmignore
       // https://github.com/npm/npm/issues/3763
