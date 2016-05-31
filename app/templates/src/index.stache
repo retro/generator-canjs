@@ -3,7 +3,7 @@
     <title>{{title}}</title>
   </head>
   <body>
-    <can-import from="<%= name %>/styles.less!" />
+    <can-import from="<%= name %>/styles.less" />
     <can-import from="<%= name %>/app" export-as="viewModel" />
 
     <h1>{{message}}</h1>

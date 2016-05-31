@@ -1,15 +1,15 @@
-import can from 'can';
+import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/';
 import superMap from 'can-connect/can/super-map/';
 import tag from 'can-connect/can/tag/';
-import 'can/map/define/define';
 
-export const <%= className %> = can.Map.extend({
-  define: {}
+export const <%= className %> = DefineMap.extend({
+  "*": "string"
 });
 
-<%= className %>.List = can.List.extend({
-  Map: <%= className %>
-}, {});
+<%= className %>.List = DefineList.extend({
+  "*": <%= className %>
+});
 
 export const <%= name %>Connection = superMap({
   url: '<%= url %>',
