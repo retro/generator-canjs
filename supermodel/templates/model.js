@@ -4,11 +4,13 @@ import superMap from 'can-connect/can/super-map/';
 import tag from 'can-connect/can/tag/';
 
 export const <%= className %> = DefineMap.extend({
-  "*": "string"
+  seal: false
+}, {
+  '<%= idProp %>': '*'
 });
 
 <%= className %>.List = DefineList.extend({
-  "*": <%= className %>
+  '*': <%= className %>
 });
 
 export const <%= name %>Connection = superMap({
