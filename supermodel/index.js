@@ -1,6 +1,7 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
+
 var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
@@ -58,6 +59,7 @@ module.exports = generators.Base.extend({
   writing: function () {
     var self = this;
     var done = this.async();
+    _.mixin(require("lodash-inflection"));
 
     var pkg = utils.getPkgOrBail(this, done);
     if(!pkg) {
@@ -79,7 +81,12 @@ module.exports = generators.Base.extend({
     }
 
     this.modelFiles.forEach(function(name) {
-      var target = name.replace('model', options.name);
+      var target;
+      if (name == 'fixtures/model.js')  {
+        target = name.replace('model', _.pluralize(options.name));
+      } else {
+        target = name.replace('model', options.name);
+      }
       self.fs.copyTpl(
         self.templatePath(name),
         self.destinationPath(path.join(folder, 'models', target)),
@@ -89,9 +96,8 @@ module.exports = generators.Base.extend({
 
     var modelTest = this.destinationPath(path.join(folder, 'models', 'test.js'));
     utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
-
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
-    utils.addImport(fixturesFile, appName + '/models/fixtures/' + options.name);
+    utils.addImport(fixturesFile, appName + '/models/fixtures/' + _.pluralize(options.name));
     done();
   }
 });
