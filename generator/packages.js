@@ -1,6 +1,6 @@
 module.exports = {
   dependencies: {
-    "yeoman-generator": "^0.20.2",
+    "yeoman-generator": "0.20.2",
     "lodash": "^4.13.1"
   },
   devDependencies: {
