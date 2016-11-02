@@ -1,0 +1,81 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn install
+
+PATH: 
+  /home/frank/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/frank/bin
+
+Yarn version: 
+  0.16.1
+
+Node version: 
+  7.0.0
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "generator-canjs",
+    "version": "0.0.16",
+    "description": "CanJS generator for Yeoman",
+    "keywords": [
+      "yeoman-generator",
+      "canjs",
+      "canjs-generator"
+    ],
+    "homepage": "https://github.com/retro/generator-canjs",
+    "bugs": "https://github.com/retro/generator-canjs/issues",
+    "author": {
+      "name": "Mihael Konjević",
+      "email": "konjevic@gmail.com",
+      "url": "https://github.com/retro"
+    },
+    "main": "app/index.js",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/retro/generator-canjs.git"
+    },
+    "scripts": {
+      "test": "npm run test:jshint && npm run test:mocha",
+      "test:mocha": "mocha",
+      "test:jshint": "jshint ./ --config .jshintrc",
+      "install": "echo node install.js && echo npm info",
+      "publish": "git push origin --all && git push origin --tags",
+      "release:prerelease": "yarn publish --new-version prerelease",
+      "release:patch": "yarn publish --new-version patch",
+      "release:minor": "yarn publish --new-version minor",
+      "release:major": "yarn publish --new-version major"
+    },
+    "dependencies": {
+      "yeoman-generator": "~0.13.4",
+      "underscore.inflections": "~0.1.5",
+      "chalk" : "~0.2.0"
+    },
+    "devDependencies": {
+      "mocha": "~1.9.0"
+    },
+    "peerDependencies": {
+      "yo": ">=1.0.4"
+    },
+    "engines": {
+      "node": ">=0.8.0",
+      "npm": ">=1.2.10"
+    },
+    "licenses": [
+      {
+        "type": "MIT"
+      }
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+bower manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: EACCES: permission denied, mkdir '/home/frank/workspace/DIREKTSPEED/src/generator-canjs/node_modules/balanced-match'
