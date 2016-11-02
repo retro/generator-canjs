@@ -1,0 +1,23 @@
+<!-- CanJS v3.0.x -->
+<can-component tag="<%= tag %>">
+  <style type="less">
+    display: block;
+
+    p { font-weight: bold; }
+  </style>
+  <template>
+    <p>{{message}}</p>
+  </template>
+  <script type="view-model">
+    import Map from 'can/map/';
+    import 'can/map/define/';
+
+    export default Map.extend({
+      define: {
+        message: {
+          value: 'This is the <%= tag %> component'
+        }
+      }
+    });
+  </script>
+</can-component>

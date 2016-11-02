@@ -1,2 +1,4 @@
-node_modules/
+node_modules/*
+!node_modules/generator-donejs
+!node_modules/generator-canjs
 temp/
