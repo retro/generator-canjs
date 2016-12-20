@@ -1,5 +1,6 @@
 var assert = require('assert');
 var path = require('path');
+var fs = require('fs');
 var helpers = require('yeoman-generator').test;
 var exec = require('child_process').exec;
 var donejsPackage = require('donejs-cli/package.json');
@@ -41,12 +42,8 @@ describe('generator-donejs', function () {
     });
 
     it('fails with an invalid package name', function (done) {
-      var tmpDir;
 
       helpers.run(path.join(__dirname, '../app'))
-        .inTmpDir(function (dir) {
-          tmpDir = dir;
-        })
         .withOptions({
           packages: donejsPackage.donejs,
           skipInstall: true
@@ -60,7 +57,55 @@ describe('generator-donejs', function () {
           done();
         });
     });
+  });
 
+  describe('Absolute path support', function() {
+    before(function(done) {
+      helpers.run(path.join(__dirname, '../app'))
+        .inTmpDir(function (dir) {
+          this.withPrompts({
+            folder: path.join(fs.realpathSync(dir), 'src')
+          })
+        })
+        .withOptions({
+          packages: donejsPackage.donejs,
+          skipInstall: true
+        })
+        .on('end', function() {
+          done();
+        })
+    });
+
+    it('set relative path name', function() {
+      assert.jsonFileContent('package.json', {
+        system: {
+          directories: {
+            lib: 'src'
+          }
+        }
+      });
+    });
+  });
+
+  describe('External path will error', function() {
+    it("fails with external path", function(done) {
+      helpers.run(path.join(__dirname, '../app'))
+        .inTmpDir(function (dir) {
+          this.withPrompts({
+            folder: path.join(fs.realpathSync(dir), '..', 'src')
+          })
+        })
+        .withOptions({
+          packages: donejsPackage.donejs,
+          skipInstall: true
+        })
+        .on('error', function(err){
+          var msg = err.message;
+          console.log(msg);
+          assert(/is external/.test(msg), 'Error because of invalid external folder path');
+          done();
+        });
+    });
   });
 
   describe('NPM 3 support', function(){

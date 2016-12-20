@@ -151,7 +151,7 @@ module.exports = generators.Base.extend({
     if(this.props.folder && this.props.folder !== '.') {
       pkgJsonFields.system.directories = { lib: this.props.folder };
     }
-    
+
     if(this.props.npmVersion >= 3) {
       pkgJsonFields.system.npmAlgorithm = 'flat';
     }
@@ -170,12 +170,12 @@ module.exports = generators.Base.extend({
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
       dependencies: {
         'can': getDependency('can'),
-        'jquery': getDependency('jquery')
+        'jquery': getDependency('jquery'),
+        'cssify': '^0.6.0'
       },
       devDependencies: {
         'documentjs': getDependency('documentjs'),
         'jshint': '^2.9.1',
-        'cssify': '^0.6.0',
         'steal': getDependency('steal'),
         'steal-qunit': getDependency('steal-qunit'),
         'steal-tools': getDependency('steal-tools'),
