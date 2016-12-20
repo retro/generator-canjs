@@ -152,8 +152,8 @@ module.exports = generators.Base.extend({
       pkgJsonFields.system.directories = { lib: this.props.folder };
     }
 
-    if(this.props.npmVersion >= 3) {
-      pkgJsonFields.system.npmAlgorithm = 'flat';
+    if(this.props.npmVersion < 3) {
+      pkgJsonFields.system.npmAlgorithm = 'nested';
     }
 
     if(!this.options.packages) {

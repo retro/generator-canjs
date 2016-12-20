@@ -163,8 +163,8 @@ module.exports = generators.Base.extend({
       }
     };
 
-    if(this.props.npmVersion >= 3) {
-      pkgJsonFields.system.npmAlgorithm = 'flat';
+    if(this.props.npmVersion < 3) {
+      pkgJsonFields.system.npmAlgorithm = 'nested';
     }
 
     if(!this.options.packages) {

@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './<%= name %>.less';
-import template from './<%= name %>.stache';
+import view from './<%= name %>.stache';
 
 export const ViewModel = DefineMap.extend({
   message: {
@@ -11,6 +11,6 @@ export const ViewModel = DefineMap.extend({
 
 export default Component.extend({
   tag: '<%= tag %>',
-  ViewModel: ViewModel,
-  template
+  ViewModel,
+  view
 });

@@ -138,9 +138,9 @@ describe('generator-donejs', function () {
           var npmAlgorithm = pkg.system.npmAlgorithm;
 
           if(major >= 3) {
-            assert.equal(npmAlgorithm, 'flat', 'If the user is using npm 3 or greater then npmAlgorithm should be "flat"');
+            assert.equal(npmAlgorithm, undefined, 'If the user is using npm 3 or greater then npmAlgorithm should not be set');
           } else {
-            assert.equal(npmAlgorithm, undefined, 'If the user is using npm 2 or less then npmAlgorithm should not be set');
+            assert.equal(npmAlgorithm, 'nested', 'If the user is using npm 2 or less then npmAlgorithm should be "nested"');
           }
 
           done();
