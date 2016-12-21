@@ -33,7 +33,7 @@ describe('generator-donejs:plugin', function () {
         pipe(child);
 
         child.on('exit', function (status) {
-          assert.equal(status, 0, 'Got correct exist status');
+          assert.equal(status, 0, 'Got correct exit status');
           
           child = exec('npm run build', {
             cwd: tmpDir
@@ -41,7 +41,7 @@ describe('generator-donejs:plugin', function () {
 
           pipe(child);
           child.on('exit', function(status) {
-            assert.equal(status, 0, 'Got correct exist status');
+            assert.equal(status, 0, 'Got correct exit status');
             done();
           });
         });
