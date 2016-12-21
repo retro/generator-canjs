@@ -35,7 +35,7 @@ describe('generator-donejs', function () {
           pipe(child);
 
           child.on('exit', function (status) {
-            assert.equal(status, 0, 'Got correct exist status');
+            assert.equal(status, 0, 'Got correct exit status');
             done();
           });
         });
