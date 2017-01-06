@@ -78,7 +78,7 @@ describe('generator-donejs', function () {
 
     it('set relative path name', function() {
       assert.jsonFileContent('package.json', {
-        system: {
+        steal: {
           directories: {
             lib: 'src'
           }
@@ -118,7 +118,7 @@ describe('generator-donejs', function () {
       });
     });
 
-    it('npmAlgorithm flag set if using NPM 3+', function(done){
+    it('npmAlgorithm flag set if using NPM < 3', function(done){
       var major = this.npmVersion.major;
       var tmpDir;
 
@@ -135,7 +135,7 @@ describe('generator-donejs', function () {
         })
         .on('end', function () {
           var pkg = require(tmpDir + '/package.json');
-          var npmAlgorithm = pkg.system.npmAlgorithm;
+          var npmAlgorithm = pkg.steal.npmAlgorithm;
 
           if(major >= 3) {
             assert.equal(npmAlgorithm, undefined, 'If the user is using npm 3 or greater then npmAlgorithm should not be set');

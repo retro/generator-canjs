@@ -73,7 +73,7 @@ module.exports = generators.Base.extend({
 
 		var parts = this.name.split('/');
 		var name = _.last(parts);
-		var folder = _.get(pkg, 'system.directories.lib') || "./";
+		var folder = _.get(pkg, 'steal.directories.lib') || "./";
 		var appName = _.get(pkg, 'name');
     // If we generate a component with the same name as the application
     var isRootComponent = name === appName;
