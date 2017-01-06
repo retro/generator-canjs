@@ -153,18 +153,18 @@ module.exports = generators.Base.extend({
       main: pkgMain,
       files: [this.props.folder],
       keywords: this.props.keywords,
-      system: {
-				main: pkgMain,
+      steal: {
+        main: pkgMain,
         directories: {
           lib: this.props.folder
         },
         configDependencies: [ 'live-reload', 'node_modules/can-zone/register' ],
-        transpiler: 'babel'
+        plugins: [ 'steal-less' ]
       }
     };
 
     if(this.props.npmVersion < 3) {
-      pkgJsonFields.system.npmAlgorithm = 'nested';
+      pkgJsonFields.steal.npmAlgorithm = 'nested';
     }
 
     if(!this.options.packages) {

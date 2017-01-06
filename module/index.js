@@ -47,11 +47,11 @@ module.exports = generators.Base.extend({
 			self.log.error("No package.json file not found at "+pkgFile);
 			process.exit(1);
 		}
-		var folder = _.get(pkg, 'system.directories.lib');
+		var folder = _.get(pkg, 'steal.directories.lib');
 		var appName = _.get(pkg, 'name');
 
 		if (folder == null || appName == null) {
-			self.log.error("The 'name' or 'system.directories.lib' is not specified in your package.json file.");
+			self.log.error("The 'name' or 'steal.directories.lib' is not specified in your package.json file.");
 			process.exit(1);
 		}
 

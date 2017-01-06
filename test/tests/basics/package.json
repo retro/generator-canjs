@@ -2,7 +2,7 @@
 	"name": "basics",
 	"main": "index.js",
 	"version": "1.0.0",
-  "system": {
+  "steal": {
     "directories": {
       "lib": "src"
     }

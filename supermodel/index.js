@@ -66,7 +66,7 @@ module.exports = generators.Base.extend({
       return;
     }
 
-    var folder = _.get(pkg, 'system.directories.lib') || './';
+    var folder = _.get(pkg, 'steal.directories.lib') || './';
     var appName = _.get(pkg, 'name');
 
     var options = {

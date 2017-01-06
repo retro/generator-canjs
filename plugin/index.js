@@ -135,7 +135,7 @@ module.exports = generators.Base.extend({
        transform: [ "cssify" ]
       },
       keywords: this.props.keywords,
-      system: {
+      steal: {
         main: this.props.name,
         configDependencies: [ 'live-reload' ],
         npmIgnore: [
@@ -149,11 +149,11 @@ module.exports = generators.Base.extend({
     };
 
     if(this.props.folder && this.props.folder !== '.') {
-      pkgJsonFields.system.directories = { lib: this.props.folder };
+      pkgJsonFields.steal.directories = { lib: this.props.folder };
     }
 
     if(this.props.npmVersion < 3) {
-      pkgJsonFields.system.npmAlgorithm = 'nested';
+      pkgJsonFields.steal.npmAlgorithm = 'nested';
     }
 
     if(!this.options.packages) {
