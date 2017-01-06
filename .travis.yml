@@ -1,8 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - "iojs"
-  - "node"
+  - "4"
+  - "6"
+  - "7"
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
