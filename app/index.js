@@ -159,7 +159,7 @@ module.exports = generators.Base.extend({
           lib: this.props.folder
         },
         configDependencies: [ 'live-reload', 'node_modules/can-zone/register' ],
-        plugins: [ 'steal-less' ]
+        plugins: [ 'steal-less', 'steal-stache' ]
       }
     };
 

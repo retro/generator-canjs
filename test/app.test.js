@@ -147,4 +147,29 @@ describe('generator-donejs', function () {
         });
     });
   });
+
+  it('steal-less and steal-stache are added as steal plugins', function(done) {
+    var tmpDir;
+
+    helpers.run(path.join(__dirname, '../app'))
+      .inTmpDir(function (dir) {
+        tmpDir = dir;
+      })
+      .withOptions({
+        packages: donejsPackage.donejs,
+        skipInstall: true
+      })
+      .withPrompts({
+        name: 'place-my-npm'
+      })
+      .on('end', function () {
+        var pkg = require(tmpDir + '/package.json');
+        var plugins = pkg.steal.plugins;
+
+        assert.ok(plugins.indexOf('steal-less') >= 0, 'plugins config should contain steal-less');
+        assert.ok(plugins.indexOf('steal-stache') >= 0, 'plugins config should contain steal-stache');
+
+        done();
+      });
+  });
 });
