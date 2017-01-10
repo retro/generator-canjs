@@ -1,6 +1,6 @@
 {
   "name": "generator-donejs",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "A generator for your DoneJS application",
   "homepage": "http://donejs.com/",
   "license": "MIT",
