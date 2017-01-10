@@ -4,9 +4,9 @@
 
     p { font-weight: bold; }
   </style>
-  <template>
+  <view>
     <p>{{message}}</p>
-  </template>
+  </view>
   <script type="view-model">
     import DefineMap from 'can-define/map/';
 
