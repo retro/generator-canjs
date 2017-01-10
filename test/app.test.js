@@ -168,6 +168,7 @@ describe('generator-donejs', function () {
 
         assert.ok(plugins.indexOf('steal-less') >= 0, 'plugins config should contain steal-less');
         assert.ok(plugins.indexOf('steal-stache') >= 0, 'plugins config should contain steal-stache');
+        assert.ok(plugins.indexOf('done-component') >= 0, 'plugins config should contain done-component');
 
         done();
       });
