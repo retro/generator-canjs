@@ -159,7 +159,12 @@ module.exports = generators.Base.extend({
           lib: this.props.folder
         },
         configDependencies: [ 'live-reload', 'node_modules/can-zone/register' ],
-        plugins: [ 'done-css', 'done-component', 'steal-less', 'steal-stache' ]
+        plugins: [ 'done-css', 'done-component', 'steal-less', 'steal-stache' ],
+        envs: {
+          'server-production': {
+            renderingBaseURL: 'dist'
+          }
+        }
       }
     };
 
