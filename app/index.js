@@ -162,7 +162,7 @@ module.exports = generators.Base.extend({
         plugins: [ 'done-css', 'done-component', 'steal-less', 'steal-stache' ],
         envs: {
           'server-production': {
-            renderingBaseURL: 'dist'
+            renderingBaseURL: '/dist'
           }
         }
       }
