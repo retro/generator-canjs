@@ -1,10 +1,12 @@
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
 
-module.exports = generators.Base.extend({
-  initializing: function () {
+module.exports = Generator.extend({
+  constructor: function(args, opts) {
+    Generator.call(this, args, opts);
+
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     // Pre set the default props from the information we have at this point
@@ -31,7 +33,7 @@ module.exports = generators.Base.extend({
     ];
   },
 
-  prompting: function () {
+  prompting: function() {
     var done = this.async();
 
     npmVersion(function(err, version){
@@ -87,7 +89,7 @@ module.exports = generators.Base.extend({
         default: version.major
       }];
 
-      this.prompt(prompts, function (props) {
+      this.prompt(prompts).then(function(props) {
         this.props = _.extend(this.props, props);
         this.props.name = _.kebabCase(this.props.name);
         done();
@@ -95,7 +97,7 @@ module.exports = generators.Base.extend({
     }.bind(this));
   },
 
-  writing: function () {
+  writing: function() {
     var self = this;
     var jshintFolder = this.props.folder && this.props.folder !== '.' ?
       ' ./' + this.props.folder + '/' : '';
@@ -208,7 +210,7 @@ module.exports = generators.Base.extend({
     });
   },
 
-  end: function () {
+  end: function() {
     if(!this.options.skipInstall) {
       var done = this.async();
       this.spawnCommand('npm', ['--loglevel', 'error', 'install']).on('close', done);
