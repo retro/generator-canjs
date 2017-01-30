@@ -1,6 +1,6 @@
 var assert = require('assert');
 var path = require('path');
-var fs = require('fs');
+var fs = require('fs-extra');
 var helpers = require('yeoman-test');
 var exec = require('child_process').exec;
 var donejsPackage = require('donejs-cli/package.json');
@@ -28,6 +28,8 @@ describe('generator-donejs', function () {
           name: 'place-my-tmp'
         })
         .on('end', function () {
+          prepareRoutingTest(tmpDir);
+
           child = exec('npm test', {
             cwd: tmpDir
           });
@@ -175,3 +177,64 @@ describe('generator-donejs', function () {
       });
   });
 });
+
+/**
+ * To test hashtag routing we need to:
+ * - copy routing test into generated project test folder;
+ * - import the test in test.js;
+ * - add routing to the app;
+ * - add a UI element for routing (ahref going to /dashboard).
+ */
+function prepareRoutingTest(tmpDir){
+  // copy extra test files into tmpDir/src/test folder:
+  fs.copySync(path.join(__dirname, 'app_tests/routing.test.js'), path.join(tmpDir, 'src/test/routing.test.js'));
+
+  // import the copied test in test.js (note that it refers project name):
+  fs.appendFileSync(path.join(tmpDir, 'src/test/test.js'), '\nimport "place-my-tmp/test/routing.test";\n');
+
+  // add page property to AppViewModel
+  insert(
+    path.join(tmpDir, 'src/app.js'),
+    function(a){ return a.search('message') !== -1; },
+    'page: \'string\',',
+    true
+  );
+
+  // add routing into app.js:
+  // route('/:page', {page: 'home'});
+  fs.appendFileSync(path.join(tmpDir, 'src/app.js'), '\nroute("/:page", {page: "home"});\n');
+
+  // add a button for navigation into index.stache after H1:
+  insert(
+    path.join(tmpDir, 'src/index.stache'),
+    function(a){ return a.search('<h1>') !== -1; },
+    '<can-import from="can-stache/helpers/route" />' +
+    '<a id="goto-dashboard" href="{{routeUrl page=\'dashboard\'}}">Goto Dashboard</a>'
+  );
+}
+
+/**
+ * Injects a string into a file after the line that passes the given testFn.
+ * @param fileName
+ * @param insertion
+ * @param testFn
+ */
+function insert(fileName, testFn, insertion, after){
+  var content = fs.readFileSync(fileName),
+    lines = content.toString().split('\n');
+
+  // empty file:
+  fs.truncateSync(fileName, 0);
+
+  lines.forEach(function(line){
+    if (!after) {
+      fs.appendFileSync(fileName, line + '\n');
+    }
+    if (testFn(line)){
+      fs.appendFileSync(fileName, insertion + '\n');
+    }
+    if (after) {
+      fs.appendFileSync(fileName, line + '\n');
+    }
+  });
+}
