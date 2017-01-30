@@ -1,13 +1,13 @@
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var utils = require('../lib/utils');
 
-module.exports = generators.Base.extend({
-  templatePath: utils.templatePath(path.join('.donejs', 'templates', 'component')),
+module.exports = Generator.extend({
+  constructor: function(args, opts) {
+    Generator.call(this, args, opts);
 
-  constructor: function () {
-    generators.Base.apply(this, arguments);
+    this.templatePath = utils.templatePath(path.join('.donejs', 'templates', 'component'));
 
     this.argument('name', {
       type: String,
@@ -32,14 +32,14 @@ module.exports = generators.Base.extend({
     ];
   },
 
-	prompting: function () {
+  prompting: function() {
 		var done = this.async();
 		this.prompt({
 			name: 'name',
 			message: 'What is the module name of your component (e.g. pmo/home or pmo/home.component)?',
 			required: true,
 			when: !this.name
-		}, function (first) {
+		}).then(function(first) {
 			var name = this.name = this.name || first.name;
 
 			this.isDoneComponent = this.name.indexOf('.component') !== -1;
@@ -53,7 +53,7 @@ module.exports = generators.Base.extend({
         when: !this.tag
 			}];
 
-			this.prompt(prompts, function (props) {
+			this.prompt(prompts).then(function(props) {
 				_.extend(this, props);
 
 				done();
@@ -61,7 +61,7 @@ module.exports = generators.Base.extend({
 		}.bind(this));
 	},
 
-	writing: function () {
+  writing: function() {
 		var isDoneComponent = this.isDoneComponent;
 		var self = this;
     var done = this.async();

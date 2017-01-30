@@ -1,4 +1,4 @@
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 
@@ -6,11 +6,11 @@ var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
 
-module.exports = generators.Base.extend({
-  templatePath: utils.templatePath(path.join('.donejs', 'templates', 'supermodel')),
-  
-  constructor: function () {
-    generators.Base.apply(this, arguments);
+module.exports = Generator.extend({
+  constructor: function(args, opts) {
+    Generator.call(this, args, opts);
+
+    this.templatePath = utils.templatePath(path.join('.donejs', 'templates', 'supermodel'));
 
     this.props = {};
 
@@ -27,7 +27,7 @@ module.exports = generators.Base.extend({
     ];
   },
 
-  prompting: function () {
+  prompting: function() {
     var done = this.async();
 
 		this.prompt({
@@ -36,7 +36,7 @@ module.exports = generators.Base.extend({
 			required: true,
 			message: 'The name for you model (e.g. order)',
 			when: !this.name
-		}, function (first) {
+		}).then(function(first) {
 			var name = this.name = this.name || first.name;
 			var prompts = [{
 				name: 'url',
@@ -48,7 +48,7 @@ module.exports = generators.Base.extend({
 				default: 'id'
 			}];
 
-			this.prompt(prompts, function (props) {
+			this.prompt(prompts).then(function(props) {
 				this.props = _.extend(this.props, props);
 
 				done();
@@ -56,7 +56,7 @@ module.exports = generators.Base.extend({
 		}.bind(this));
   },
 
-  writing: function () {
+  writing: function() {
     var self = this;
     var done = this.async();
     _.mixin(require("lodash-inflection"));

@@ -1,10 +1,10 @@
 var validate = require("validate-npm-package-name");
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
 
-module.exports = generators.Base.extend({
+module.exports = Generator.extend({
   initializing: function () {
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
@@ -96,7 +96,7 @@ module.exports = generators.Base.extend({
         default: version.major
       }];
 
-      this.prompt(prompts, function (props) {
+      this.prompt(prompts).then(function(props) {
         this.props = _.extend(this.props, props);
         this.props.name = _.kebabCase(this.props.name);
 
@@ -128,8 +128,8 @@ module.exports = generators.Base.extend({
   },
 
   writing: function () {
-		var pkgName = this.props.name;
-		var pkgMain = pkgName + '/index.stache!done-autorender';
+    var pkgName = this.props.name;
+    var pkgMain = pkgName + '/index.stache!done-autorender';
 
     var self = this;
     var pkgJsonFields = {

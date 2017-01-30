@@ -1,11 +1,13 @@
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 var packages = require('./packages');
 var utils = require('../lib/utils');
 
-module.exports = generators.Base.extend({
-  initializing: function () {
+module.exports = Generator.extend({
+  constructor: function(args, opts) {
+    Generator.call(this, args, opts);
+
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     // Pre set the default props from the information we have at this point
@@ -27,7 +29,7 @@ module.exports = generators.Base.extend({
     ];
   },
 
-  prompting: function () {
+  prompting: function() {
     var done = this.async();
 
     var prompts = [{
@@ -69,7 +71,7 @@ module.exports = generators.Base.extend({
       filter: _.words
     }];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts).then(function(props) {
       this.props = _.extend(this.props, props);
       this.props.name = _.kebabCase(this.props.name);
       this.props.addName = this.props.name.replace('donejs-', '');
@@ -77,7 +79,7 @@ module.exports = generators.Base.extend({
     }.bind(this));
   },
 
-  writing: function () {
+  writing: function() {
     var self = this;
 
     this.fs.writeJSON('package.json', {
