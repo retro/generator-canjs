@@ -29,7 +29,7 @@ module.exports = generators.Base.extend({
 		this.prompt({
 			name: 'name',
 			message: 'What is the name of your module (e.g. my/module)?',
-			required: true,
+			validate: utils.validateRequired,
 			when: !this.name
 		}, function (prompt) {
       _.extend(this, prompt);

@@ -33,7 +33,7 @@ module.exports = Generator.extend({
 		this.prompt({
 			name: 'name',
 			type: String,
-			required: true,
+			validate: utils.validateRequired,
 			message: 'The name for you model (e.g. order)',
 			when: !this.name
 		}).then(function(first) {
