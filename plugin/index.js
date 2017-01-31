@@ -19,7 +19,6 @@ module.exports = Generator.extend({
     };
 
     this.mainFiles = [
-      'documentjs.json',
       'readme.md',
       '_gitignore',
       'test/test.html',
@@ -28,8 +27,7 @@ module.exports = Generator.extend({
 
     this.srcFiles = [
       'plugin_test.js',
-      'plugin.js',
-      'plugin.md'
+      'plugin.js'
     ];
   },
 
@@ -126,7 +124,6 @@ module.exports = Generator.extend({
         "release:minor": "npm version minor && npm publish",
         "release:major": "npm version major && npm publish",
         build: "node build.js",
-        document: "documentjs",
         develop: "done-serve --static --develop --port 8080"
       },
       main: "dist/cjs/" + this.props.name,
@@ -141,7 +138,6 @@ module.exports = Generator.extend({
         main: this.props.name,
         configDependencies: [ 'live-reload' ],
         npmIgnore: [
-          'documentjs',
           'testee',
           'generator-donejs',
           'donejs-cli',
@@ -176,7 +172,6 @@ module.exports = Generator.extend({
         'cssify': '^0.6.0'
       },
       devDependencies: {
-        'documentjs': getDependency('documentjs'),
         'jshint': '^2.9.1',
         'steal': getDependency('steal'),
         'steal-qunit': getDependency('steal-qunit'),

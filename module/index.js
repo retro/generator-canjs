@@ -18,7 +18,6 @@ module.exports = Generator.extend({
 
     this.moduleFiles = [
       'module.js',
-      'module.md',
       'test.html',
       'module_test.js'
     ];

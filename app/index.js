@@ -19,7 +19,6 @@ module.exports = Generator.extend({
 
     this.mainFiles = [
       'readme.md',
-      'documentjs.json',
       '_gitignore',
       'build.js',
       'production.html',
@@ -30,7 +29,6 @@ module.exports = Generator.extend({
       'test.html',
       'app.js',
       'index.stache',
-      'index.md',
       'styles.less',
       'test.html',
       'test/test.js',
@@ -147,7 +145,6 @@ module.exports = Generator.extend({
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'done-serve --port 8080',
         develop: "done-serve --develop --port 8080",
-        document: "documentjs",
         build: "node build"
       },
       main: pkgMain,
