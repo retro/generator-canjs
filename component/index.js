@@ -37,7 +37,7 @@ module.exports = Generator.extend({
 		this.prompt({
 			name: 'name',
 			message: 'What is the module name of your component (e.g. pmo/home or pmo/home.component)?',
-			required: true,
+			validate: utils.validateRequired,
 			when: !this.name
 		}).then(function(first) {
 			var name = this.name = this.name || first.name;

@@ -53,4 +53,10 @@ describe('generator:utils', function() {
       assert.equal(strings[1], "bar@~2.0.0");
     });
   });
+
+  it('validateRequired', function() {
+    assert.ok(!utils.validateRequired(''), 'empty string should fail validation');
+    assert.ok(!utils.validateRequired(), 'not passing a value should fail validation');
+    assert.ok(utils.validateRequired('name'), 'passing a value passes validation');
+  });
 });
