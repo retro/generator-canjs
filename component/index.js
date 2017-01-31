@@ -24,7 +24,6 @@ module.exports = Generator.extend({
     this.modletFiles = [
       'modlet/component.html',
       'modlet/component.js',
-      'modlet/component.md',
       'modlet/component.less',
       'modlet/component.stache',
       'modlet/component_test.js',

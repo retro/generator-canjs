@@ -1,5 +1,0 @@
-@page <%= name %>
-
-# <%= name %>
-
-<%= description %>
