@@ -1,7 +1,8 @@
-var generator = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 
-module.exports = generator.Base.extend({
-  initializing: function () {
+module.exports = Generator.extend({
+  constructor: function(args, opts) {
+    Generator.call(this, args, opts);
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     
     this.files = [
@@ -16,7 +17,7 @@ module.exports = generator.Base.extend({
       type    : 'input',
       name    : 'name',
       message : 'What is the name of the file?'
-    }], function (answers) {
+    }]).then(function(answers) {
       this.props = answers;
       done();
     }.bind(this));
