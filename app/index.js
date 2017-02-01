@@ -29,6 +29,7 @@ module.exports = Generator.extend({
       'test.html',
       'app.js',
       'index.stache',
+      'index.md',
       'styles.less',
       'test.html',
       'test/test.js',
