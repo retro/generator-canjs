@@ -27,7 +27,8 @@ module.exports = Generator.extend({
 
     this.srcFiles = [
       'plugin_test.js',
-      'plugin.js'
+      'plugin.js',
+      'plugin.md'
     ];
   },
 
