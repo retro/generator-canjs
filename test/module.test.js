@@ -73,5 +73,27 @@ describe('generator-donejs', function() {
           done();
         });
     });
+
+    it('passing arguments works', function(done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../module'))
+        .inTmpDir(function(dir) {
+          var done = this.async();
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'basics'), dir);
+          done();
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withArguments([
+          'foo-bar'
+        ])
+        .on('end', function() {
+          assert( fs.existsSync( path.join( tmpDir, "src", "foo-bar", "foo-bar.js" ) ), "foo-bar.js exists" );
+          done();
+        });
+    });
   });
 });

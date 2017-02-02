@@ -30,9 +30,9 @@ module.exports = Generator.extend({
       name: 'name',
       message: 'What is the name of your module (e.g. my/module)?',
       validate: utils.validateRequired,
-      when: !this.name
+      when: !this.options.name
     }).then(function(prompt) {
-      _.extend(this, prompt);
+      _.extend(this.options, prompt);
       done();
     }.bind(this));
   },
@@ -40,7 +40,7 @@ module.exports = Generator.extend({
   writing: function () {
     var self = this;
     var pkgFile = this.destinationPath('package.json');
-    var parts = this.name.split('/');
+    var parts = this.options.name.split('/');
     var name = _.last(parts);
     var pkg = this.fs.readJSON(pkgFile, false);
     if(pkg === false) {

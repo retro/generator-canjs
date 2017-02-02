@@ -30,30 +30,30 @@ module.exports = Generator.extend({
   prompting: function() {
     var done = this.async();
 
-		this.prompt({
-			name: 'name',
-			type: String,
-			validate: utils.validateRequired,
-			message: 'The name for you model (e.g. order)',
-			when: !this.name
-		}).then(function(first) {
-			var name = this.name = this.name || first.name;
-			var prompts = [{
-				name: 'url',
-				message: 'What is the URL endpoint?',
-				default: '/' + name
-			}, {
-				name: 'idProp',
-				message: 'What is the property name of the id?',
-				default: 'id'
-			}];
+    this.prompt({
+      name: 'name',
+      type: String,
+      validate: utils.validateRequired,
+      message: 'The name for you model (e.g. order)',
+      when: !this.options.name
+    }).then(function(first) {
+      var name = this.options.name = this.options.name || first.name;
+      var prompts = [{
+        name: 'url',
+        message: 'What is the URL endpoint?',
+        default: '/' + name
+      }, {
+        name: 'idProp',
+        message: 'What is the property name of the id?',
+        default: 'id'
+      }];
 
-			this.prompt(prompts).then(function(props) {
-				this.props = _.extend(this.props, props);
+      this.prompt(prompts).then(function(props) {
+        this.props = _.extend(this.props, props);
 
-				done();
-			}.bind(this));
-		}.bind(this));
+        done();
+      }.bind(this));
+    }.bind(this));
   },
 
   writing: function() {
@@ -70,13 +70,13 @@ module.exports = Generator.extend({
     var appName = _.get(pkg, 'name');
 
     var options = {
-      className: upperFirst(_.camelCase(this.name)),
-      name: this.name,
+      className: upperFirst(_.camelCase(this.options.name)),
+      name: this.options.name,
       url: this.props.url.trim(),
       idProp: this.props.idProp
     };
 
-    if(this.name === 'test') {
+    if(this.options.name === 'test') {
       throw new Error('Supermodel can not be named "test"');
     }
 
