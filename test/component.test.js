@@ -126,5 +126,29 @@ describe('generator-donejs', function () {
           done();
         });
     });
+
+    it('works with passed arguments', function (done) {
+      var tmpDir;
+      debugger;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'basics'), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withArguments([
+          'foo/bar',
+          'foo-bar'
+        ])
+        .on('end', function () {
+          assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar.js" ) ), "bar.js exists" );
+          assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar_test.js" ) ), "bar_test.js exists" );
+          assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar.html" ) ), "bar.html exists" );
+          done();
+        });
+    });
   });
 });

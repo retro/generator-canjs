@@ -157,16 +157,16 @@ describe('generator-donejs', function () {
       it('Copies the right files', function () {
         var tmpDir = this.tmpDir;
         assert(fs.existsSync(path.join(tmpDir, 'src', "models", "messages.js")),
-               "messages.js exists");
+          "messages.js exists");
         assert(fs.existsSync(path.join(tmpDir, 'src', "models",
-                                       "messages_test.js")),
-               "messages_test.js exists");
+          "messages_test.js")),
+        "messages_test.js exists");
       });
 
       it('Updates the models/test.js file without replacing', function() {
         var tmpDir = this.tmpDir;
         var testFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
-                                                 'test.js'), 'utf8');
+          'test.js'), 'utf8');
 
         assert(/foo_test/.test(testFile), 'foo_test still in the file');
         assert(/messages_test/.test(testFile), 'messages_test added');
@@ -175,7 +175,7 @@ describe('generator-donejs', function () {
       it('Updates the models/fixtures/fixtures.js file without replacing', function() {
         var tmpDir = this.tmpDir;
         var fixFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
-                                                'fixtures', 'fixtures.js'), 'utf8');
+          'fixtures', 'fixtures.js'), 'utf8');
 
         assert(/fixtures\/foo/.test(fixFile), 'Existing fixtures remain');
         assert(/fixtures\/messages/.test(fixFile), 'New fixture added');
@@ -207,7 +207,7 @@ describe('generator-donejs', function () {
       it('Doesn\'t update the test.js file twice', function() {
         var tmpDir = this.tmpDir;
         var testFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
-                                                 'test.js'), 'utf8');
+          'test.js'), 'utf8');
 
         var times = testHelpers.appearances("messages_test", testFile);
         assert.equal(times, 1, 'Only appears once');
@@ -278,6 +278,30 @@ describe('generator-donejs', function () {
             done();
           });
       });
+    });
+
+    it('using arguments works', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../supermodel'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", "basics" ), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withArguments([
+          'messages',
+        ])
+        .withPrompts({
+          url: '  /messages',
+          idProp: "id"
+        })
+        .on('end', function () {
+          assert( fs.existsSync( path.join( tmpDir, "src", "models", "messages.js" ) ), "bar.js exists" );
+          done();
+        });
     });
   });
 });
