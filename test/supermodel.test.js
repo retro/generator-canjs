@@ -31,7 +31,10 @@ describe('generator-donejs', function () {
           idProp: "id"
         })
         .on('end', function () {
-          assert( fs.existsSync( path.join( tmpDir, "src", "models", "messages.js" ) ), "bar.js exists" );
+          assert(fs.existsSync(path.join(tmpDir, "src", "models", "messages.js")),
+            "bar.js exists" );
+          assert.fileContent(path.join(tmpDir, 'src', 'models', 'messages.js'),
+            /serviceBaseURL/, "serviceBaseURL included");
           done();
         });
     });
@@ -107,6 +110,58 @@ describe('generator-donejs', function () {
           assert(fs.existsSync(path.join(tmpDir, "models", "fixtures", "messages.js")), "messages.js exists");
           done();
         });
+    });
+
+    describe('Providing a full URL', function(){
+      it('Sets the package.json serviceBaseURL if answered to', function (done) {
+        var tmpDir;
+
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            tmpDir = dir;
+            fs.copySync(path.join(__dirname, "tests", "basics"), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'messages',
+            url: 'https://example.com/messages',
+            useServiceBaseURL: true,
+            idProp: "id"
+          })
+          .on('end', function () {
+            var pkg = require(path.join(tmpDir, "package.json"));
+            assert.equal(pkg.steal.serviceBaseURL, 'https://example.com');
+
+            done();
+          });
+      });
+
+      it('Doesn\'t set serviceBaseURL if answer that not the base url', function(done) {
+        var tmpDir;
+
+        helpers.run(path.join(__dirname, '../supermodel'))
+          .inTmpDir(function (dir) {
+            tmpDir = dir;
+            fs.copySync(path.join(__dirname, "tests", "basics"), dir)
+          })
+          .withOptions({
+            skipInstall: true
+          })
+          .withPrompts({
+            name: 'messages',
+            url: 'https://example.com/messages',
+            useServiceBaseURL: false,
+            idProp: "id"
+          })
+          .on('end', function () {
+            var pkg = require(path.join(tmpDir, "package.json"));
+            assert.equal(pkg.steal.serviceBaseURL, undefined);
+
+            done();
+          });
+      });
     });
 
     it('Errors when a test has an invalid name', function (done) {
