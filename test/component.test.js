@@ -129,7 +129,6 @@ describe('generator-donejs', function () {
 
     it('works with passed arguments', function (done) {
       var tmpDir;
-      debugger;
 
       helpers.run(path.join(__dirname, '../component'))
         .inTmpDir(function (dir) {
@@ -147,6 +146,29 @@ describe('generator-donejs', function () {
           assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar.js" ) ), "bar.js exists" );
           assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar_test.js" ) ), "bar_test.js exists" );
           assert( fs.existsSync( path.join( tmpDir, "src", "foo", "bar", "bar.html" ) ), "bar.html exists" );
+          done();
+        });
+    });
+
+    it('adds import to test/test.js', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../component'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'existing'), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'foo/bar',
+          tag: 'foo-bar'
+        })
+        .on('end', function () {
+          var testFile = fs.readFileSync(path.join(tmpDir, "src", "test", "test.js"), "utf8");
+          assert(/foo_test/.test(testFile), "foo_test still exists in the file");
+          assert(/bar_test/.test(testFile), "bar_test imported by test/test.js");
           done();
         });
     });
