@@ -95,5 +95,27 @@ describe('generator-donejs', function() {
           done();
         });
     });
+
+    it('adds import to test/test.js', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../module'))
+        .inTmpDir(function(dir) {
+          tmpDir = dir;
+          fs.copySync(path.join( __dirname, "tests", 'existing'), dir)
+        })
+        .withOptions({
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'foo-bar'
+        })
+        .on('end', function () {
+          var testFile = fs.readFileSync(path.join(tmpDir, "src", "test", "test.js"), "utf8");
+          assert(/foo_test/.test(testFile), "foo_test still exists in the file");
+          assert(/foo-bar_test/.test(testFile), "foo-bar_test imported by test/test.js");
+          done();
+        });
+    });
   });
 });

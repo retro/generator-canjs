@@ -75,5 +75,9 @@ module.exports = Generator.extend({
         options
       );
     });
+
+    var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
+    utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/') +
+      '/' + name + '_test');
   }
 });
