@@ -44,7 +44,6 @@ describe('generator-donejs', function () {
     });
 
     it('fails with an invalid package name', function (done) {
-
       helpers.run(path.join(__dirname, '../app'))
         .withOptions({
           packages: donejsPackage.donejs,
@@ -59,6 +58,21 @@ describe('generator-donejs', function () {
           done();
         });
     });
+
+    it('fails if there are no packages', function(done) {
+      helpers.run(path.join(__dirname, '../app'))
+        .withOptions({
+          packages: null,
+          skipInstall: true
+        })
+        .withPrompts({
+          name: 'place-my-tmp'
+        })
+        .on('error', function(err){
+          assert(true, 'An error for not providing packages');
+          done();
+        });
+    })
   });
 
   describe('Absolute path support', function() {

@@ -162,7 +162,8 @@ module.exports = Generator.extend({
           'server-production': {
             renderingBaseURL: '/dist'
           }
-        }
+        },
+        serviceBaseURL: ''
       }
     };
 

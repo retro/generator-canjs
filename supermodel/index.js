@@ -1,7 +1,8 @@
 var Generator = require('yeoman-generator');
+var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
-
+var URL = require('whatwg-url').URL;
 var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
@@ -30,6 +31,10 @@ module.exports = Generator.extend({
   prompting: function() {
     var done = this.async();
 
+    function addToProps(props){
+      this.props = _.extend(this.props, props);
+    }
+
     this.prompt({
       name: 'name',
       type: String,
@@ -38,20 +43,49 @@ module.exports = Generator.extend({
       when: !this.options.name
     }).then(function(first) {
       var name = this.options.name = this.options.name || first.name;
-      var prompts = [{
+
+      var prompt = {
         name: 'url',
         message: 'What is the URL endpoint?',
         default: '/' + name
-      }, {
-        name: 'idProp',
-        message: 'What is the property name of the id?',
-        default: 'id'
-      }];
+      };
 
-      this.prompt(prompts).then(function(props) {
-        this.props = _.extend(this.props, props);
+      var promptId = function() {
+        var prompt = {
+          name: 'idProp',
+          message: 'What is the property name of the id?',
+          default: 'id'
+        };
 
-        done();
+        return this.prompt(prompt).then(addToProps.bind(this)).then(function(){
+          done();
+        });
+      }.bind(this);
+
+      this.prompt(prompt).then(function(answer){
+        var rawUrl = answer.url.trim();
+        try {
+          var url = new URL(rawUrl);
+          var urlPath = url.pathname;
+          url.pathname = '';
+          var serviceBaseURL = utils.removeSlash(url.toString());
+
+          var prompt = {
+            name: 'useServiceBaseURL',
+            message: 'Is ' + serviceBaseURL + ' your service URL?',
+            type: Boolean
+          };
+          this.prompt(prompt).then(function(answer){
+            this.props.serviceBaseURL = answer.useServiceBaseURL &&
+              serviceBaseURL;
+            this.props.url = answer.useServiceBaseURL ? urlPath : rawUrl;
+
+            return promptId();
+          }.bind(this));
+        } catch(ex) {
+          this.props.url = answer.url;
+          return promptId();
+        }
       }.bind(this));
     }.bind(this));
   },
@@ -69,10 +103,16 @@ module.exports = Generator.extend({
     var folder = _.get(pkg, 'steal.directories.lib') || './';
     var appName = _.get(pkg, 'name');
 
+    if(this.props.serviceBaseURL) {
+      pkg.steal.serviceBaseURL = this.props.serviceBaseURL;
+      var pkgPath = this.destinationPath('package.json');
+      fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, ' '), 'utf8');
+    }
+
     var options = {
       className: upperFirst(_.camelCase(this.options.name)),
       name: this.options.name,
-      url: this.props.url.trim(),
+      url: this.props.url,
       idProp: this.props.idProp
     };
 
@@ -98,6 +138,7 @@ module.exports = Generator.extend({
     utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + _.pluralize(options.name));
+
     done();
   }
 });

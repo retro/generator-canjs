@@ -2,6 +2,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import superMap from 'can-connect/can/super-map/';
 import tag from 'can-connect/can/tag/';
+import loader from '@loader';
 
 export const <%= className %> = DefineMap.extend({
   seal: false
@@ -14,7 +15,7 @@ export const <%= className %> = DefineMap.extend({
 });
 
 export const <%= name %>Connection = superMap({
-  url: '<%= url %>',
+  url: loader.serviceBaseURL + '<%= url %>',
   idProp: '<%= idProp %>',
   Map: <%= className %>,
   List: <%= className %>.List,
