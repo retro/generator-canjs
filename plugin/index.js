@@ -23,6 +23,7 @@ module.exports = Generator.extend({
       '_gitignore',
       'test/test.html',
       'test/test.js',
+      'index.html'
     ];
 
     this.srcFiles = [
