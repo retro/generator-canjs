@@ -59,4 +59,9 @@ describe('generator:utils', function() {
     assert.ok(!utils.validateRequired(), 'not passing a value should fail validation');
     assert.ok(utils.validateRequired('name'), 'passing a value passes validation');
   });
+
+  it('validateTagName', function() {
+    assert.ok(utils.validateTagName('abc-xyz'), 'should return true for valid names');
+    assert.ok(/abc is not a valid tag name/.test(utils.validateTagName('abc')), 'should return warning message for invalid names');
+  });
 });
