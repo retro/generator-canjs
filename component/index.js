@@ -50,7 +50,8 @@ module.exports = Generator.extend({
         name: 'tag',
         message: 'The tag name of the component',
         default: tag,
-        when: !this.options.tag
+        when: !this.options.tag,
+        validate: utils.validateTagName
       }];
 
       this.prompt(prompts).then(function(props) {

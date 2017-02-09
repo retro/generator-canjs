@@ -37,6 +37,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "is-valid-element-name": "^1.0.0",
     "lodash": "^3.10.0",
     "lodash-inflection": "^1.3.2",
     "lodash.upperfirst": "^4.1.2",
