@@ -1,4 +1,5 @@
 import fixture from 'can-fixture';
+import <%= className %> from '../<%= name %>';
 
 const store = fixture.store([{
   <%= idProp %>: 0,
@@ -6,14 +7,8 @@ const store = fixture.store([{
 }, {
   <%= idProp %>: 1,
   description: 'Second item'
-}]);
+}], <%= className %>.connection.algebra);
 
-fixture({
-  'GET <%= url %>': store.findAll,
-  'GET <%= url %>/{<%= idProp %>}': store.findOne,
-  'POST <%= url %>': store.create,
-  'PUT <%= url %>/{<%= idProp %>}': store.update,
-  'DELETE <%= url %>/{<%= idProp %>}': store.destroy
-});
+fixture('<%= url %>/{<%= idProp %>', store);
 
 export default store;
