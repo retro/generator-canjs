@@ -10,7 +10,7 @@ const <%= className %> = DefineMap.extend({
   '<%= idProp %>': '*'
 });
 
-const algebra = set.Algebra(
+const algebra = new set.Algebra(
   set.props.id('<%= idProp %>')
 );
 
