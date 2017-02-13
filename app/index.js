@@ -60,7 +60,8 @@ module.exports = Generator.extend({
       }, {
         name: 'description',
         message: 'Description',
-        when: !this.pkg.description
+        when: !this.pkg.description,
+        default: 'An awesome DoneJS app'
       }, {
         name: 'homepage',
         message: 'Project homepage url',
@@ -129,6 +130,11 @@ module.exports = Generator.extend({
   writing: function () {
     var pkgName = this.props.name;
     var pkgMain = pkgName + '/index.stache!done-autorender';
+    var repository = this.props.repository || {
+      type: 'git',
+      url: 'git+https://github.com/' + (this.props.githubAccount || 'donejs-user') +
+        '/' + pkgName + '.git'
+    };
 
     var self = this;
     var pkgJsonFields = {
@@ -136,12 +142,14 @@ module.exports = Generator.extend({
       version: '0.0.0',
       description: this.props.description,
       homepage: this.props.homepage,
-      repository: this.props.repository,
+      repository: repository,
       author: {
         name: this.props.authorName,
         email: this.props.authorEmail,
         url: this.props.authorUrl
       },
+      license: 'UNLICENSED',
+      private: true,
       scripts: {
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'done-serve --port 8080',
