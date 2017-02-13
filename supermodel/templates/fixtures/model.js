@@ -9,6 +9,6 @@ const store = fixture.store([{
   description: 'Second item'
 }], <%= className %>.connection.algebra);
 
-fixture('<%= url %>/{<%= idProp %>', store);
+fixture('<%= url %>/{<%= idProp %>}', store);
 
 export default store;
