@@ -1,4 +1,4 @@
-var Generator = require('yeoman-generator');
+var BaseGenerator = require('../lib/baseGenerator');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -7,9 +7,9 @@ var utils = require('../lib/utils');
 var upperFirst = require("lodash.upperfirst");
 var utils = require('../lib/utils');
 
-module.exports = Generator.extend({
+module.exports = BaseGenerator.extend({
   constructor: function(args, opts) {
-    Generator.call(this, args, opts);
+    BaseGenerator.call(this, args, opts);
 
     this.templatePath = utils.templatePath(path.join('.donejs', 'templates', 'supermodel'));
 
