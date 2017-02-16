@@ -1,11 +1,13 @@
 var validate = require("validate-npm-package-name");
-var Generator = require('yeoman-generator');
+var BaseGenerator = require('../lib/baseGenerator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
 
-module.exports = Generator.extend({
-  initializing: function () {
+module.exports = BaseGenerator.extend({
+  constructor: function(args, opts) {
+    BaseGenerator.call(this, args, opts);
+
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     // Pre set the default props from the information we have at this point

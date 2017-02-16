@@ -72,7 +72,7 @@ describe('generator-donejs', function () {
           assert(true, 'An error for not providing packages');
           done();
         });
-    })
+    });
   });
 
   describe('Absolute path support', function() {
@@ -189,6 +189,62 @@ describe('generator-donejs', function () {
 
         done();
       });
+  });
+
+  describe('if user can\'t write to ~/yo-rc-global.json', function() {
+    var globalConfigPath, globalConfigPermissions;
+
+    beforeEach(function() {
+      var userHome, fileStats;
+
+      userHome = require('user-home');
+      globalConfigPath = path.join(userHome, '.yo-rc-global.json');
+
+      if (!fs.existsSync(globalConfigPath)) {
+        fs.writeJSONSync(globalConfigPath, {});
+      }
+
+      fileStats = fs.statSync(globalConfigPath);
+      globalConfigPermissions = fileStats['mode'];
+
+      // change permissions of global config
+      fs.chmodSync(globalConfigPath, 0);
+    });
+
+    afterEach(function() {
+      // restore permissions of global config
+      fs.chmodSync(globalConfigPath, globalConfigPermissions);
+    });
+
+    it('works', function (done) {
+      var tmpDir;
+
+      helpers.run(path.join(__dirname, '../app'))
+        .inTmpDir(function (dir) {
+          tmpDir = dir;
+        })
+        .withOptions({
+          packages: donejsPackage.donejs,
+          skipInstall: true,
+          // make sure yeoman tries to write to .yo-rc files
+          skipCache: false
+        })
+        .withPrompts({
+          name: 'place-my-tmp',
+          // make sure to set prompts that are `store: true`
+          authorName: 'Joe Programmer',
+          authorEmail: 'joe@program.mer',
+          authorUrl: 'www.program.mer'
+        })
+        .on('end', function () {
+          assert(true, 'completed successfully');
+          done();
+        })
+        .on('error', function(err){
+          assert(false, err);
+          done();
+        });
+    });
   });
 });
 

@@ -1,11 +1,11 @@
-var Generator = require('yeoman-generator');
+var BaseGenerator = require('../lib/baseGenerator');
 var path = require('path');
 var _ = require('lodash');
 var npmVersion = require('../lib/utils').npmVersion;
 
-module.exports = Generator.extend({
+module.exports = BaseGenerator.extend({
   constructor: function(args, opts) {
-    Generator.call(this, args, opts);
+    BaseGenerator.call(this, args, opts);
 
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
