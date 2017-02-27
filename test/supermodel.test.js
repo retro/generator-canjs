@@ -46,7 +46,7 @@ describe('generator-donejs', function () {
       helpers.run(path.join(__dirname, '../supermodel'))
         .inTmpDir(function (dir) {
           tmpDir = dir;
-          target = path.join(dir, '.donejs', 'templates', 'supermodel', 'model_test.js');
+          target = path.join(dir, '.donejs', 'templates', 'supermodel', 'model-test.js');
           fs.copySync(path.join( __dirname, 'tests', 'basics' ), dir);
           fs.copySync(source, target);
         })
@@ -59,7 +59,7 @@ describe('generator-donejs', function () {
           idProp: "id"
         })
         .on('end', function () {
-          assert.fileContent(path.join(tmpDir, 'src', 'models', 'messages_test.js'),
+          assert.fileContent(path.join(tmpDir, 'src', 'models', 'messages-test.js'),
             /Overriden messages test file/);
           done();
         });
@@ -106,7 +106,7 @@ describe('generator-donejs', function () {
         })
         .on('end', function () {
           assert(fs.existsSync(path.join(tmpDir, "models", "messages.js")), "messages.js exists");
-          assert(fs.existsSync(path.join(tmpDir, "models", "messages_test.js")), "messages.js exists");
+          assert(fs.existsSync(path.join(tmpDir, "models", "messages-test.js")), "messages.js exists");
           assert(fs.existsSync(path.join(tmpDir, "models", "fixtures", "messages.js")), "messages.js exists");
           done();
         });
@@ -214,8 +214,8 @@ describe('generator-donejs', function () {
         assert(fs.existsSync(path.join(tmpDir, 'src', "models", "messages.js")),
           "messages.js exists");
         assert(fs.existsSync(path.join(tmpDir, 'src', "models",
-          "messages_test.js")),
-        "messages_test.js exists");
+          "messages-test.js")),
+        "messages-test.js exists");
       });
 
       it('Updates the models/test.js file without replacing', function() {
@@ -223,8 +223,8 @@ describe('generator-donejs', function () {
         var testFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
           'test.js'), 'utf8');
 
-        assert(/foo_test/.test(testFile), 'foo_test still in the file');
-        assert(/messages_test/.test(testFile), 'messages_test added');
+        assert(/foo-test/.test(testFile), 'foo-test still in the file');
+        assert(/messages-test/.test(testFile), 'messages-test added');
       });
 
       it('Updates the models/fixtures/fixtures.js file without replacing', function() {
@@ -264,7 +264,7 @@ describe('generator-donejs', function () {
         var testFile = fs.readFileSync(path.join(tmpDir, 'src', 'models',
           'test.js'), 'utf8');
 
-        var times = testHelpers.appearances("messages_test", testFile);
+        var times = testHelpers.appearances("messages-test", testFile);
         assert.equal(times, 1, 'Only appears once');
       });
 

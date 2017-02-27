@@ -24,7 +24,7 @@ module.exports = BaseGenerator.extend({
     this.modelFiles = [
       'fixtures/model.js',
       'model.js',
-      'model_test.js'
+      'model-test.js'
     ];
   },
 
@@ -135,7 +135,7 @@ module.exports = BaseGenerator.extend({
     });
 
     var modelTest = this.destinationPath(path.join(folder, 'models', 'test.js'));
-    utils.addImport(modelTest, appName + '/models/' + options.name + '_test');
+    utils.addImport(modelTest, appName + '/models/' + options.name + '-test');
     var fixturesFile = this.destinationPath(path.join(folder, 'models', 'fixtures', 'fixtures.js'));
     utils.addImport(fixturesFile, appName + '/models/fixtures/' + _.pluralize(options.name));
 

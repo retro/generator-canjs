@@ -35,7 +35,7 @@ describe('generator-donejs', function() {
       helpers.run(path.join(__dirname, '../module'))
         .inTmpDir(function (dir) {
           tmpDir = dir;
-          target = path.join(dir, '.donejs', 'templates', 'module', 'module_test.js');
+          target = path.join(dir, '.donejs', 'templates', 'module', 'module-test.js');
           fs.copySync(path.join( __dirname, "tests", 'basics'), dir);
           fs.copySync(source, target);
         })
@@ -46,7 +46,7 @@ describe('generator-donejs', function() {
           name: 'foo-bar'
         })
         .on('end', function () {
-          assert.fileContent(path.join( tmpDir, "src", "foo-bar", "foo-bar_test.js" ),
+          assert.fileContent(path.join( tmpDir, "src", "foo-bar", "foo-bar-test.js" ),
             /Overriden foo-bar test file/);
           done();
         });
@@ -111,9 +111,9 @@ describe('generator-donejs', function() {
           name: 'foo-bar'
         })
         .on('end', function () {
-          var testFile = fs.readFileSync(path.join(tmpDir, "src", "test", "test.js"), "utf8");
-          assert(/foo_test/.test(testFile), "foo_test still exists in the file");
-          assert(/foo-bar_test/.test(testFile), "foo-bar_test imported by test/test.js");
+          var testFile = fs.readFileSync(path.join(tmpDir, "src", "test.js"), "utf8");
+          assert(/foo-test/.test(testFile), "foo-test still exists in the file");
+          assert(/foo-bar-test/.test(testFile), "foo-bar-test imported by test.js");
           done();
         });
     });
