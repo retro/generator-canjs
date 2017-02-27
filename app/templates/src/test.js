@@ -1,11 +1,13 @@
 import F from 'funcunit';
 import QUnit from 'steal-qunit';
 
+import '<%= name %>/models/test';
+
 F.attach(QUnit);
 
 QUnit.module('<%= name %> functional smoke test', {
   beforeEach() {
-    F.open('../development.html');
+    F.open('./development.html');
   }
 });
 
