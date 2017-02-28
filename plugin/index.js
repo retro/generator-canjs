@@ -21,15 +21,15 @@ module.exports = BaseGenerator.extend({
     this.mainFiles = [
       'readme.md',
       '_gitignore',
-      'test/test.html',
-      'test/test.js',
+      'test.html',
       'index.html'
     ];
 
     this.srcFiles = [
-      'plugin_test.js',
+      'plugin-test.js',
       'plugin.js',
-      'plugin.md'
+      'plugin.md',
+      'test.js'
     ];
   },
 
@@ -119,7 +119,7 @@ module.exports = BaseGenerator.extend({
         preversion: "npm test && npm run build",
         version: "git commit -am \"Update dist for release\" && git checkout -b release && git add -f dist/",
         postversion: "git push --tags && git checkout master && git branch -D release && git push",
-        testee: "testee test/test.html --browsers firefox",
+        testee: "testee test.html --browsers firefox",
         test: "npm run jshint && npm run testee",
         jshint: "jshint ./*.js" + jshintFolder + " --config",
         "release:patch": "npm version patch && npm publish",

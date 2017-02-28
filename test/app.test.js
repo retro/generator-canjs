@@ -260,7 +260,7 @@ function prepareRoutingTest(tmpDir){
   fs.copySync(path.join(__dirname, 'app_tests/routing.test.js'), path.join(tmpDir, 'src/test/routing.test.js'));
 
   // import the copied test in test.js (note that it refers project name):
-  fs.appendFileSync(path.join(tmpDir, 'src/test/test.js'), '\nimport "place-my-tmp/test/routing.test";\n');
+  fs.appendFileSync(path.join(tmpDir, 'src/test.js'), '\nimport "place-my-tmp/test/routing.test";\n');
 
   // add page property to AppViewModel
   insert(

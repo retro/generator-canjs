@@ -7,36 +7,90 @@ var path = require('path');
 
 describe('generator:utils', function() {
   describe('addImport', function() {
-    describe('Adding a named import', function() {
-      before(function() {
-        var dir = this.tmpDir = testHelpers.tmpdir();
-        mkdirp.sync(dir);
+    beforeEach(function() {
+      var dir = this.tmpDir = testHelpers.tmpdir();
+      mkdirp.sync(dir);
 
-        var f = path.join(dir, 'test.js');
-        fs.writeFileSync(f, '', 'utf8');
-      });
+      var f = path.join(dir, 'test.js');
+      fs.writeFileSync(f, '', 'utf8');
+    });
 
-      it('works', function() {
-        var tmpDir = this.tmpDir;
-        var f = path.join(tmpDir, 'test.js');
+    it('Adding a named import', function() {
+      var tmpDir = this.tmpDir;
+      var f = path.join(tmpDir, 'test.js');
 
-        utils.addImport(f, 'foo', 'foo');
-        var testFile = fs.readFileSync(f);
+      utils.addImport(f, 'foo', 'foo');
 
-        assert(/import foo from 'foo';/.test(testFile), 'correctly written');
-      });
+      var actual = fs.readFileSync(f);
+      var expected = [
+        'import foo from \'foo\';',
+        ''
+      ].join('\n');
 
-      it('doesn\'t add extra newlines', function() {
-        var tmpDir = this.tmpDir;
-        var f = path.join(tmpDir, 'test.js');
-        fs.writeFileSync(f, 'import bar from \'bar\'\n', 'utf8');
+      assert.equal(actual, expected, 'correctly written');
+    });
 
-        utils.addImport(f, 'foo', 'foo');
-        utils.addImport(f, 'bar', 'bar');
-        var testFile = fs.readFileSync(f);
+    it('doesn\'t add extra newlines', function() {
+      var tmpDir = this.tmpDir;
+      var f = path.join(tmpDir, 'test.js');
+      fs.writeFileSync(f, 'import foo from \'foo\';\n', 'utf8');
 
-        assert(!(/\n\n\n/.test(testFile)), 'should not have multiple newlines in a row');
-      });
+      utils.addImport(f, 'bar', 'bar');
+      utils.addImport(f, 'baz', 'baz');
+
+      var actual = fs.readFileSync(f);
+      var expected = [
+        'import foo from \'foo\';',
+        '',
+        'import bar from \'bar\';',
+        '',
+        'import baz from \'baz\';',
+        ''
+      ].join('\n');
+
+      assert.equal(actual, expected, 'should not have multiple newlines in a row');
+    });
+
+    it('don\'t add duplicate imports', function() {
+      var tmpDir = this.tmpDir;
+      var f = path.join(tmpDir, 'test.js');
+      var expected = [
+        'import foo from \'foo\';',
+        '',
+        'import bar from \'bar\';'
+      ].join('\n');
+      fs.writeFileSync(f, expected, 'utf8');
+
+      utils.addImport(f, 'foo', 'foo');
+      var actual = fs.readFileSync(f);
+
+      assert.equal(actual, expected, 'should not change content');
+    });
+
+    it('works when there is existing javascript in the file', function() {
+      var tmpDir = this.tmpDir;
+      var f = path.join(tmpDir, 'test.js');
+      var content = [
+        'import bar from \'bar\';',
+        '',
+        'var baz = \'bar\';',
+        ''
+      ].join('\n');
+      fs.writeFileSync(f, content, 'utf8');
+
+      utils.addImport(f, 'foo', 'foo');
+      var actual = fs.readFileSync(f);
+
+      var expected = [
+        'import bar from \'bar\';',
+        '',
+        'import foo from \'foo\';',
+        '',
+        'var baz = \'bar\';',
+        ''
+      ].join('\n');
+
+      assert.equal(actual, expected, 'should have all imports at the top');
     });
   });
 

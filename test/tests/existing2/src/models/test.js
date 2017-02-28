@@ -1,5 +1,5 @@
 import 'steal-qunit';
 
-import 'existing/models/foo_test';
+import 'existing/models/foo-test';
 
-import 'existing/models/messages_test';
+import 'existing/models/messages-test';

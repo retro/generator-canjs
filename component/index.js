@@ -27,7 +27,7 @@ module.exports = BaseGenerator.extend({
       'modlet/component.md',
       'modlet/component.less',
       'modlet/component.stache',
-      'modlet/component_test.js',
+      'modlet/component-test.js',
       'modlet/test.html'
     ];
   },
@@ -121,9 +121,9 @@ module.exports = BaseGenerator.extend({
         );
       });
 
-      var mainTests = this.destinationPath(path.join(folder, 'test', 'test.js'));
+      var mainTests = this.destinationPath(path.join(folder, 'test.js'));
       utils.addImport(mainTests, [appName].concat(fullPath.slice(1)).join('/') +
-        '/' + name + '_test');
+        '/' + name + '-test');
     }
     done();
   }

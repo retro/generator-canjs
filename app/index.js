@@ -24,18 +24,16 @@ module.exports = BaseGenerator.extend({
       '_gitignore',
       'build.js',
       'production.html',
-      'development.html'
+      'development.html',
+      'test.html'
     ];
 
     this.srcFiles = [
-      'test.html',
       'app.js',
       'index.stache',
       'index.md',
       'styles.less',
-      'test.html',
-      'test/test.js',
-      'test/functional.js',
+      'test.js',
       'models/fixtures/fixtures.js',
       'models/test.js'
     ];
@@ -153,7 +151,7 @@ module.exports = BaseGenerator.extend({
       license: 'UNLICENSED',
       private: true,
       scripts: {
-        test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
+        test: 'testee test.html --browsers firefox --reporter Spec',
         start: 'done-serve --port 8080',
         develop: "done-serve --develop --port 8080",
         build: "node build"
