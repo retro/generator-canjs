@@ -22,7 +22,7 @@ module.exports = BaseGenerator.extend({
     this.mainFiles = [
       '_gitignore',
       'LICENSE',
-      'readme.md',
+      'README.md',
       'default/templates/file.js',
       'default/index.js',
       'test/index.js'
