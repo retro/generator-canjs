@@ -19,7 +19,8 @@ module.exports = BaseGenerator.extend({
     };
 
     this.mainFiles = [
-      'readme.md',
+      'CONTRIBUTING.md',
+      'README.md',
       '_gitignore',
       'test.html',
       'index.html'
