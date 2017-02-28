@@ -12,19 +12,3 @@ To add this generator to your DoneJS application, run
 ```
 donejs add <%= addName %>
 ```
-
-## Developing
-
-To make changes to this generator, clone the repository and install the dependencies
-
-```
-git clone git@github.com:<%= githubAccount %>/<%= name %>.git
-cd <%= name %>
-npm install
-```
-
-Then you can run the tests with
-
-```
-npm test
-```
