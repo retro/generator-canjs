@@ -119,7 +119,7 @@ module.exports = BaseGenerator.extend({
       "scripts": {
         preversion: "npm test && npm run build",
         version: "git commit -am \"Update dist for release\" && git checkout -b release && git add -f dist/",
-        postversion: "git push --tags && git checkout master && git branch -D release && git push",
+        postpublish: "git push --tags && git checkout master && git branch -D release && git push",
         testee: "testee test.html --browsers firefox",
         test: "npm run jshint && npm run testee",
         jshint: "jshint ./*.js" + jshintFolder + " --config",
