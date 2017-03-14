@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var program = require('../lib/cli');
+
+program.parse(process.argv);
+
+if (!program.args.length) {
+  program.help();
+}
+
+
+/* local version
+#!/usr/bin/env node
+
+var cli = require('../lib/cli');
+var utils = require('../lib/utils');
+
+utils.projectRoot()
+  .then(function(root) {
+    var program = cli(root);
+
+    program.parse(process.argv);
+
+    // show help if no args provided
+    if (!program.args.length) {
+      program.help();
+    }
+  })
+  .catch(function(err) {
+    throw err;
+  });
+*/

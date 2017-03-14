@@ -1,4 +1,4 @@
-var validate = require("validate-npm-package-name");
+var validate = require('validate-npm-package-name');
 var generators = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
@@ -50,6 +50,13 @@ module.exports = generators.Base.extend({
       }
 
       var prompts = [{
+        name: 'canVersion',
+        type: 'list',
+        message: 'CanJS Version',
+        when: !this.pkg.donejs,
+        default: '1.0.0',
+        choices: ['1.0.0','0.9.6']
+      },{
         name: 'name',
         message: 'Project name',
         when: !this.pkg.name,
@@ -117,8 +124,8 @@ module.exports = generators.Base.extend({
   },
 
   writing: function () {
-		var pkgName = this.props.name;
-		var pkgMain = pkgName + '/index.stache!done-autorender';
+    var pkgName = this.props.name;
+    var pkgMain = pkgName + '/index.stache!done-autorender';
 
     var self = this;
     var pkgJsonFields = {
@@ -135,15 +142,15 @@ module.exports = generators.Base.extend({
       scripts: {
         test: 'testee ' + this.props.folder + '/test.html --browsers firefox --reporter Spec',
         start: 'done-serve --port 8080',
-        develop: "done-serve --develop --port 8080",
-        document: "documentjs",
-        build: "node build"
+        develop: 'done-serve --develop --port 8080',
+        document: 'documentjs',
+        build: 'node build'
       },
       main: pkgMain,
       files: [this.props.folder],
       keywords: this.props.keywords,
       system: {
-				main: pkgMain,
+        main: pkgMain,
         directories: {
           lib: this.props.folder
         },
@@ -157,32 +164,33 @@ module.exports = generators.Base.extend({
     }
 
     if(!this.options.packages) {
-      throw new Error('No DoneJS dependency package list provided!');
+      //throw new Error('No DoneJS dependency package list provided!');
     }
 
     this.log('Writing package.json v' + this.options.version);
 
-    var deps = this.options.packages.dependencies;
-    var devDeps = this.options.packages.devDependencies;
+    //var deps = this.options.packages.dependencies;
+    //var devDeps = this.options.packages.devDependencies;
+
 
     this.fs.writeJSON('package.json', _.extend(pkgJsonFields, this.pkg, {
-      dependencies: deps,
-      devDependencies: devDeps
+      dependencies: require(__dirname+'/'+this.props.canVersion+'/package.json').dependencies,
+      devDependencies: require(__dirname+'/'+this.props.canVersion+'/package.json').devDependencies
     }));
 
     this.mainFiles.forEach(function(name) {
       // Handle bug where npm has renamed .gitignore to .npmignore
       // https://github.com/npm/npm/issues/3763
       self.fs.copyTpl(
-        self.templatePath(name),
-        self.destinationPath((name === "_gitignore") ? ".gitignore" : name),
+        __dirname+'/'+this.props.canVersion+'/templates/'+name,
+        self.destinationPath((name === '_gitignore') ? '.gitignore' : name),
         self.props
       );
     });
-
+    // self.templatePath(path.join('src', name)),
     this.srcFiles.forEach(function(name) {
       self.fs.copyTpl(
-        self.templatePath(path.join('src', name)),
+        __dirname+'/'+this.props.canVersion+'/templates/src/'+name,
         self.destinationPath(path.join(self.props.folder, name)),
         self.props
       );

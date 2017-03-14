@@ -1,0 +1,56 @@
+{
+  "name": "blo",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "scripts": {
+    "test": "testee src/test.html --browsers firefox --reporter Spec",
+    "start": "done-serve --port 8080",
+    "develop": "done-serve --develop --port 8080",
+    "document": "documentjs",
+    "build": "node build"
+  },
+  "main": "blo/index.stache!done-autorender",
+  "files": [
+    "src"
+  ],
+  "keywords": [],
+  "system": {
+    "main": "blo/index.stache!done-autorender",
+    "directories": {
+      "lib": "src"
+    },
+    "configDependencies": [
+      "live-reload",
+      "node_modules/can-zone/register"
+    ],
+    "transpiler": "babel",
+    "npmAlgorithm": "flat"
+  },
+  "dependencies": {
+    "can-component": "^3.0.4",
+    "can-connect": "^1.0.21",
+    "can-define": "^1.0.10",
+    "can-route": "^3.0.6",
+    "can-route-pushstate": "^3.0.1",
+    "can-set": "^1.0.3",
+    "can-stache": "^3.0.16",
+    "can-view-autorender": "^3.0.3",
+    "can-zone": "^0.6.0",
+    "steal": "^1.0.5",
+    "steal-less": "^1.0.2",
+    "steal-stache": "^3.0.4"
+  },
+  "devDependencies": {
+    "funcunit": "^3.1.0",
+    "steal-qunit": "^1.0.0",
+    "steal-tools": "^1.0.1",
+    "testee": "^0.3.0",
+    "can-fixture": "^1.0.11"
+  }
+}

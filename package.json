@@ -1,23 +1,36 @@
 {
-  "name": "generator-donejs",
-  "version": "0.9.6",
-  "description": "A generator for your DoneJS application",
+  "name": "generator-canjs",
+  "version": "0.9.7",
+  "description": "A generator for your CanJS Projects",
   "homepage": "http://donejs.com/",
   "license": "MIT",
   "main": "lib",
+  "bin": {
+    "canjs": "./bin/canjs"
+  },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- test/ --timeout 600000",
-    "test": "mocha test/ --timeout 600000",
-    "coverage:upload": "istanbul cover _mocha --report lcovonly -- test/ --timeout 600000 && cat ./coverage/lcov.info | ./node_modules/coveralls-send/bin/coveralls.js",
-    "publish": "git push origin --tags && git push origin",
-    "release:patch": "npm version patch && npm publish",
-    "release:minor": "npm version minor && npm publish",
-    "release:major": "npm version major && npm publish"
+      "docs-copy": "cp -R docs/static/img site/static/ && cp docs/static/favicon.ico site/favicon.ico",
+      "document": "bit-docs && npm run docs-copy",
+      "document:force": "bit-docs -fd && npm run docs-copy",
+      "test": "npm run jshint && npm run mocha && npm run document && npm run test-guides",
+      "test-guides": "npm run test-quickstart && npm run test-pmo",
+      "test-quickstart": "guide guides/guide/test.js --local",
+      "test-pmo": "guide guides/place-my-order/test.js --local",
+      "jshint": "jshint lib/. bin/donejs test/. --config",
+      "mocha": "mocha test/test --timeout 120000",
+      "verify": "echo \"Script ran\"",
+      "publish": "git push origin && git push origin --tags",
+      "release:prerelease": "npm version prerelease && npm publish",
+      "release:patch": "npm version patch && npm publish",
+      "release:minor": "npm version minor && npm publish",
+      "release:major": "npm version major && npm publish",
+      "coverage": "istanbul cover _mocha -- test/test --timeout 120000",
+      "coverage:upload": "istanbul cover _mocha --report lcovonly -- test/ --timeout 600000 && cat ./coverage/lcov.info | ./node_modules/coveralls-send/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:donejs/generator-donejs.git",
-    "github": "https://github.com/donejs/generator-donejs"
+    "url": "git@github.com:retro/generator-canjs.git",
+    "github": "https://github.com/retro/generator-canjs"
   },
   "author": {
     "name": "Bitovi",
